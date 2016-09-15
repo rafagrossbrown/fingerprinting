@@ -1,0 +1,1999 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>a CSS framework</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="style/styleNiji.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/assets/github-gist.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
+    <script src="script/app.js"></script>
+    <!-- directives -->
+    <script src="script/components/alerts/alerts.js"></script>
+    <script src="script/components/dropdowns/dropdowns.js"></script>
+    <script src="script/components/modals/modals.js"></script>
+    <style>
+      pre {
+        margin: 0;
+        overflow-y: hidden;
+        overflow-x: auto;
+      }
+      code.hljs {
+        display: block;
+        padding: 0;
+        margin: 0 0 0 -30px;
+      }
+      .nj-row + pre,
+      .nj-group + pre,
+      .nj-block + pre {
+        margin-top: -20px;
+      }
+      pre + pre {
+        margin-top: -40px;
+      }
+
+      .nj-display { padding-bottom: 10px; }
+      .nj-subtitle { padding-bottom: 10px; }
+      .nj-block[column] + pre,
+      .nj-block[two-columns] + pre {
+        margin: 0 0 30px;
+      }
+      [data-columns] > * span {
+        display: block;
+        background: rgba(0,0,0,.1);
+        text-align: center;
+        padding: 20px 0;
+        margin: 8px 1px;
+        border-radius: 6px;
+      }
+      [data-columns].double > * span {
+        padding: 57px;
+      }
+      .nj-drawer header h2 a,
+      .nj-block .nj-modal,
+      .nj-block .nj-spinner,
+      .nj-block .nj-header { z-index: 10; }
+      .nj-wrapper > .bkg-alpha { background-color: rgba(255, 255, 255, 0.8) !important; }
+      a[name] {
+        display: block;
+        position: relative;
+        top: -15px;
+      }
+      .nj-content > .nj-block {
+        margin-bottom: 70px;
+      }
+      .demo-only.drawer-container {
+        position: relative;
+        width: 100%;
+      }
+      .demo-only.drawer-container .nj-drawer {
+        position: static;
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0);
+      }
+      .demo-only.drawer-container .nj-drawer nav {
+        position: static;
+      }
+      @media only screen and (max-width: 480px) {
+        .demo-only.drawer-container {
+          height: auto;
+        }
+        .demo-only.drawer-container:before {
+          position: relative;
+          content: "To see the mobile version in acction, please use the hamburger icon at the top of this page."
+        }
+      }
+      .demo-only.modal-container {
+        position: relative;
+        width: 100%;
+        height: 300px;
+      }
+      .demo-only.modal-container.large {
+        position: relative;
+        width: 100%;
+        height: 360px;
+      }
+      .demo-only.modal-container .nj-modal,
+      .demo-only.modal-container .nj-spinner {
+        position: absolute;
+      }
+      .nj-block .nj-alert {
+        position: relative;
+        top: 0 !important;
+      }
+      .nj-block .nj-header {
+        position: relative;
+      }
+      .nj-block .nj-subheader {
+        margin-top: 0 !important;
+      }
+    </style>
+  </head>
+
+  <body ng-app="myApp" ng-controller="myCtrl" ng-init="showData()">
+
+    <nj-modal show="demoModal1">
+      <p class="nj-row">I'm a modal</p>
+    </nj-modal>
+    <nj-modal show="demoModal2" close="true">
+      <p class="nj-row">I'm a modal</p>
+    </nj-modal>
+    <nj-modal show="demoModal3" title="Title">
+      <p class="nj-row">I'm a modal</p>
+    </nj-modal>
+    <nj-modal show="demoModal4" template="dialog" title="Title" close="true">
+      <p class="nj-row">I'm a dialog</p>
+    </nj-modal>
+
+    <header class="nj-header bkg-header drawer">
+      <div class="nj-wrapper">
+        <button class="nj-drawer-btn nj-icon" icon="menu" ng-click="toggleMenu()">toggle menu</button>
+        <h1><a class="nj-headline" href="index.html">Documentation</a></h1>
+      </div>
+    </header>
+
+    <div class="nj-view drawer">
+    <div class="nj-content">
+    <div class="nj-wrapper">
+      <a name="top"></a>
+      <!-- <nj-alert ng-show="demoAlert1" close="true">
+        I'm an alert
+      </nj-alert>
+      <nj-alert ng-show="demoAlert2">
+        <button class="nj-close nj-icon small" icon="close_circle" ng-click="toggleDemoAlert2()">close</button>
+        <span>I'm an alert</span>
+      </nj-alert>
+      <nj-alert ng-show="demoAlert3" class="warning">
+        <button class="nj-close nj-icon small" icon="close_circle" ng-click="toggleDemoAlert3()">close</button>
+        <p class="nj-table">
+          <span class="nj-cell">
+            <i class="nj-icon rounded" icon="alert">check</i>
+          </span>
+          <span class="nj-cell">I'm a warning alert</span>
+        </p>
+      </nj-alert>
+      <nj-alert ng-show="demoAlert4" class="negative">
+        <button class="nj-close nj-icon small" icon="close_circle" ng-click="toggleDemoAlert4()">close</button>
+        <p class="nj-table">
+          <span class="nj-cell">
+            <i class="nj-icon rounded" icon="alert">check</i>
+          </span>
+          <span class="nj-cell">I'm a negative alert</span>
+        </p>
+        <button class="nj-button link" icon="right">Action</button>
+      </nj-alert> -->
+
+      <!-- ------------------ ALERTS ------------------ -->
+      <a name="alerts"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Alerts</h2>
+        <div class="nj-alert show">
+          I'm an alert
+        </div>
+        <pre>
+          <code class="html">
+        <nj-alert
+          show-alert="vm.alert.showAlert"
+          message="I'm an alert">
+        </nj-alert>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">With close button</h2>
+        <div class="nj-alert show">
+          <button class="nj-close nj-icon small" icon="close_circle">close</button>
+          <i class="nj-icon rounded" icon="check">check</i>
+          <span>I'm an alert</span>
+        </div>
+        <pre>
+          <code class="html">
+        <nj-alert
+          show-alert="vm.alert.showAlert"
+          has-close-button="true"
+          message="I'm an alert">
+        </nj-alert>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Negative with call to action</h2>
+        <div class="nj-alert negative show">
+          <button class="nj-close nj-icon small" icon="close_circle">close</button>
+          <p>I'm a negative alert</p>
+          <button class="nj-button link small" icon="right">Action</button>
+        </div>
+        <pre>
+          <code class="html">
+        <nj-alert
+          show-alert="vm.alert.showAlert"
+          has-close-button="true"
+          type="negative"
+          message="I'm a negative alert"
+          extra-button="Action">
+        </nj-alert>
+          </code>
+        </pre>
+      </div>
+
+      <!-- ------------------ BUTTONS ------------------ -->
+      <a name="buttons"></a>
+      <hr class="nj-divider fit">
+      <div class="nj-block">
+        <h2 class="nj-display">Buttons</h2>
+        <h3 class="nj-subtitle">Call to action</h2>
+
+        <button class="nj-button">Default</button>
+        <pre>
+          <code class="html">
+        <button class="nj-button">Default</button>
+          </code>
+        </pre>
+
+        <button class="nj-button inverted">Inverted</button>
+        <pre>
+          <code class="html">
+        <button class="nj-button inverted">Inverted</button>
+          </code>
+        </pre>
+
+        <button class="nj-button secondary">Secondary</button>
+        <pre>
+          <code class="html">
+        <button class="nj-button secondary">Secondary</button>
+          </code>
+        </pre>
+
+        <button class="nj-button negative">Negative</button>
+        <pre>
+          <code class="html">
+        <button class="nj-button negative">Negative</button>
+          </code>
+        </pre>
+
+        <button class="nj-button negative inverted">Negative Inverted</button>
+        <pre>
+          <code class="html">
+        <button class="nj-button negative inverted">Negative Inverted</button>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Links</h2>
+        <button class="nj-button link">This is a link</button>
+        <pre>
+          <code class="html">
+        <button class="nj-button link">This is a link</button>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Buttons with icons</h2>
+        <button class="nj-button">
+          <i icon="plus"></i>
+          <span>Add</span>
+        </button>
+        <pre>
+          <code class="html">
+        <button class="nj-button">
+          <i icon="plus"></i>
+          <span>Add</span>
+        </button>
+          </code>
+        </pre>
+
+        <button class="nj-button">
+          <span>Add</span>
+          <i icon="plus"></i></button>
+        <pre>
+          <code class="html">
+        <button class="nj-button">
+          <span>Add</span>
+          <i icon="plus"></i>
+        </button>
+          </code>
+        </pre>
+
+        <button class="nj-button link" icon="plus">Add</button>
+        <pre>
+          <code class="html">
+        <button class="nj-button link" icon="plus">Add</button>
+          </code>
+        </pre>
+
+        <button class="nj-button link icon-plus">Add</button>
+        <pre>
+          <code class="html">
+        <button class="nj-button link icon-plus">Add</button>
+          </code>
+        </pre>
+
+        <button class="nj-button rounded" icon="check"></button>
+        <pre>
+          <code class="html">
+        <button class="nj-button rounded" icon="check"></button>
+          </code>
+        </pre>
+
+        <button class="nj-button rounded secondary" icon="close"></button>
+        <pre>
+          <code class="html">
+        <button class="nj-button rounded secondary" icon="close"></button>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Block buttons</h2>
+        <p>Adding "block" classname will make the button fit the available space.</p>
+        <div class="nj-row">
+          <button class="nj-button block">Block button</button>
+        </div>
+        <pre>
+          <code class="html">
+        <button class="nj-button block">Block button</button>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Small buttons</h2>
+        <div class="nj-row">
+          <button class="nj-button small">Small button</button>
+        </div>
+        <pre>
+          <code class="html">
+        <button class="nj-button small">Small button</button>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Large buttons</h2>
+        <div class="nj-row">
+          <button class="nj-button large">Large button</button>
+        </div>
+        <pre>
+          <code class="html">
+        <button class="nj-button large">Large button</button>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Disabled buttons</h2>
+        <p>Use either "nj-disabled" classname or "disabled" attribute</p>
+        <button class="nj-button" disabled>Default</button>
+        <pre>
+          <code class="html">
+        <button class="nj-button" disabled>Default</button>
+          </code>
+        </pre>
+
+        <button class="nj-button negative disabled">Negative</button>
+        <pre>
+          <code class="html">
+        <button class="nj-button negative disabled">Negative</button>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Grouped buttons</h2>
+        <div class="nj-group">
+          <button class="nj-button">1</button>
+          <button class="nj-button active">2</button>
+          <button class="nj-button negative">3</button>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-group">
+          <button class="nj-button">1</button>
+          <button class="nj-button active">2</button>
+          <button class="nj-button negative">3</button>
+        </div>
+          </code>
+        </pre>
+      </div>
+
+      <!-- ------------------ COLLAPSIBLES ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="collapsibles"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Collapsibles</h2>
+        <div class="nj-row">
+          <button class="nj-button link" ng-class="collapsed ? 'icon-minus' : 'icon-plus'" ng-click="toggleCollapse()">See more</button>
+        </div>
+        <div class="nj-collapsible" ng-class="{'show': collapsed}">
+          <p class="nj-row">This is a hidden content.</p>
+        </div>
+        <pre>
+          <code class="html">
+      <button class="nj-button link" ng-class="collapsed ? 'icon-minus' : 'icon-plus'" ng-click="toggleCollapse()">See more</button>
+      <div class="nj-collapsible" ng-class="{'show': collapsed}">
+        <p class="nj-row">This is a hidden content.</p>
+      </div>
+          </code>
+        </pre>
+      </div>
+
+      <!-- ------------------ CHECKBOXES ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="checkboxes"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Checkboxes</h2>
+        <div class="nj-row">
+          <label class="nj-checkbox">
+            <input checked="" type="checkbox">
+            <span icon="check">Checkbox text 1</span>
+          </label>
+          <label class="nj-checkbox">
+            <input type="checkbox">
+            <span icon="check">Checkbox text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+        <label class="nj-checkbox">
+          <input checked="" type="checkbox">
+          <span icon="check">Checkbox text 1</span>
+        </label>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Right aligned</h2>
+        <div class="nj-row">
+          <label class="nj-checkbox right">
+            <input checked="" type="checkbox">
+            <span icon="check">Checkbox text 1</span>
+          </label>
+          <label class="nj-checkbox right">
+            <input type="checkbox">
+            <span icon="check">Checkbox text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+        <label class="nj-checkbox right">
+          <input checked="" type="checkbox">
+          <span icon="check">Checkbox text 1</span>
+        </label>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Block</h2>
+        <div class="nj-row">
+          <label class="nj-checkbox block">
+            <input checked="" type="checkbox">
+            <span icon="check">Checkbox text 1</span>
+          </label>
+          <label class="nj-checkbox block block">
+            <input type="checkbox">
+            <span icon="check">Checkbox text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+        <label class="nj-checkbox block">
+          <input checked="" type="checkbox">
+          <span icon="check">Checkbox text 1</span>
+        </label>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Block and right aligned</h2>
+        <div class="nj-row">
+          <label class="nj-checkbox block right">
+            <input checked="" type="checkbox">
+            <span icon="check">Checkbox text 1</span>
+          </label>
+          <label class="nj-checkbox block right">
+            <input type="checkbox">
+            <span icon="check">Checkbox text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+        <label class="nj-checkbox block right">
+          <input checked="" type="checkbox">
+          <span icon="check">Checkbox text 1</span>
+        </label>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Disabled</h2>
+        <div class="nj-row">
+          <label class="nj-checkbox disabled">
+            <input checked="" type="checkbox">
+            <span icon="check">Checkbox text 1</span>
+          </label>
+          <label class="nj-checkbox" disabled>
+            <input type="checkbox">
+            <span icon="check">Checkbox text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+        <label class="nj-checkbox disabled">
+          <input checked="" type="checkbox">
+          <span icon="check">Checkbox text 1</span>
+        </label>
+          </code>
+        </pre>
+      </div>
+
+      <!-- ------------------ RADIOS ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="radios"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Radio buttons</h2>
+        <div class="nj-row">
+          <label class="nj-radio">
+            <input checked="" type="radio" name="radio1">
+            <span icon="check">Radio text 1</span>
+          </label>
+          <label class="nj-radio">
+            <input type="radio" name="radio1">
+            <span icon="check">Radio text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+        <label class="nj-radio">
+          <input checked="" type="radio">
+          <span icon="check">Radio text 1</span>
+        </label>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Right aligned</h2>
+        <div class="nj-row">
+          <label class="nj-radio right">
+            <input checked="" type="radio" name="radio2">
+            <span icon="check">Radio text 1</span>
+          </label>
+          <label class="nj-radio right">
+            <input type="radio" name="radio2">
+            <span icon="check">Radio text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+        <label class="nj-radio right">
+          <input checked="" type="radio">
+          <span icon="check">Radio text 1</span>
+        </label>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Block</h2>
+        <div class="nj-row">
+          <label class="nj-radio block">
+            <input checked="" type="radio" name="radio3">
+            <span icon="check">Radio text 1</span>
+          </label>
+          <label class="nj-radio block block">
+            <input type="radio" name="radio3">
+            <span icon="check">Radio text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+        <label class="nj-radio block">
+          <input checked="" type="radio">
+          <span icon="check">Radio text 1</span>
+        </label>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Block and right aligned</h2>
+        <div class="nj-row">
+          <label class="nj-radio block right">
+            <input checked="" type="radio" name="radio4">
+            <span icon="check">Radio text 1</span>
+          </label>
+          <label class="nj-radio block right">
+            <input type="radio" name="radio4">
+            <span icon="check">Radio text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+        <label class="nj-radio block right">
+          <input checked="" type="radio">
+          <span icon="check">Radio text 1</span>
+        </label>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Disabled</h2>
+        <div class="nj-row">
+          <label class="nj-radio disabled">
+            <input checked="" type="radio" name="radio5">
+            <span icon="check">Radio text 1</span>
+          </label>
+          <label class="nj-radio" disabled>
+            <input type="radio" name="radio5">
+            <span icon="check">Radio text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+        <label class="nj-radio disabled">
+          <input checked="" type="radio">
+          <span icon="check">Radio text 1</span>
+        </label>
+          </code>
+        </pre>
+      </div>
+
+      <!-- ------------------ SWITCHES ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="switches"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Switches</h2>
+        <div class="nj-row">
+          <div class="nj-switch">
+            <label>
+               <input type="checkbox">
+               <span></span>
+             </label>
+            <p class="nj-switch-label">Switch text 1</p>
+          </div>
+          <label class="nj-switch">
+            <input type="checkbox">
+            <span>Switch text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+            <nj-switch id="toggle-sms"
+                change="callback.method()"
+                state="associated.state"
+                message="{{'static label'}}"></nj-switch>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Right aligned</h2>
+        <div class="nj-row">
+          <div class="nj-switch right">
+            <p class="nj-switch-label">Switch text 1</p>
+            <label>
+               <input type="checkbox">
+               <span></span>
+             </label>
+          </div>
+          <label class="nj-switch right">
+            <input type="checkbox">
+            <span>Switch text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+            <nj-switch id="toggle-sms"
+                extra-class="right"
+                change="callback.method()"
+                state="associated.state"
+                message="{{'static label'}}"></nj-switch>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Block</h2>
+        <div class="nj-row">
+          <div class="nj-switch block">
+            <label>
+               <input type="checkbox">
+               <span></span>
+             </label>
+            <p class="nj-switch-label">Switch text 1</p>
+          </div>
+
+          <label class="nj-switch block">
+            <input type="checkbox">
+            <span>Switch text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+            <nj-switch id="toggle-sms"
+                extra-class="block"
+                change="callback.method()"
+                state="associated.state"
+                message="{{'static label'}}"></nj-switch>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Block and right aligned</h2>
+        <div class="nj-row">
+          <div class="nj-switch block right">
+            <label>
+               <input type="checkbox">
+               <span></span>
+             </label>
+            <p class="nj-switch-label">Switch text 1</p>
+          </div>
+
+          <label class="nj-switch block right">
+            <input type="checkbox">
+            <span>Switch text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+            <nj-switch id="toggle-sms"
+                extra-class="block block right"
+                change="callback.method()"
+                state="associated.state"
+                message="{{'static label'}}"></nj-switch>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Disabled</h2>
+        <div class="nj-row">
+          <label class="nj-switch disabled">
+            <input checked="" type="checkbox">
+            <span>Switch text 1</span>
+          </label>
+          <label class="nj-switch" disabled>
+            <input type="checkbox">
+            <span>Switch text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+            <nj-switch id="toggle-sms"
+                extra-class="block disabled"
+                change="callback.method()"
+                state="associated.state"
+                message="{{'static label'}}"></nj-switch>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Dynamic label</h2>
+        <div class="nj-row">
+          <label class="nj-switch disabled">
+            <input checked="" type="checkbox">
+            <span>Switch text 1</span>
+          </label>
+          <label class="nj-switch" disabled>
+            <input type="checkbox">
+            <span>Switch text 2</span>
+          </label>
+        </div>
+        <pre>
+          <code class="html">
+            <nj-switch id="toggle-sms"
+                extra-class="block"
+                change="callback.method()"
+                state="associated.state"
+                message-active="{{'active label'}}"
+                message-inactive="{{'inactive label'}}">
+              </nj-switch>
+          </code>
+        </pre>
+      </div>
+
+
+
+
+      <!-- ------------------ INPUTS ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="inputs"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Inputs</h2>
+        <div class="nj-row">
+          <label>Label</label>
+          <input type="text" class="nj-input" value="input">
+        </div>
+        <pre>
+          <code class="html">
+        <label>Label</label>
+        <input type="text" class="nj-input" value="input">
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Input with inline label</h2>
+        <div class="nj-row">
+          <label class="nj-inline">Label</label>
+          <input type="text" class="nj-input" value="input">
+        </div>
+        <pre>
+          <code class="html">
+        <label class="nj-inline">Label</label>
+        <input type="text" class="nj-input" value="input">
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Inputs with icon</h2>
+        <div class="nj-row">
+          <input class="nj-input icon" type="text" placeholder="username">
+          <i icon="user"></i>
+        </div>
+        <pre>
+          <code class="html">
+        <input class="nj-input icon" type="text" placeholder="username">
+        <i icon="user"></i>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Block inputs</h2>
+        <p>Adding "block" classname will make the input fit the available space.</p>
+        <div class="nj-row">
+          <input class="nj-input block" type="text" value="Block input">
+        </div>
+        <pre>
+          <code class="html">
+        <input class="nj-input block" type="text" value="Block input">
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Pin input</h2>
+        <div class="nj-row">
+          <input type="password" class="nj-input" type="text" value="">
+        </div>
+        <pre>
+          <code class="html">
+        <input type="password" class="nj-input" type="text" value="">
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Textareas</h2>
+        <div class="nj-row">
+          <textarea class="nj-textarea">Text</textarea>
+        </div>
+        <pre>
+          <code class="html">
+        <textarea class="nj-textarea">Text</textarea>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Validations</h2>
+        <p>Validation could be done either adding clasnames to the input or to the input parent. Classnames "ng-valid" and "ng-invalid" are preffered when using angular.</p>
+        <br>
+        <h3 class="nj-subtitle">Valid input</h2>
+        <div class="nj-row nj-valid">
+          <input class="nj-input" type="text" value="Valid input">
+          <div class="nj-message">This input is valid.</div>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-row nj-valid">
+          <input class="nj-input" type="text" value="Valid input">
+          <div class="nj-message">This input is valid.</div>
+        </div>
+          </code>
+        </pre>
+        <pre>
+          <code class="html">
+        <div class="nj-row">
+          <input class="nj-input ng-valid" type="text" value="Valid input">
+          <div class="nj-message">This input is valid.</div>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Block validation</h2>
+        <div class="nj-row nj-valid">
+          <input class="nj-input" type="text" value="Valid input">
+          <div class="nj-message block">Now the message is under the input.</div>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-row nj-valid">
+          <input class="nj-input" type="text" value="Valid input">
+          <div class="nj-message block">Now the message is under the input.</div>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Invalid input</h2>
+        <div class="nj-row nj-invalid">
+          <input class="nj-input" type="text" value="Invalid input">
+          <div class="nj-message">This input is invalid.</div>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-row nj-invalid">
+          <input class="nj-input" type="text" value="Invalid input">
+          <div class="nj-message">This input is invalid.</div>
+        </div>
+          </code>
+        </pre>
+        <pre>
+          <code class="html">
+        <div class="nj-row">
+          <input class="nj-input ng-invalid" type="text" value="Invalid input">
+          <div class="nj-message">This input is invalid.</div>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Textareas</h2>
+        <div class="nj-row">
+          <textarea class="nj-textarea">Text</textarea>
+        </div>
+        <pre>
+          <code class="html">
+        <textarea class="nj-textarea">Text</textarea>
+          </code>
+        </pre>
+      </div>
+
+      <!-- ------------------ DROPDOWNS ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="dropdowns"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Dropdowns</h2>
+        <div class="nj-dropdown" icon="down">
+          <button>Option 1</button>
+          <ul>
+            <li>Option 1</li>
+            <li>Option 2</li>
+            <li>Option 3</li>
+          </ul>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-dropdown" icon="down">
+          <button>Option 1</button>
+          <ul>
+            <li>Option 1</li>
+            <li>Option 2</li>
+            <li>Option 3</li>
+          </ul>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Block dropdowns</h2>
+        <p>Adding "block" classname will make the dropdown fit the available space.</p>
+        <div class="nj-dropdown block" icon="down">
+          <button>Option 1</button>
+          <ul>
+            <li>Option 1</li>
+            <li>Option 2</li>
+            <li>Option 3</li>
+          </ul>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-dropdown block" icon="down">
+          <button>Option 1</button>
+          <ul>
+            <li>Option 1</li>
+            <li>Option 2</li>
+            <li>Option 3</li>
+          </ul>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Agular directive</h2>
+
+        <div class="nj-row">
+
+        <nj-dropdown icon="down" selected="2"
+                     options="['Option 1', 'Option 2', 'Option 3']">
+        </nj-dropdown>
+        </div>
+        <pre>
+          <code>
+        Append: [dependencies path]/dropdowns/dropdowns.js
+          </code>
+        </pre>
+        <pre>
+          <code class="html">
+        <nj-dropdown icon="down" selected="2" options="['Option 1', 'Option 2', 'Option 3']"></nj-dropdown>
+          </code>
+        </pre>
+      </div>
+
+
+
+
+
+
+
+      <!-- ------------------ MODALS ------------------ -->
+      <!-- <hr class="nj-divider fit">
+      <a name="modals"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Modals</h2>
+        <p>White themed modals are mainly used for field validations.</p>
+        <div class="demo-only modal-container">
+          <div class="nj-modal show">
+            <div class="nj-card" column>
+              <div class="nj-card-content">
+                <p class="nj-row">I'm a modal</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-modal">
+          <div class="nj-card" column>
+            <div class="nj-card-content">
+              <p class="nj-row">I'm a modal</p>
+            </div>
+          </div>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">With close button</h3>
+        <div class="demo-only modal-container">
+          <div class="nj-modal show">
+            <div class="nj-card" column>
+              <header>
+                <a href="#" class="nj-icon small" icon="close">close</a>
+              </header>
+              <div class="nj-card-content">
+                <p class="nj-row">I'm a modal</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-modal">
+          <div class="nj-card" column>
+            <header>
+              <a href="#" class="nj-icon small" icon="close">close</a>
+            </header>
+            <div class="nj-card-content">
+              <p class="nj-row">I'm a modal</p>
+            </div>
+          </div>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">With title</h3>
+        <div class="demo-only modal-container">
+          <div class="nj-modal show">
+            <div class="nj-card" column>
+              <header>
+                <a href="#" class="nj-icon small" icon="close">close</a>
+                <h2 class="nj-subtitle">Title</h2>
+              </header>
+              <div class="nj-card-content">
+                <p class="nj-row">I'm a modal</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-modal">
+          <div class="nj-card" column>
+            <header>
+              <a href="#" class="nj-icon small" icon="close">close</a>
+              <h2 class="nj-subtitle">Title</h2>
+            </header>
+            <div class="nj-card-content">
+              <p class="nj-row">I'm a modal</p>
+            </div>
+          </div>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h2 class="nj-display">Dialog</h2>
+        <p>Add "dialog" classname to change the modal color scheme.</p>
+        <div class="demo-only modal-container">
+          <div class="nj-modal show dialog">
+            <div class="nj-card" column>
+              <header>
+                <a href="#" class="nj-icon small" icon="close">close</a>
+                <h2 class="nj-subtitle">Title</h2>
+              </header>
+              <div class="nj-card-content">
+                <p class="nj-row">I'm a dialog</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-modal show dialog">
+          <div class="nj-card" column>
+            <header>
+              <a href="#" class="nj-icon small" icon="close">close</a>
+              <h2 class="nj-subtitle">Title</h2>
+            </header>
+            <div class="nj-card-content">
+              <p class="nj-row">I'm a dialog</p>
+            </div>
+          </div>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h2 class="nj-display">Dialog with card</h2>
+        <div class="demo-only modal-container">
+          <div class="nj-modal show dialog">
+            <div class="nj-card" column>
+              <header>
+                <a href="#" class="nj-icon small" icon="close">close</a>
+                <h2 class="nj-subtitle">Title</h2>
+              </header>
+              <div class="nj-card">
+                <p class="nj-row">I'm a card inside a dialog</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-modal show dialog">
+          <div class="nj-card" column>
+            <header>
+              <a href="#" class="nj-icon small" icon="close">close</a>
+              <h2 class="nj-subtitle">Title</h2>
+            </header>
+            <div class="nj-card">
+              <p class="nj-row">I'm a card inside a dialog</p>
+            </div>
+          </div>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h2 class="nj-display">Dialog with footer</h2>
+        <div class="demo-only modal-container large">
+          <div class="nj-modal show dialog">
+            <div class="nj-card" column>
+              <header>
+                <a href="#" class="nj-icon small" icon="close">close</a>
+                <h2 class="nj-subtitle">Title</h2>
+              </header>
+              <div class="nj-card">
+                <p class="nj-row">I'm a card inside a dialog</p>
+              </div>
+              <footer>
+                <button class="nj-button large block">Got it!</button>
+              </footer>
+            </div>
+          </div>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-modal show dialog">
+          <div class="nj-card" column>
+            <header>
+              <a href="#" class="nj-icon small" icon="close">close</a>
+              <h2 class="nj-subtitle">Title</h2>
+            </header>
+            <div class="nj-card">
+              <p class="nj-row">I'm a card inside a dialog</p>
+            </div>
+            <footer>
+              <button class="nj-button large block">Got it!</button>
+            </footer>
+          </div>
+        </div>
+          </code>
+        </pre>
+      </div> -->
+
+      <!-- ------------------ ANGULAR MODALS ------------------ -->
+      <!-- <hr class="nj-divider fit">
+      <div class="nj-block">
+        <h2 class="nj-display">Angular modals</h2>
+        <p class="nj-row">Use the buttons bellow to launch each modal.</p>
+        <button class="nj-button" ng-click="toggleDemoModal1()">Launch demo modal</button>
+        <pre>
+          <code class="html">
+        <button class="nj-button" ng-click="toggleDemoModal1()">Launch demo modal</button>
+          </code>
+        </pre>
+        <pre>
+          <code class="html">
+        <nj-modal show="demoModal1">
+          <p class="nj-row">I'm a modal</p>
+        </nj-modal>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-display">With close button</h3>
+        <button class="nj-button" ng-click="toggleDemoModal2()">Launch demo modal</button>
+        <pre>
+          <code class="html">
+        <nj-modal show="demoModal2" close="true">
+          <p class="nj-row">I'm a modal</p>
+        </nj-modal>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-display">With title</h3>
+        <button class="nj-button" ng-click="toggleDemoModal3()">Launch demo modal</button>
+        <pre>
+          <code class="html">
+        <nj-modal show="demoModal3" title="Title">
+          <p class="nj-row">I'm a modal</p>
+        </nj-modal>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-display">Dialog</h3>
+        <button class="nj-button" ng-click="toggleDemoModal4()">Launch demo modal</button>
+        <pre>
+          <code class="html">
+        <nj-modal show="demoModal4" template="dialog" title="Title" close="true">
+          <p class="nj-row">I'm a dialog</p>
+        </nj-modal>
+          </code>
+        </pre>
+      </div> -->
+
+      <!-- ------------------ SPINNERS ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="spinners"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Spinners</h2>
+        <div class="nj-spinner">
+          <i icon="spinner"></i>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-spinner">
+          <i icon="spinner"></i>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-display">Spinner with overlay</h3>
+        <div class="demo-only modal-container">
+          <div class="nj-spinner overlay">
+            <i icon="spinner"></i>
+          </div>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-spinner overlay">
+          <i icon="spinner"></i>
+        </div>
+          </code>
+        </pre>
+      </div>
+
+      <!-- ------------------ HEADERS ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="headers"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Headers</h2>
+        <header class="nj-header bkg-header">
+          <div class="nj-wrapper">
+            <h1><a class="nj-headline" href="index.html">Section name</a></h1>
+          </div>
+        </header>
+        <pre>
+          <code class="html">
+        <header class="nj-header bkg-header">
+          <div class="nj-wrapper">
+            <h1><a class="nj-headline" href="index.html">Section name</a></h1>
+          </div>
+        </header>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">With Action buttons</h3>
+        <p>Only visible in mobile view</p>
+        <header class="nj-header bkg-header">
+          <div class="nj-wrapper">
+            <button class="nj-drawer-btn nj-icon" icon="menu">toggle menu</button>
+            <button class="nj-header-btn nj-icon nj-float-r" icon="home">home</button>
+            <h1 class="nj-fit"><a class="nj-headline" href="index.html">Section name</a></h1>
+          </div>
+        </header>
+        <pre>
+          <code class="html">
+        <header class="nj-header bkg-header">
+          <div class="nj-wrapper">
+            <button class="nj-drawer-btn nj-icon" icon="menu">toggle menu</button>
+            <button class="nj-header-btn nj-icon nj-float-r" icon="home">home</button>
+            <h1 class="nj-fit"><a class="nj-headline" href="index.html">Section name</a></h1>
+          </div>
+        </header>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">With logo</h3>
+        <p>Only visible in mobile view</p>
+        <header class="nj-header bkg-header logo">
+          <div class="nj-wrapper">
+            <h1><a class="nj-headline" href="index.html">Section name</a></h1>
+          </div>
+        </header>
+        <pre>
+          <code class="html">
+        <header class="nj-header bkg-header logo">
+          <div class="nj-wrapper">
+            <h1><a class="nj-headline" href="index.html">Section name</a></h1>
+          </div>
+        </header>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Subheader</h3>
+        <div class="nj-subheader">
+          <span class="nj-float-r">Phone</span>
+          <span class="nj-fit">User name</span>
+        </div>
+        <pre>
+          <code class="html">
+            <div class="nj-subheader">
+              <span class="nj-float-r">Phone</span>
+              <span class="nj-fit">User name</span>
+            </div>
+          </code>
+        </pre>
+      </div>
+
+      <!-- ------------------ DRAWERS ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="drawers"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Drawers</h2>
+
+
+        <!-- <div class="nj-drawer" ng-click="toggleMenu()">
+          <header>
+            <h2><a href="index.html">Home</a></h2>
+          </header>
+          <nav ng-click="toggleMenu()">
+            <aside>
+              <a href="#" class="nj-icon" icon="settings">Mi cuenta</a>
+              <div class="nj-fit">
+                <h3>User name</h2>
+                <h4>617 61 65 54</h2>
+              </div>
+            </aside> -->
+
+
+        <div class="demo-only drawer-container">
+          <div class="nj-drawer">
+            <nav>
+              <ul>
+                <li><a href="#" icon="feedback">Item with icon</a></li>
+                <li><a href="#">Item w/o icon</a></li>
+                <li class="active"><a href="#">Selected item</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-drawer">
+          <nav>
+            <ul>
+              <li><a href="#" icon="feedback">Item with icon</a></li>
+              <li><a href="#">Item w/o icon</a></li>
+              <li class="active"><a href="#">Selected item</a></li>
+            </ul>
+          </nav>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">With header</h3>
+        <div class="demo-only drawer-container">
+          <div class="nj-drawer">
+            <header>
+              <h2><a href="index.html">Home</a></h2>
+            </header>
+            <nav>
+              <ul>
+                <li><a href="#">Item 1</a></li>
+                <li><a href="#">Item 2</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <pre>
+          <code class="html">
+        <div class="nj-drawer">
+          <header>
+            <h2><a href="index.html">Home</a></h2>
+          </header>
+          <nav>
+            <ul>
+              <li><a href="#">Item 1</a></li>
+              <li><a href="#">Item 2</a></li>
+            </ul>
+          </nav>
+        </div>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">Collapsible items</h3>
+        <div class="demo-only drawer-container">
+          <div class="nj-drawer">
+            <nav>
+              <ul>
+                <li ng-class="collapsedUsers ? 'icon-angle_up' : 'icon-angle_down'">
+                  <a href="#" icon="users" ng-click="toggleCollapseUsers()">Users</a>
+                </li>
+                <li class="nj-collapsible" ng-class="{'show': collapsedUsers}">
+                  <ul>
+                    <li><a href="#">User 1</a></li>
+                    <li><a href="#">User 2</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <pre>
+          <code class="html">
+        <nav class="nj-drawer">
+          <ul>
+            <li ng-class="collapsedUsers ? 'icon-angle_up' : 'icon-angle_down'">
+              <a href="#" icon="users" ng-click="toggleCollapseUsers()">Users</a>
+            </li>
+            <li class="nj-collapsible" ng-class="{'show': collapsedUsers}">
+              <ul>
+                <li><a href="#">User 1</a></li>
+                <li><a href="#">User 2</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+          </code>
+        </pre>
+      </div>
+
+      <!-- ------------------ ICONS ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="icons"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Icons</h2>
+        <p>Refer to the <a target="_blank" href="assets/css/icons.html" class="color-significant">icons list</a> to see the possible values of the icon attribute.</p>
+        <i icon="user"> user icon</i>
+        <pre>
+          <code class="html">
+        <i icon="user"> user icon</i>
+          </code>
+        </pre>
+      </div>
+
+      <!-- ------------------ LISTS ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="lists"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Lists</h2>
+        <ul class="nj-list">
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul class="nj-list">
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">With bullets</h3>
+        <ul class="nj-list disc">
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul class="nj-list disc">
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">With dividers</h3>
+        <ul class="nj-list border">
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul class="nj-list border">
+          <li>Item 1</li>
+          <li>Item 2</li>
+          <li>Item 3</li>
+        </ul>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">With icons</h3>
+        <ul class="nj-list border">
+          <li icon="angle_right">Item 1</li>
+          <li icon="angle_right"><a class="nj-button link block" href="#">Item 2</a></li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul class="nj-list border">
+          <li icon="angle_right">Item 1</li>
+          <li icon="angle_right"><a class="nj-button link block" href="#">Item 2</a></li>
+        </ul>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <h3 class="nj-subtitle">With radio buttons</h3>
+        <ul class="nj-list radio">
+          <li icon="check" class="active">Item 1</li>
+          <li icon="check">Item 2</li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul class="nj-list radio">
+          <li icon="check" class="active">Item 1</li>
+          <li icon="check">Item 2</li>
+        </ul>
+          </code>
+        </pre>
+      </div>
+
+
+      <!-- ------------------ TYPOGRAPHY ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="typography"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">typography</h2>
+        <p class="nj-row">Typography clasnames could be applied to any tag, so they are unrelated to headings, paragraphs...</p>
+        <p class="nj-display">Display</p>
+        <pre>
+          <code class="html">
+        <p class="nj-display">Display</p>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <p class="nj-headline">Headline</p>
+        <pre>
+          <code class="html">
+        <p class="nj-headline">Headline</p>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <p class="nj-title">Title</p>
+        <pre>
+          <code class="html">
+        <p class="nj-title">Title</p>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <p class="nj-subtitle">Subtitle</p>
+        <pre>
+          <code class="html">
+        <p class="nj-subtitle">Subtitle</p>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <p class="nj-body">Body</p>
+        <pre>
+          <code class="html">
+        <p class="nj-body">Body</p>
+          </code>
+        </pre>
+
+        <hr class="fit">
+        <p class="nj-small">Small</p>
+        <pre>
+          <code class="html">
+        <p class="nj-small">Small</p>
+          </code>
+        </pre>
+      </div>
+
+      <!-- ------------------ GRID ------------------ -->
+      <hr class="nj-divider fit">
+      <a name="grid"></a>
+      <div class="nj-block">
+        <h2 class="nj-display">Grid</h2>
+
+        <h3 class="nj-subtitle">6 columns (list)</h3>
+        <p>Grid is limited to 6 columns. More columns could be achieved using nesting.</p>
+
+        <ul data-columns="6">
+          <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li><li><span>6</span></li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul data-columns="6">
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+          <li>6</li>
+        </ul>
+          </code>
+        </pre>
+
+        <h3 class="nj-subtitle">6 columns (div)</h3>
+        <div data-columns="6">
+          <div><span>1</span></div><div><span>2</span></div><div><span>3</span></div><div><span>4</span></div><div><span>5</span></div><div><span>6</span></div>
+        </div>
+        <pre>
+          <code class="html">
+        <div data-columns="6">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+          <div>6</div>
+        </div>
+          </code>
+        </pre>
+
+        <h3 class="nj-subtitle">6 columns with gutter</h3>
+        <ul data-columns="6" class="nj-gutter">
+          <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li><li><span>6</span></li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul data-columns="6" class="nj-gutter">
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+          <li>6</li>
+        </ul>
+          </code>
+        </pre>
+
+        <h3 class="nj-subtitle">6 to 1</h3>
+        <ul data-columns="6">
+          <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li><li><span>6</span></li>
+        </ul>
+        <ul data-columns="5">
+          <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li>
+        </ul>
+        <ul data-columns="4">
+          <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li>
+        </ul>
+        <ul data-columns="3">
+          <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li>
+        </ul>
+        <ul data-columns="2">
+          <li><span>1</span></li><li><span>2</span></li>
+        </ul>
+        <ul data-columns="1">
+          <li><span>1</span></li>
+        </ul>
+        <hr class="fit">
+        <h3 class="nj-subtitle">6 to 1 with gutter</h3>
+        <ul data-columns="6" class="nj-gutter">
+          <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li><li><span>6</span></li>
+        </ul>
+        <ul data-columns="5" class="nj-gutter">
+          <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li>
+        </ul>
+        <ul data-columns="4" class="nj-gutter">
+          <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li>
+        </ul>
+        <ul data-columns="3" class="nj-gutter">
+          <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li>
+        </ul>
+        <ul data-columns="2" class="nj-gutter">
+          <li><span>1</span></li><li><span>2</span></li>
+        </ul>
+        <ul data-columns="1" class="nj-gutter">
+          <li><span>1</span></li>
+        </ul>
+        <hr class="empty">
+        <h3 class="nj-subtitle">6 columns responsive</h3>
+        <p>Example:</p>
+        <ul class="nj-list disc">
+          <li>Desktop (default):<strong> 6 columns</strong></li>
+          <li>Tablet landscape (md):<strong> 4 columns</strong></li>
+          <li>Tablet portrait / Mobile landscape (sm):<strong> 2 columns</strong></li>
+          <li>Mobile portrait (xs):<strong> 1 column</strong></li>
+        </ul>
+        <p><strong>Note:</strong> Setting data-columns to 0, md0, sm0 or xs0 will hide the column for that breakpoint.</p>
+        <ul data-columns="6 md4 sm2 xs1" class="nj-gutter">
+            <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li><li><span>4</span></li><li><span>5</span></li><li><span>6</span></li><li><span>7</span></li><li><span>8</span></li><li><span>9</span></li><li><span>10</span></li><li><span>11</span></li><li><span>12</span></li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul data-columns="6 md4 sm2 xs1" class="nj-gutter">
+          <li>1</li>
+          <li>2</li>
+          ...
+          <li>11</li>
+          <li>12</li>
+        </ul>
+          </code>
+        </pre>
+
+        <h3 class="nj-subtitle">column span <small>(how many data-columns an element should span across)</small></h3>
+        <p><strong>Example 1:</strong> 6 colums, 1 for each side panel and 4 for content.</p>
+        <ul data-columns="6" class="nj-gutter">
+          <li data-column-span="1"><span>1 column</span></li>
+          <li data-column-span="4"><span>4 columns</span></li>
+          <li data-column-span="1"><span>1 column</span></li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul data-columns="6">
+          <li data-column-span="1">1 column</li>
+          <li data-column-span="4">4 columns</li>
+          <li data-column-span="1">1 column</li>
+        </ul>
+          </code>
+        </pre>
+
+        <p><strong>Example 2:</strong> 3 colums for content and a side menu of 2 columns</p>
+        <ul data-columns="5" class="nj-gutter">
+          <li><span>1</span></li>
+          <li><span>2</span></li>
+          <li><span>3</span></li>
+          <li data-column-span="2"><span>Menu</span></li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul data-columns="5" class="nj-gutter">
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li data-column-span="2">Menu</li>
+        </ul>
+          </code>
+        </pre>
+
+        <h3 class="nj-subtitle">Nested grids</h3>
+        <p>Nested grids will be useful in case you need to split content inside a data-column.</p>
+        <div data-columns="5" class="nj-gutter">
+          <section data-column-span="3">
+            <ul data-columns="3" class="nj-gutter double">
+              <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li>
+            </ul>
+          </section>
+          <nav data-column-span="2">
+            <header><span>Menu header</span></header>
+            <ul data-columns="2" class="nj-gutter">
+              <li><span>1</span></li><li><span>2</span></li>
+            </ul>
+          </nav>
+        </div>
+        <pre>
+          <code class="html">
+        <div data-columns="5" class="nj-gutter">
+          <section data-column-span="3">
+            <ul data-columns="3" class="nj-gutter">
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+            </ul>
+          </section>
+          <nav data-column-span="2">
+            <header>Menu header</header>
+            <ul data-columns="2" class="nj-gutter">
+              <li>1</li>
+              <li>2</li>
+            </ul>
+          </nav>
+        </div>
+          </code>
+        </pre>
+
+        <h3 class="nj-subtitle">Nested responsive grids</h3>
+        <p>Same code as before, this time responsive:</p>
+        <ul>
+          <li>
+            Desktop (default): <strong>5 columns</strong>
+            <ul class="nj-list disc">
+              <li>Content: <strong>3 columns</strong></li>
+              <li>Menu: <strong>2 columns</strong> (content: 2 columns)</li>
+            </ul>
+          </li>
+          <li>
+            Tablet landscape (md):
+            <ul class="nj-list disc">
+              <li>Menu: <strong>2 columns</strong> (content: 1 column)</li>
+            </ul>
+          </li>
+          <li>
+            Tablet portrait / Mobile landscape (sm): <strong>2 columns</strong>
+            <ul class="nj-list disc">
+              <li>Content: <strong>1 column</strong></li>
+              <li>Menu: <strong>1 columns</strong></li>
+            </ul>
+          </li>
+          <li>
+            Mobile portrait (xs): <strong>1 column</strong>
+            <ul class="nj-list disc">
+              <li>Content: <strong>1 column</strong></li>
+              <li>Menu: <strong>Removed</strong></li>
+            </ul>
+        </ul>
+        <div data-columns="5 sm2 xs1" class="nj-gutter">
+          <section data-column-span="3 sm1 xs1">
+            <ul data-columns="3 sm1" class="nj-gutter double">
+              <li><span>1</span></li><li><span>2</span></li><li><span>3</span></li>
+            </ul>
+          </section>
+          <nav data-column-span="2 sm1 xs0">
+            <header><span>Menu header</span></header>
+            <ul data-columns="2 md1" class="nj-gutter">
+              <li><span>1</span></li><li><span>2</span></li>
+            </ul>
+          </nav>
+        </div>
+        <pre>
+          <code class="html">
+        <div data-columns="5 sm2 xs1" class="nj-gutter">
+          <section data-column-span="3 sm1 xs1">
+            <ul data-columns="3 sm1" class="nj-gutter">
+              <li>1</li>
+              <li>2</li>
+              <li>3</li>
+            </ul>
+          </section>
+          <nav data-column-span="2 sm1 xs0">
+            <header>Menu header</header>
+            <ul data-columns="2 md1" class="nj-gutter">
+              <li>1</li>
+              <li>2</li>
+            </ul>
+          </nav>
+        </div>
+          </code>
+        </pre>
+
+        <h3 class="nj-subtitle">column offset <small>(move columns to the right)</small></h3>
+        <ul data-columns="4">
+          <li><span>No offset</span></li>
+          <li data-column-offset="1"><span>1 column offset</span></li>
+          <li><span>No offset</span></li>
+        </ul>
+        <ul data-columns="4">
+          <li data-column-offset="1"><span>1 column offset</span></li>
+          <li data-column-offset="1"><span>1 column offset</span></li>
+        </ul>
+        <ul data-columns="4">
+          <li data-column-offset="2"><span>2 data-columns offset</span></li>
+          <li><span>No offset</span></li>
+        </ul>
+        <ul data-columns="4">
+          <li data-column-offset="3"><span>3 data-columns offset</span></li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul data-columns="4">
+          <li>No offset</li>
+          <li data-column-offset="1">1 column offset</li>
+          <li>No offset</li>
+        </ul>
+        <ul data-columns="4">
+          <li data-column-offset="1">1 column offset</li>
+          <li data-column-offset="1">1 column offset</li>
+        </ul>
+        <ul data-columns="4">
+          <li data-column-offset="2">2 data-columna offset</li>
+          <li>No offset</li>
+        </ul>
+        <ul data-columns="4">
+          <li data-column-offset="3">3 data-columns offset</li>
+        </ul>
+          </code>
+        </pre>
+
+        <p><strong>Example:</strong> Centered content effect uisng column offset.</p>
+        <ul data-columns="4">
+          <li data-column-offset="1" data-column-span="2"><span>1 column offset</span></li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul data-columns="4">
+          <li data-column-offset="1" data-column-span="2">1 column offset</li>
+        </ul>
+          </code>
+        </pre>
+
+        <h3 class="nj-subtitle">Responsive column offset</h3>
+        <ul data-columns="6 md4 sm3 xs1">
+          <li data-column-offset="1 md2 sm1 xs0"><span>Responsive offset</span></li>
+        </ul>
+        <pre>
+          <code class="html">
+        <ul data-columns="6 md4 sm3 xs1">
+          <li data-column-offset="1 md2 sm1 xs0">Responsive offset</li>
+        </ul>
+          </code>
+        </pre>
+      </div>
+    </div>
+    </div>
+    </div>
+
+    <div class="nj-drawer" ng-class="{'show': menuOn}" ng-click="toggleMenu()">
+      <header>
+        <h2><a href="index.html">Home</a></h2>
+      </header>
+      <nav ng-click="toggleMenu()">
+        <!--
+        <aside>
+          <h4>617 61 65 54</h4>
+          <h3>User name</h3>
+        </aside>
+        <ul>
+          <li ng-class="collapsedUsers ? 'icon-angle_up' : 'icon-angle_down'">
+            <a href="#" icon="users" ng-click="toggleCollapseUsers()">Users</a>
+          </li>
+          <li class="nj-collapsible" ng-class="{'show': collapsedUsers}">
+            <ul>
+              <li><a href="#">User 1</a></li>
+              <li><a href="#">User 2</a></li>
+            </ul>
+          </li>
+        </ul> -->
+        <ul ng-click="toggleMenu()">
+          <li ng-repeat="datalist in datalists" ng-click="select(datalist)" ng-class="{active: isActive(datalist)}">
+            <a ng-click="scrollTo(datalist.link)">{{ datalist.name }}</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="nj-overlay" ng-click="toggleMenu()"></div>
+    <script>
+      var elements = document.getElementsByClassName('html');
+      for(var i = 0; i < elements.length; i++) {
+         elements[i].innerHTML = elements[i].innerHTML.replace(/\</g,"&lt;").replace(/\>/g,"&gt;");
+      }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Online Fingerprinting Census</title>
+    <meta name="viewport" content="width=device-width">
+  <meta http-equiv="Content-Type" content="text/html;">
+  
+  <meta name="description" content="A community-based effort to reveal the flow and usage of personal online data, and to explore ways towards a transparent and respectful data trade in the future
+">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="image_src" href="/images/dtl1-sm.png">
+
+  <meta name="Keywords" content="">
+  <meta property="og:site_name" content="The Data Transparency Lab">
+  <meta property="og:image" content="/images/dtl1-sm.png">
+<!-- STYLE -->
+  <link href="/style/bootstrap.css" media="screen" rel="stylesheet" type="text/css">
+  <!-- <link href="/style/bootstrap-theme.css" media="screen" rel="stylesheet" type="text/css"> -->
+  
+  <link href="/style/font-awesome.min.css" rel="stylesheet">
+  <link href="/style/styleNiji.css" rel="stylesheet">
+  <link href="/style/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/assets/github-gist.min.css">
+<!-- SCRIPTS -->
+  <script src="/script/jquery.min.js"></script>
+  <script src="/script/bootstrap.min.js" media="screen"></script>
+  <script src="/script/main.js" media="screen"></script>
+  <script async="" src="/script/analytics.js"></script>
+      <script src="/script/components/alerts/alerts.js"></script>
+    <script src="/script/components/dropdowns/dropdowns.js"></script>
+    <script src="/script/components/modals/modals.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
+  <script type="text/javascript">
+    // Nasty hack to ensure the navbar menu is highlighted properly when user
+    // goes to a page different to index.html (otherwise, the home option
+    // keeps highlighted in the navbar
+    $( document ).ready(function() {
+      $('a[href="' + document.location.pathname + '"]').parent().parent().parent().addClass('active');
+    });
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-62836510-1', {'allowAnchor': true});
+    ga('send', 'pageview', { 'page': location.pathname + location.search + location.hash});
+    
+  </script>
+  <style>
+      pre {
+        margin: 0;
+        overflow-y: hidden;
+        overflow-x: auto;
+      }
+      code.hljs {
+        display: block;
+        padding: 0;
+        margin: 0 0 0 -30px;
+      }
+      .nj-row + pre,
+      .nj-group + pre,
+      .nj-block + pre {
+        margin-top: -20px;
+      }
+      pre + pre {
+        margin-top: -40px;
+      }
+
+      .nj-display { padding-bottom: 10px; }
+      .nj-subtitle { padding-bottom: 10px; }
+      .nj-block[column] + pre,
+      .nj-block[two-columns] + pre {
+        margin: 0 0 30px;
+      }
+      [data-columns] > * span {
+        display: block;
+        background: rgba(0,0,0,.1);
+        text-align: center;
+        padding: 20px 0;
+        margin: 8px 1px;
+        border-radius: 6px;
+      }
+      [data-columns].double > * span {
+        padding: 57px;
+      }
+      .nj-drawer header h2 a,
+      .nj-block .nj-modal,
+      .nj-block .nj-spinner,
+      .nj-block .nj-header { z-index: 10; }
+      .nj-wrapper > .bkg-alpha { background-color: rgba(255, 255, 255, 0.8) !important; }
+      a[name] {
+        display: block;
+        position: relative;
+        top: -15px;
+      }
+      .nj-content > .nj-block {
+        margin-bottom: 70px;
+      }
+      .demo-only.drawer-container {
+        position: relative;
+        width: 100%;
+      }
+      .demo-only.drawer-container .nj-drawer {
+        position: static;
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0);
+      }
+      .demo-only.drawer-container .nj-drawer nav {
+        position: static;
+      }
+      @media only screen and (max-width: 480px) {
+        .demo-only.drawer-container {
+          height: auto;
+        }
+        .demo-only.drawer-container:before {
+          position: relative;
+          content: "To see the mobile version in acction, please use the hamburger icon at the top of this page."
+        }
+      }
+      .demo-only.modal-container {
+        position: relative;
+        width: 100%;
+        height: 300px;
+      }
+      .demo-only.modal-container.large {
+        position: relative;
+        width: 100%;
+        height: 360px;
+      }
+      .demo-only.modal-container .nj-modal,
+      .demo-only.modal-container .nj-spinner {
+        position: absolute;
+      }
+      .nj-block .nj-alert {
+        position: relative;
+        top: 0 !important;
+      }
+      .nj-block .nj-header {
+        position: relative;
+      }
+      .nj-block .nj-subheader {
+        margin-top: 0 !important;
+      }
+    </style>
+</head>
+
+
+  <body ng-app="myApp" ng-controller="myCtrl" ng-init="showData()" data-spy="scroll" data-target="#navbar-default" style="zoom: 1">
+
+    <nav id="navbar-default" class="navbar navbar-default navbar-fixed-top">
+<div class="container-fluid">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" 
+            data-target="#myNavbar">
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	  </button>
+ 
+    <a class="navbar-brand" 
+      href="/index.html#">
+      <img src="/images/dtl1-sm.png" style="margin-top:-10px;">
+    </a>
+  </div>
+	<div class="collapse navbar-collapse navbar-right" id="myNavbar">
+	  <ul class="nav navbar-nav">
+     <!--  <li class="">
+        <a href="/index.html#">Home</a>
+      </li> -->
+           <!-- <label>Search</label> -->
+        <input type="text" class="nj-input" value="Discover a website">
+           <button class="nj-button link">Home</button>
+          
+           <div class="nj-dropdown" icon="down">
+          <button>About</button>
+          <ul>
+            <li><a href="/team.html">The Project</a></li>
+            <li>Methodology</li>
+            
+
+          </ul>
+        </div>
+	  </ul>
+	</div>
+</div>
+</nav>
+
+<!--     <header class="nj-header bkg-header drawer">
+      <div class="nj-wrapper">
+        <button class="nj-drawer-btn nj-icon" icon="menu" ng-click="toggleMenu()">toggle menu</button>
+        <div class="nj-dropdown" icon="down">
+          <button>About</button>
+          <ul>
+            <li><a href="/team.html">Who are we?</a></li>
+            <li>Methodology</li>
+          </ul>
+        </div>
+        <h1><a class="nj-headline" href="index.html">Documentation</a></h1>
+        <button class="nj-header-btn nj-icon" icon="home">home</button>
+         
+      </div>
+    </header>
+ -->
+    <!-- div class="nj-view drawer">
+    <div class="nj-content">
+    <div class="nj-wrapper">
+      <a name="top"></a> -->
+
+
+    <div class="page-title"><h2> News &amp; Blog </h2></div>
+
+<div class="divider-line"></div>
+<div class="introduction-hero"> <h5> Here you will find the latest news about our tools, events, and tech program, as well as blogposts from experts in the field of data transparency. </h5></div>
+
+<div class="container-fluid">
+
+
+
+   <div class="row"><div class="center">
+
+   <a href="/blog/2016/09/12/peopleandprivacy.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#71ADAE">
+     
+     
+       <div class="text">
+         <h2 class="module-heading">“Oh … but people don’t care about privacy” </h2>
+         <p class="module-subheading"> Nikolaos Laoutaris </p>
+         <p class="module-meta"> 12 Sep 2016 </p>
+         <p class="category">blog</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   
+
+
+
+   
+
+   <a href="/blog/2016/07/18/recon.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#71ADAE">
+     
+     
+       <div class="text">
+         <h2 class="module-heading">Data Transparency Lab Research empowers its users and beyond. </h2>
+         <p class="module-subheading"> Daniel Coloma </p>
+         <p class="module-meta"> 18 Jul 2016 </p>
+         <p class="category">blog</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   
+
+
+
+   
+
+   <a href="/blog/2016/05/26/openwpm.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#71ADAE">
+     
+     
+       <div class="text">
+         <h2 class="module-heading">Data transparency must combine cutting-edge research with community involvement </h2>
+         <p class="module-subheading"> Arvind Narayanan </p>
+         <p class="module-meta"> 26 May 2016 </p>
+         <p class="category">blog</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   </div></div>
+
+
+
+   <div class="row"><div class="center">
+
+   <a href="/blog/2016/03/23/desire-need.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#71ADAE">
+     
+     
+       <div class="text">
+         <h2 class="module-heading">Online privacy and transparency – between desire and need </h2>
+         <p class="module-subheading"> Blanca Mayayo </p>
+         <p class="module-meta"> 23 Mar 2016 </p>
+         <p class="category">blog</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   
+
+
+
+   
+
+   <a href="/news/2016/03/15/cfp2016.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#9D8BAE">
+     
+       <div class="text">
+         <h2 class="module-heading">Now Open: Data Transparency Lab Call For Proposals 2016! </h2>
+         <p class="module-subheading">  </p>
+         <p class="module-meta"> 15 Mar 2016 </p>
+         <p class="category">news</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   
+
+
+
+   
+
+   <a href="/news/2016/03/03/choffcasespassword.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#71ADAE">
+     
+     
+       <div class="text">
+         <h2 class="module-heading">The Curious Case of the Exposed Password  </h2>
+         <p class="module-subheading"> David Choffnes </p>
+         <p class="module-meta"> 03 Mar 2016 </p>
+         <p class="category">blog</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   </div></div>
+
+
+
+   <div class="row"><div class="center">
+
+   <a href="/news/2016/02/23/datasharing-new-approach.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#71ADAE">
+     
+     
+       <div class="text">
+         <h2 class="module-heading">A New Approach for Data Sharing - Data Transparency Lab works together with AirCloak and The Office for Creative Research </h2>
+         <p class="module-subheading"> Daniel Coloma </p>
+         <p class="module-meta"> 23 Feb 2016 </p>
+         <p class="category">blog</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   
+
+
+
+   
+
+   <a href="/news/2016/02/05/dtl2016.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#9D8BAE">
+     
+       <div class="text">
+         <h2 class="module-heading">Save the Date: DTL2016 Conference Dates Announcement </h2>
+         <p class="module-subheading">  </p>
+         <p class="module-meta"> 05 Feb 2016 </p>
+         <p class="category">news</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   
+
+
+
+   
+
+   <a href="/news/2016/01/27/dtl2015Recap.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#D19999">
+       <div class="text">
+         <h2 class="module-heading">DTL2015: What you missed. </h2>
+         <p class="module-subheading"> Video </p>
+         <p class="module-meta"> 27 Jan 2016 </p>
+         <p class="category">update</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   </div></div>
+
+
+
+   <div class="row"><div class="center">
+
+   <a href="/news/2016/01/21/cowsandprivacy.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#71ADAE">
+     
+     
+       <div class="text">
+         <h2 class="module-heading">Mission: Avoid a Tragedy of the Commons around privacy in the Web </h2>
+         <p class="module-subheading"> Nikolaos Laoutaris </p>
+         <p class="module-meta"> 21 Jan 2016 </p>
+         <p class="category">blog</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   
+
+
+
+   
+
+   <a href="/news/2015/12/11/tnwDTL.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#9D8BAE">
+     
+       <div class="text">
+         <h2 class="module-heading">Big data and transparency: Why it matters to you (published on TNW) </h2>
+         <p class="module-subheading">  </p>
+         <p class="module-meta"> 11 Dec 2015 </p>
+         <p class="category">news</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   
+
+
+
+   
+
+   <a href="/news/2015/11/26/toolsFloodAir.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#9D8BAE">
+     
+       <div class="text">
+         <h2 class="module-heading">Announcing DTL-supported tools: AirCloak and FloodWatch </h2>
+         <p class="module-subheading">  </p>
+         <p class="module-meta"> 26 Nov 2015 </p>
+         <p class="category">news</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   </div></div>
+
+
+
+   <div class="row"><div class="center">
+
+   <a href="/news/2015/11/03/emtech2015.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#9D8BAE">
+     
+       <div class="text">
+         <h2 class="module-heading">DTL at EmTech MIT 2015. </h2>
+         <p class="module-subheading">  </p>
+         <p class="module-meta"> 03 Nov 2015 </p>
+         <p class="category">news</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   
+
+
+
+   
+
+   <a href="/news/2015/06/10/grantees2015.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#D19999">
+       <div class="text">
+         <h2 class="module-heading">DTL 2015 Grantees Announced </h2>
+         <p class="module-subheading">  </p>
+         <p class="module-meta"> 10 Jun 2015 </p>
+         <p class="category">update</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   
+
+
+
+   
+
+   <a href="/news/2015/03/04/MWC2014.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#9D8BAE">
+     
+       <div class="text">
+         <h2 class="module-heading">Data Transparency Lab at the Mobile World Congress 2015 </h2>
+         <p class="module-subheading">  </p>
+         <p class="module-meta"> 04 Mar 2015 </p>
+         <p class="category">news</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   </div></div>
+
+
+
+   <div class="row"><div class="center">
+
+   <a href="/news/2014/11/29/dtl2014.html"> 
+   <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 module-container">
+     <div class="module" style="background-color:#9D8BAE">
+     
+       <div class="text">
+         <h2 class="module-heading">DTL2014 Data Transparency Lab Kick-Off Workshop </h2>
+         <p class="module-subheading">  </p>
+         <p class="module-meta"> 29 Nov 2014 </p>
+         <p class="category">news</p>
+       </div>
+     </div>
+   </div>
+   </a>
+   </div></div>
+
+</div>
+<div id="twitter-module">
+<a class="twitter-timeline" href="https://twitter.com/DTL_info">Tweets by DTL_info</a> <script async="" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+<div class="padded-bottom">
+				</div>
+
+
+     <script type="text/javascript" charset="UTF-8" src="http://cookie-script.com/s/474fc3db154b7b9ef45401fdad585459.js"></script>
+   <footer class="footer main-footer">
+    <p class="text-muted">
+      <a href="/policy.html" class="popup2">Privacy and Transparency Policy</a>
+    </p>
+    <p class="text-muted">
+      © Data Transparency Lab 2016
+    </p>
+    <script type="text/javascript">
+      jQuery(document).ready(function () {
+        jQuery('.menu a').click(function(){
+          var match = jQuery(this).attr('href').match(/#\S+/);
+          ga('send', 'pageview', location.pathname + match[0]);
+        });
+      });
+    </script>
+  </footer>
+
+  </body>
+  
+
+
+</html>

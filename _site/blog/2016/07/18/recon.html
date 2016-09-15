@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Online Fingerprinting Census</title>
+    <meta name="viewport" content="width=device-width">
+  <meta http-equiv="Content-Type" content="text/html;">
+  
+  <meta name="description" content="A community-based effort to reveal the flow and usage of personal online data, and to explore ways towards a transparent and respectful data trade in the future
+">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="image_src" href="/images/dtl1-sm.png">
+
+  <meta name="Keywords" content="">
+  <meta property="og:site_name" content="The Data Transparency Lab">
+  <meta property="og:image" content="/images/dtl1-sm.png">
+<!-- STYLE -->
+  <link href="/style/bootstrap.css" media="screen" rel="stylesheet" type="text/css">
+  <!-- <link href="/style/bootstrap-theme.css" media="screen" rel="stylesheet" type="text/css"> -->
+  
+  <link href="/style/font-awesome.min.css" rel="stylesheet">
+  <link href="/style/styleNiji.css" rel="stylesheet">
+  <link href="/style/main.css" media="screen" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/assets/github-gist.min.css">
+<!-- SCRIPTS -->
+  <script src="/script/jquery.min.js"></script>
+  <script src="/script/bootstrap.min.js" media="screen"></script>
+  <script src="/script/main.js" media="screen"></script>
+  <script async="" src="/script/analytics.js"></script>
+      <script src="/script/components/alerts/alerts.js"></script>
+    <script src="/script/components/dropdowns/dropdowns.js"></script>
+    <script src="/script/components/modals/modals.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
+  <script type="text/javascript">
+    // Nasty hack to ensure the navbar menu is highlighted properly when user
+    // goes to a page different to index.html (otherwise, the home option
+    // keeps highlighted in the navbar
+    $( document ).ready(function() {
+      $('a[href="' + document.location.pathname + '"]').parent().parent().parent().addClass('active');
+    });
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-62836510-1', {'allowAnchor': true});
+    ga('send', 'pageview', { 'page': location.pathname + location.search + location.hash});
+    
+  </script>
+  <style>
+      pre {
+        margin: 0;
+        overflow-y: hidden;
+        overflow-x: auto;
+      }
+      code.hljs {
+        display: block;
+        padding: 0;
+        margin: 0 0 0 -30px;
+      }
+      .nj-row + pre,
+      .nj-group + pre,
+      .nj-block + pre {
+        margin-top: -20px;
+      }
+      pre + pre {
+        margin-top: -40px;
+      }
+
+      .nj-display { padding-bottom: 10px; }
+      .nj-subtitle { padding-bottom: 10px; }
+      .nj-block[column] + pre,
+      .nj-block[two-columns] + pre {
+        margin: 0 0 30px;
+      }
+      [data-columns] > * span {
+        display: block;
+        background: rgba(0,0,0,.1);
+        text-align: center;
+        padding: 20px 0;
+        margin: 8px 1px;
+        border-radius: 6px;
+      }
+      [data-columns].double > * span {
+        padding: 57px;
+      }
+      .nj-drawer header h2 a,
+      .nj-block .nj-modal,
+      .nj-block .nj-spinner,
+      .nj-block .nj-header { z-index: 10; }
+      .nj-wrapper > .bkg-alpha { background-color: rgba(255, 255, 255, 0.8) !important; }
+      a[name] {
+        display: block;
+        position: relative;
+        top: -15px;
+      }
+      .nj-content > .nj-block {
+        margin-bottom: 70px;
+      }
+      .demo-only.drawer-container {
+        position: relative;
+        width: 100%;
+      }
+      .demo-only.drawer-container .nj-drawer {
+        position: static;
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+        transform: translateY(0);
+      }
+      .demo-only.drawer-container .nj-drawer nav {
+        position: static;
+      }
+      @media only screen and (max-width: 480px) {
+        .demo-only.drawer-container {
+          height: auto;
+        }
+        .demo-only.drawer-container:before {
+          position: relative;
+          content: "To see the mobile version in acction, please use the hamburger icon at the top of this page."
+        }
+      }
+      .demo-only.modal-container {
+        position: relative;
+        width: 100%;
+        height: 300px;
+      }
+      .demo-only.modal-container.large {
+        position: relative;
+        width: 100%;
+        height: 360px;
+      }
+      .demo-only.modal-container .nj-modal,
+      .demo-only.modal-container .nj-spinner {
+        position: absolute;
+      }
+      .nj-block .nj-alert {
+        position: relative;
+        top: 0 !important;
+      }
+      .nj-block .nj-header {
+        position: relative;
+      }
+      .nj-block .nj-subheader {
+        margin-top: 0 !important;
+      }
+    </style>
+</head>
+
+
+  <body ng-app="myApp" ng-controller="myCtrl" ng-init="showData()" data-spy="scroll" data-target="#navbar-default" style="zoom: 1">
+
+    <nav id="navbar-default" class="navbar navbar-default navbar-fixed-top">
+<div class="container-fluid">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" 
+            data-target="#myNavbar">
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	  </button>
+ 
+    <a class="navbar-brand" 
+      href="/index.html#">
+      <img src="/images/dtl1-sm.png" style="margin-top:-10px;">
+    </a>
+  </div>
+	<div class="collapse navbar-collapse navbar-right" id="myNavbar">
+	  <ul class="nav navbar-nav">
+     <!--  <li class="">
+        <a href="/index.html#">Home</a>
+      </li> -->
+           <!-- <label>Search</label> -->
+        <input type="text" class="nj-input" value="Discover a website">
+           <button class="nj-button link">Home</button>
+          
+           <div class="nj-dropdown" icon="down">
+          <button>About</button>
+          <ul>
+            <li><a href="/team.html">The Project</a></li>
+            <li>Methodology</li>
+            
+
+          </ul>
+        </div>
+	  </ul>
+	</div>
+</div>
+</nav>
+
+<!--     <header class="nj-header bkg-header drawer">
+      <div class="nj-wrapper">
+        <button class="nj-drawer-btn nj-icon" icon="menu" ng-click="toggleMenu()">toggle menu</button>
+        <div class="nj-dropdown" icon="down">
+          <button>About</button>
+          <ul>
+            <li><a href="/team.html">Who are we?</a></li>
+            <li>Methodology</li>
+          </ul>
+        </div>
+        <h1><a class="nj-headline" href="index.html">Documentation</a></h1>
+        <button class="nj-header-btn nj-icon" icon="home">home</button>
+         
+      </div>
+    </header>
+ -->
+    <!-- div class="nj-view drawer">
+    <div class="nj-content">
+    <div class="nj-wrapper">
+      <a name="top"></a> -->
+
+
+    <div class="post-container">
+<h3>Data Transparency Lab Research empowers its users and beyond.</h3> 
+
+<div class="author">
+  Daniel Coloma, CTO, Data Transparency Lab.
+</div>
+<div class="post-date">
+  18 Jul 2016
+</div>
+
+<div class="blurb">
+  Research findings resulted in the correction of privacy failings by developers in following releases.
+</div>
+
+<div class="post-body">
+  <p>
+    One of the main aims of DTL is to provide insights about the use of our personal data by web services and apps. One of our 2015 Grantees, <a href="http://recon.meddle.mobi/"> Northeastern University's 
+    project ReCon </a>, offers a tool to end-users that lets them understand
+    which bits of Personal Information (PI) are sent by their smartphones to other parties, usually unbeknownst to them. ReCon specifically details the type of PI that is sent,
+    the applications that are sending it, and the domains that are receiving it.
+  </p>
+  <p>
+    One of the key insights the ReCon project unveiled was that 
+    <a href="/news/2016/03/03/choffcasespassword.html"> some applications were 
+    sending user passwords in plain text </a> (<em>i.e.</em> not encrypted). After
+    detecting this situation, the ReCon team contacted the application developers. As a result, most of
+    the app developers fixed the situation. Interestingly, these insights were not only useful to ReCon users, but 
+    also extremely useful to all users of the identified applications, mainly because the findings resulted in the improvement and correction of the privacy failings by their developers in following releases.
+  </p>
+  <p>
+    This is one example of how the tools that DTL develops directly benefit the end users of the
+    tool itself, but also have impact beyond them. In the case of ReCon,
+    millions of users who were not using the ReCon tool were
+    affected by the same vulnerabilities. That made me wonder how we could
+    make the most of the projects we were running, particularly ReCon.
+  </p>
+   <h5>ReCon: Data Visualizations</h5>
+  <p>
+    The first approach that came to mind was sharing all the PI leaks detected openly (the meta-data, not the info. itself), so any lay user could look for information
+    about how a particular application behaves privacy-wise. I decided to
+    explore the possibility to develop a visualization of the PI leaks detected
+    by the ReCon project. I shared this idea with Dave Choffnes, the ReCon Principal Investigator,
+    who was very supportive of the idea and excited to work with us on it.
+  </p>
+
+  <p>
+    The ReCon team shared with me a 
+    <a href="http://recon.meddle.mobi/json/data.json">json file </a> that 
+    included the aggregated information about PI leaks detected by ReCon so I
+    already had a good starting point to play with. With the help of my 
+    colleagues Blanca and Rafa we developed a first version of the
+    visualization that you can play with at the 
+    <a href="/tools/recon/index.html" target="_blank"> DTL
+    Website</a>.
+  </p>
+  <p>
+    It is a very early quick and dirty version, developed by an engineer with no
+    expertise in visualization, but despite that, it is worth checking out because of the insights that were revealed: e.g. some applications send a user's device
+    identifier up to 9 different domains. We are working with 
+    visualization experts from our community to upgrade this visualization, to make it more understandable and compelling for end-users. We hope to release it in the coming months.
+  </p>
+  <p>
+    The <a href="http://recon.meddle.mobi/json/data.json"> JSON file </a> and
+    the <a href="https://github.com/datatransparencylab/recon/tree/gh-pages">
+    source code </a> of the initial visualizations are fully available, so please feel
+    free to play with it, send us your Pull Requests or create a totally 
+    brand new visualization.
+  </p>
+  <h5>Open API</h5>
+  <p>
+    We also thought that there was be extra-value beyond a nice visualization
+    of the data discovered by providing real-time interactive applications that
+    can leverage ReCon findings. For example, 
+    a mobile application could warn a user about which apps on her phone are leaking certain kinds of PI, based on the information ReCon detected about other users of those same privacy-lacking apps. 
+  </p>
+  <p>
+    In order to address this kind of use of cases we decided to develop an API that wraps the ReCon dataset. For instance, such an API could be used to detect whether a particular app has been previously spotted leaking
+    Personal Information (or not). This could be useful to identify how
+    "leaky" a device is and to warn users before installing 
+    an application.
+  </p>
+  <p>
+    The API is in alpha status and is freely and openly available. The <a href="https://github.com/datatransparencylab/recon-api"> documentation </a>
+    provides information about how to use the API and there are some <a href="https://github.com/datatransparencylab/recon-api"> slides </a> that
+    provide more general context beyond the API.
+  </p>
+<br />
+ <p>
+</p>
+<!-- close post body -->
+</div>
+</div>
+
+     <script type="text/javascript" charset="UTF-8" src="http://cookie-script.com/s/474fc3db154b7b9ef45401fdad585459.js"></script>
+   <footer class="footer main-footer">
+    <p class="text-muted">
+      <a href="/policy.html" class="popup2">Privacy and Transparency Policy</a>
+    </p>
+    <p class="text-muted">
+      © Data Transparency Lab 2016
+    </p>
+    <script type="text/javascript">
+      jQuery(document).ready(function () {
+        jQuery('.menu a').click(function(){
+          var match = jQuery(this).attr('href').match(/#\S+/);
+          ga('send', 'pageview', location.pathname + match[0]);
+        });
+      });
+    </script>
+  </footer>
+
+  </body>
+  
+
+
+</html>
