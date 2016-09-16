@@ -177,7 +177,8 @@ h6{
 }
 
 .main-footer{
-	background-color: #e7e7e7;
+	background-color: #535353;
+	color: white;
 }
 
 .slides-container ul{
@@ -671,7 +672,7 @@ h6{
 
 /*team.html classes */
 
-.member-name{
+/*.member-name{
   padding: 10px;
   font-size: 1.2em;
   font-weight: bold;
@@ -712,7 +713,7 @@ h6{
   margin: 0 auto 20px;      
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
-}
+}*/
 
 span{
   font-weight: bold;
@@ -979,3 +980,10 @@ padding: 3em;
 text-indent: 3em;
 
 }
+
+/*#navbar-default {
+color:white;
+  background-color: #27A3D4;
+  border-color: #e7e7e7;
+}*/
+ 

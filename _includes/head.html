@@ -14,21 +14,19 @@
   <meta property="og:image" content="{{% site.baseurl}}/images/dtl1-sm.png">
 <!-- STYLE -->
   <link href="{{ site.baseurl}}/style/bootstrap.css" media="screen" rel="stylesheet" type="text/css">
-  <!-- <link href="{{ site.baseurl}}/style/bootstrap-theme.css" media="screen" rel="stylesheet" type="text/css"> -->
-  
+ 
   <link href="{{ site.baseurl}}/style/font-awesome.min.css" rel="stylesheet">
-  <link href="{{ site.baseurl}}/style/styleNiji.css" rel="stylesheet">
+  <!-- <link href="{{ site.baseurl}}/style/styleNiji.css" rel="stylesheet"> -->
   <link href="{{ site.baseurl}}/style/main.css" media="screen" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/assets/github-gist.min.css">
 <!-- SCRIPTS -->
   <script src="{{ site.baseurl}}/script/jquery.min.js"></script>
   <script src="{{ site.baseurl}}/script/bootstrap.min.js" media="screen"></script>
   <script src="{{ site.baseurl}}/script/main.js" media="screen"></script>
   <script async="" src="{{ site.baseurl}}/script/analytics.js"></script>
-      <script src="{{ site.baseurl}}/script/components/alerts/alerts.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
+      <!-- <script src="{{ site.baseurl}}/script/components/alerts/alerts.js"></script>
     <script src="{{ site.baseurl}}/script/components/dropdowns/dropdowns.js"></script>
-    <script src="{{ site.baseurl}}/script/components/modals/modals.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
+    <script src="{{ site.baseurl}}/script/components/modals/modals.js"></script> -->
   <script type="text/javascript">
     // Nasty hack to ensure the navbar menu is highlighted properly when user
     // goes to a page different to index.html (otherwise, the home option
@@ -47,101 +45,4 @@
     ga('send', 'pageview', { 'page': location.pathname + location.search + location.hash});
     
   </script>
-  <style>
-      pre {
-        margin: 0;
-        overflow-y: hidden;
-        overflow-x: auto;
-      }
-      code.hljs {
-        display: block;
-        padding: 0;
-        margin: 0 0 0 -30px;
-      }
-      .nj-row + pre,
-      .nj-group + pre,
-      .nj-block + pre {
-        margin-top: -20px;
-      }
-      pre + pre {
-        margin-top: -40px;
-      }
-
-      .nj-display { padding-bottom: 10px; }
-      .nj-subtitle { padding-bottom: 10px; }
-      .nj-block[column] + pre,
-      .nj-block[two-columns] + pre {
-        margin: 0 0 30px;
-      }
-      [data-columns] > * span {
-        display: block;
-        background: rgba(0,0,0,.1);
-        text-align: center;
-        padding: 20px 0;
-        margin: 8px 1px;
-        border-radius: 6px;
-      }
-      [data-columns].double > * span {
-        padding: 57px;
-      }
-      .nj-drawer header h2 a,
-      .nj-block .nj-modal,
-      .nj-block .nj-spinner,
-      .nj-block .nj-header { z-index: 10; }
-      .nj-wrapper > .bkg-alpha { background-color: rgba(255, 255, 255, 0.8) !important; }
-      a[name] {
-        display: block;
-        position: relative;
-        top: -15px;
-      }
-      .nj-content > .nj-block {
-        margin-bottom: 70px;
-      }
-      .demo-only.drawer-container {
-        position: relative;
-        width: 100%;
-      }
-      .demo-only.drawer-container .nj-drawer {
-        position: static;
-        -webkit-transform: translateY(0);
-        -ms-transform: translateY(0);
-        transform: translateY(0);
-      }
-      .demo-only.drawer-container .nj-drawer nav {
-        position: static;
-      }
-      @media only screen and (max-width: 480px) {
-        .demo-only.drawer-container {
-          height: auto;
-        }
-        .demo-only.drawer-container:before {
-          position: relative;
-          content: "To see the mobile version in acction, please use the hamburger icon at the top of this page."
-        }
-      }
-      .demo-only.modal-container {
-        position: relative;
-        width: 100%;
-        height: 300px;
-      }
-      .demo-only.modal-container.large {
-        position: relative;
-        width: 100%;
-        height: 360px;
-      }
-      .demo-only.modal-container .nj-modal,
-      .demo-only.modal-container .nj-spinner {
-        position: absolute;
-      }
-      .nj-block .nj-alert {
-        position: relative;
-        top: 0 !important;
-      }
-      .nj-block .nj-header {
-        position: relative;
-      }
-      .nj-block .nj-subheader {
-        margin-top: 0 !important;
-      }
-    </style>
 </head>

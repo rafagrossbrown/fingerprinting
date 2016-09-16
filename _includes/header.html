@@ -1,58 +1,50 @@
 <nav id="navbar-default" class="navbar navbar-default navbar-fixed-top">
-<div class="container-fluid">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" 
-            data-target="#myNavbar">
-	    <span class="icon-bar"></span>
-	    <span class="icon-bar"></span>
-	    <span class="icon-bar"></span>
-	  </button>
- 
-    <a class="navbar-brand" 
-      href="{% if page.isIndex%}#{% else %}{{ site.baseurl}}/index.html#{% endif %}">
-      <img src="{{ site.baseurl}}/images/dtl1-sm.png" style="margin-top:-10px;">
-    </a>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" 
+              data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- in order to make the spy-scroll effect work I needed to add some kind 
+           of smartness to the links to include the naked anchor *only* if the 
+           page is the index.html and use the full URL otherwise -->
+      <a class="navbar-brand" href="{% if page.isIndex%}#{% else %}{{ site.baseurl}}/index.html#{% endif %}">
+        <img src="{{ site.baseurl}}/images/dtl1-sm.png" style="margin-top:-10px;">
+      </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+      <ul class="nav navbar-nav">
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search Website">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        <li class="{% if page.isIndex %}active{% endif %}">
+          <a href="{% if page.isIndex%}#{% else %}{{ site.baseurl}}/index.html#{% endif %}">Home</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+            aria-expanded="false">
+            About <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="{{ site.baseurl}}/grants-program.html">
+                The Project
+              </a>
+            </li>
+            <li>
+              <a href="{{ site.baseurl}}/grantees2016.html">Methodology</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+              <a href="http://www.datatransparencylab.org">datatransparencylab.org</a>
+            </li>
+      </ul>
+    </div>
   </div>
-	<div class="collapse navbar-collapse navbar-right" id="myNavbar">
-	  <ul class="nav navbar-nav">
-     <!--  <li class="{% if page.isIndex %}active{% endif %}">
-        <a href="{% if page.isIndex%}#{% else %}{{ site.baseurl}}/index.html#{% endif %}">Home</a>
-      </li> -->
-           <!-- <label>Search</label> -->
-        <input type="text" class="nj-input" value="Discover a website">
-           <button class="nj-button link">Home</button>
-          
-           <div class="nj-dropdown" icon="down">
-          <button>About</button>
-          <ul>
-            <li><a href="{{ site.baseurl}}/team.html">The Project</a></li>
-            <li>Methodology</li>
-            
-
-          </ul>
-        </div>
-	  </ul>
-	</div>
-</div>
 </nav>
-
-<!--     <header class="nj-header bkg-header drawer">
-      <div class="nj-wrapper">
-        <button class="nj-drawer-btn nj-icon" icon="menu" ng-click="toggleMenu()">toggle menu</button>
-        <div class="nj-dropdown" icon="down">
-          <button>About</button>
-          <ul>
-            <li><a href="{{ site.baseurl}}/team.html">Who are we?</a></li>
-            <li>Methodology</li>
-          </ul>
-        </div>
-        <h1><a class="nj-headline" href="index.html">Documentation</a></h1>
-        <button class="nj-header-btn nj-icon" icon="home">home</button>
-         
-      </div>
-    </header>
- -->
-    <!-- div class="nj-view drawer">
-    <div class="nj-content">
-    <div class="nj-wrapper">
-      <a name="top"></a> -->

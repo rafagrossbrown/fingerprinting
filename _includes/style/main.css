@@ -147,7 +147,7 @@ margin-left: auto;*/
 
 .main-footer{
 
-	background-color: #e7e7e7;
+	background-color:#535353;
 
 }
 
@@ -255,11 +255,10 @@ background-color: white;
 	margin-bottom: 2em;
 
 }
-.introduction-hero{
+/*.introduction-hero{
 	padding: 2em;
-	/*padding: 4em;*/
 	margin-bottom: 2em;
-}
+}*/
 
 #contact{
 	float:left;
@@ -652,43 +651,3 @@ text-align: right;
  	background-color: #E7E7E7;
 
  }
- 
-.circle
-    {
-    width:100px;
-    height:100px;
-    border-radius:250px;
-    font-size:15px;
-    color:#fff;
-    line-height:100px;
-    text-align:center;
-    background:#88CECF;
-    margin:50 50 50 0px;
-    }
-
-.date-circle
-    {
-    width:100px;
-    height:100px;
-    border-radius:250px;
-    font-size:2em;
-    color:#fff;
-    line-height:100px;
-    text-align:center;
-    background: #292929;
-    margin:50 150 50 0px;
-    }
-
-    .grantees-intro{
-padding: 4em;
-margin-left: 10px;
-	margin-bottom: 2em;
-	text-align: left;
-
-    }
-    .mention-header{
-
-background-color: #E7E7E7 ;
-margin-top: 40px;
-    }
- 

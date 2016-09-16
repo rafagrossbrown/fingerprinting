@@ -18,21 +18,19 @@
   <meta property="og:image" content="/images/dtl1-sm.png">
 <!-- STYLE -->
   <link href="/style/bootstrap.css" media="screen" rel="stylesheet" type="text/css">
-  <!-- <link href="/style/bootstrap-theme.css" media="screen" rel="stylesheet" type="text/css"> -->
-  
+ 
   <link href="/style/font-awesome.min.css" rel="stylesheet">
-  <link href="/style/styleNiji.css" rel="stylesheet">
+  <!-- <link href="/style/styleNiji.css" rel="stylesheet"> -->
   <link href="/style/main.css" media="screen" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/assets/github-gist.min.css">
 <!-- SCRIPTS -->
   <script src="/script/jquery.min.js"></script>
   <script src="/script/bootstrap.min.js" media="screen"></script>
   <script src="/script/main.js" media="screen"></script>
   <script async="" src="/script/analytics.js"></script>
-      <script src="/script/components/alerts/alerts.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
+      <!-- <script src="/script/components/alerts/alerts.js"></script>
     <script src="/script/components/dropdowns/dropdowns.js"></script>
-    <script src="/script/components/modals/modals.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.6/angular.js"></script>
+    <script src="/script/components/modals/modals.js"></script> -->
   <script type="text/javascript">
     // Nasty hack to ensure the navbar menu is highlighted properly when user
     // goes to a page different to index.html (otherwise, the home option
@@ -51,167 +49,61 @@
     ga('send', 'pageview', { 'page': location.pathname + location.search + location.hash});
     
   </script>
-  <style>
-      pre {
-        margin: 0;
-        overflow-y: hidden;
-        overflow-x: auto;
-      }
-      code.hljs {
-        display: block;
-        padding: 0;
-        margin: 0 0 0 -30px;
-      }
-      .nj-row + pre,
-      .nj-group + pre,
-      .nj-block + pre {
-        margin-top: -20px;
-      }
-      pre + pre {
-        margin-top: -40px;
-      }
-
-      .nj-display { padding-bottom: 10px; }
-      .nj-subtitle { padding-bottom: 10px; }
-      .nj-block[column] + pre,
-      .nj-block[two-columns] + pre {
-        margin: 0 0 30px;
-      }
-      [data-columns] > * span {
-        display: block;
-        background: rgba(0,0,0,.1);
-        text-align: center;
-        padding: 20px 0;
-        margin: 8px 1px;
-        border-radius: 6px;
-      }
-      [data-columns].double > * span {
-        padding: 57px;
-      }
-      .nj-drawer header h2 a,
-      .nj-block .nj-modal,
-      .nj-block .nj-spinner,
-      .nj-block .nj-header { z-index: 10; }
-      .nj-wrapper > .bkg-alpha { background-color: rgba(255, 255, 255, 0.8) !important; }
-      a[name] {
-        display: block;
-        position: relative;
-        top: -15px;
-      }
-      .nj-content > .nj-block {
-        margin-bottom: 70px;
-      }
-      .demo-only.drawer-container {
-        position: relative;
-        width: 100%;
-      }
-      .demo-only.drawer-container .nj-drawer {
-        position: static;
-        -webkit-transform: translateY(0);
-        -ms-transform: translateY(0);
-        transform: translateY(0);
-      }
-      .demo-only.drawer-container .nj-drawer nav {
-        position: static;
-      }
-      @media only screen and (max-width: 480px) {
-        .demo-only.drawer-container {
-          height: auto;
-        }
-        .demo-only.drawer-container:before {
-          position: relative;
-          content: "To see the mobile version in acction, please use the hamburger icon at the top of this page."
-        }
-      }
-      .demo-only.modal-container {
-        position: relative;
-        width: 100%;
-        height: 300px;
-      }
-      .demo-only.modal-container.large {
-        position: relative;
-        width: 100%;
-        height: 360px;
-      }
-      .demo-only.modal-container .nj-modal,
-      .demo-only.modal-container .nj-spinner {
-        position: absolute;
-      }
-      .nj-block .nj-alert {
-        position: relative;
-        top: 0 !important;
-      }
-      .nj-block .nj-header {
-        position: relative;
-      }
-      .nj-block .nj-subheader {
-        margin-top: 0 !important;
-      }
-    </style>
 </head>
 
 
-  <body ng-app="myApp" ng-controller="myCtrl" ng-init="showData()" data-spy="scroll" data-target="#navbar-default" style="zoom: 1">
+  <body data-spy="scroll" data-target="#navbar-default" style="zoom: 1">
 
     <nav id="navbar-default" class="navbar navbar-default navbar-fixed-top">
-<div class="container-fluid">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" 
-            data-target="#myNavbar">
-	    <span class="icon-bar"></span>
-	    <span class="icon-bar"></span>
-	    <span class="icon-bar"></span>
-	  </button>
- 
-    <a class="navbar-brand" 
-      href="/index.html#">
-      <img src="/images/dtl1-sm.png" style="margin-top:-10px;">
-    </a>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" 
+              data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- in order to make the spy-scroll effect work I needed to add some kind 
+           of smartness to the links to include the naked anchor *only* if the 
+           page is the index.html and use the full URL otherwise -->
+      <a class="navbar-brand" href="/index.html#">
+        <img src="/images/dtl1-sm.png" style="margin-top:-10px;">
+      </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+      <ul class="nav navbar-nav">
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search Website">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+        <li class="">
+          <a href="/index.html#">Home</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
+            aria-expanded="false">
+            About <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a href="/grants-program.html">
+                The Project
+              </a>
+            </li>
+            <li>
+              <a href="/grantees2016.html">Methodology</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+              <a href="http://www.datatransparencylab.org">datatransparencylab.org</a>
+            </li>
+      </ul>
+    </div>
   </div>
-	<div class="collapse navbar-collapse navbar-right" id="myNavbar">
-	  <ul class="nav navbar-nav">
-     <!--  <li class="">
-        <a href="/index.html#">Home</a>
-      </li> -->
-           <!-- <label>Search</label> -->
-        <input type="text" class="nj-input" value="Discover a website">
-           <button class="nj-button link">Home</button>
-          
-           <div class="nj-dropdown" icon="down">
-          <button>About</button>
-          <ul>
-            <li><a href="/team.html">The Project</a></li>
-            <li>Methodology</li>
-            
-
-          </ul>
-        </div>
-	  </ul>
-	</div>
-</div>
 </nav>
-
-<!--     <header class="nj-header bkg-header drawer">
-      <div class="nj-wrapper">
-        <button class="nj-drawer-btn nj-icon" icon="menu" ng-click="toggleMenu()">toggle menu</button>
-        <div class="nj-dropdown" icon="down">
-          <button>About</button>
-          <ul>
-            <li><a href="/team.html">Who are we?</a></li>
-            <li>Methodology</li>
-          </ul>
-        </div>
-        <h1><a class="nj-headline" href="index.html">Documentation</a></h1>
-        <button class="nj-header-btn nj-icon" icon="home">home</button>
-         
-      </div>
-    </header>
- -->
-    <!-- div class="nj-view drawer">
-    <div class="nj-content">
-    <div class="nj-wrapper">
-      <a name="top"></a> -->
-
 
     <div class="post-container">
 <h3> Online privacy and transparency – between desire and need</h3> 
@@ -283,6 +175,14 @@ Discussion on how this big data algorithmic transparency - <a href="http://blogs
     </script>
   </footer>
 
+     <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
   
 
