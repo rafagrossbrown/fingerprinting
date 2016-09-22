@@ -15,3 +15,7 @@ twitter_username: dtl_info
 
 # Build settings
 markdown: kramdown
+
+# _config.yml
+gems:
+  - jekyll-angular
