@@ -17,14 +17,13 @@
     <div class="collapse navbar-collapse navbar-right" id="myNavbar">
       <ul class="nav navbar-nav">
           <form class="navbar-form navbar-left">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search Website">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+              <input type="text" class="search-query empty" id="iconified" placeholder="&#xF002; Search websites">
+            <button type="submit" class="btn btn-default">Search</button> 
         </form>
+        
         <li class="{% if page.isIndex %}active{% endif %}">
-          <a href="{% if page.isIndex%}#{% else %}{{ site.baseurl}}/index.html#{% endif %}">Home</a>
-        </li>
+        <a href="{% if page.isIndex%}#{% else %}{{ site.baseurl}}/index.html#{% endif %}">Home</a>
+      </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
             aria-expanded="false">
@@ -33,7 +32,7 @@
           <ul class="dropdown-menu" role="menu">
             <li>
               <a href="{{ site.baseurl}}/grants-program.html">
-                The Project
+                The Project 
               </a>
             </li>
             <li>

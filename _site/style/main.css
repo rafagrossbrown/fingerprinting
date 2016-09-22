@@ -2,12 +2,12 @@
     font-family: 'GothamLight';
     src: url('gotham-light.eot');
     src: url('gotham-light.eot') format('embedded-opentype'),
-         url('gotham-light.woff2') format('woff2'),
          url('gotham-light.woff') format('woff'),
          url('gotham-light.ttf') format('truetype'),
          url('gotham-light.svg#GothamLight') format('svg');
          font-weight: 800;
 }
+ /*url('gotham-light.woff2') format('woff2'),*/
 
 body{
 	font-family: "GothamLight";
@@ -19,10 +19,6 @@ body{
 	text-align: center;
 	position: relative;
 }
-
- 	
-
-
 body a{
 
 	 /*border-bottom: 3px solid #7ab9ba;*/
@@ -62,7 +58,7 @@ li{
 
 h1{
 	font-family: "GothamLight";
-	font-size: 3.333em;
+	/*font-size: 3.333em;*/
 	color: white;
 	width: 50%;
 	margin-left: auto;
@@ -72,14 +68,14 @@ h1{
 
 h2{
 	font-family: "GothamLight";
-	font-size: 3em;
+	/*font-size: 3em;*/
 	color: black;
 	margin-bottom: 1em;
 }
 
 h3{
 	font-family: "GothamLight";
-	font-size: 2em;
+	/*font-size: 2em;*/
 /*	color:#88ced9;*/
 	margin-bottom: 1em;
 	margin-top: 0.333em;
@@ -87,14 +83,14 @@ h3{
 
 h4{
 	font-family: "GothamLight";
-	font-size: 1.53em;
+	/*font-size: 1.53em;*/
 	color: black;
 	margin-bottom: 1em;
 }
 
 h5{
 	font-family: "GothamLight";
-	font-size: 1.2em;
+	/*font-size: 1.2em;*/
 	color: #283d41;
 	margin-left: auto;
 	margin-right: auto;
@@ -102,10 +98,18 @@ h5{
 
 h6{
 	font-family: "GothamLight";
-	font-size: 1em;
+	/*font-size: 1em;*/
 	/*color: #283d41;*/
 	margin-left: auto;
 	margin-right: auto;
+}
+
+input.empty {
+    font-family: "GothamLight",'FontAwesome';
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+     content: "\f007";
 }
 
 .slick-pics{
@@ -161,7 +165,7 @@ h6{
 	height: 120px;
 }
 
-.section1{
+/*.section1{
 	float: left;
 	text-align: center;
 	width:100%;
@@ -170,11 +174,11 @@ h6{
 	margin-left:auto;
 	margin-right: auto;
 	background-color: white;
-}
+}*/
 
-.section1 a{
+/*.section1 a{
 	color:black;
-}
+}*/
 
 .main-footer{
 	background-color: #535353;
@@ -202,7 +206,7 @@ h6{
 	background-color: #ffffff;
 }
 
-.section3{
+/*.section3{
 	float:left;
 	display: block;
 	text-align: center;
@@ -216,8 +220,8 @@ h6{
 	background-color: #e1f3f3;
 	color:black;
 }
-
-.section3 a{
+*/
+/*.section3 a{
   color: 	#3f4747; lin
 }
 
@@ -245,7 +249,7 @@ h6{
 
 .section4 li {
   line-height: 1.667em;
-}
+}*/
 
 #updates .date{
 	font-size:2em;
@@ -724,7 +728,7 @@ span{
 
 /*blog.html classes */
 .wrapper{
-	margin-bottom: 50px;
+ 
 }
 .module{
 
@@ -981,9 +985,166 @@ text-indent: 3em;
 
 }
 
-/*#navbar-default {
-color:white;
-  background-color: #27A3D4;
-  border-color: #e7e7e7;
-}*/
+/*FINGERPRINTING styles*/
  
+ #whatis{
+padding: 50px;
+
+ 
+ }
+
+ .vizContainer{
+
+ 	padding: 30px 20px 30px 20px;
+ }
+
+ #about{
+
+ }
+
+/*HEADER > NAVIGATION STUFF*/
+.navbar {
+
+	min-height: 70px;
+}
+.navbar-default{
+
+	border-color: transparent;
+}
+ #navbar-default{
+
+ 	background-color: #004F7C;
+ 	min-height: 70px;
+ }
+.navbar-collapse {
+
+	background-color: #004F7C;
+}
+
+#myNavbar{
+
+	padding: 10px;
+}
+ #myNavbar a{
+ 	line-height: 20px;
+ 	color: white;
+ }
+
+#myNavbar a:hover,
+#myNavbar a:focus {
+	color: #004F7C;
+	background-color: #ffffff;
+
+} 
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #555;
+  background-color: #004F7C;
+   
+}
+.navbar-default .navbar-nav > .active > a {
+	/*border-radius: 25px;*/
+   border: 1px solid #ffffff;
+
+}
+
+/*NAV TOGGLE BUTTON*/
+.navbar-toggle {
+
+	border:0px solid transparent;
+}
+.navbar-toggle .icon-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+  margin: 5px;
+}
+.navbar-default .navbar-toggle .icon-bar {
+
+	background-color: white;
+
+}
+ 
+ .dropdown-menu {
+ 	background-color: #004F7C;
+ }
+
+ .btn-default {
+
+background-color: #7AB800;
+color:white;
+border-color: transparent;
+ }
+ 
+ .btn-default:hover {
+
+background-color: #7AB800;
+color:white;
+border-color: transparent;
+ }
+
+.navbar-form{
+
+	margin-right: 2.5em;
+
+
+
+
+}
+.search-query{
+	border-radius: 25px;
+	padding-left: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-width: 0px;
+	margin-right: .5em;
+	font-size: 1em;
+	text-indent: 3px;
+}
+/*.navbar-search{
+	margin-right: 15px;
+}*/
+
+.btn-primary {
+    color: #fff;
+    background-color: #7AB800;
+    border-color: transparent;
+    border-radius: 50% ;
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    margin-top: 20px;
+    font-weight: normal;
+}
+
+.btn-primary img{
+	display: block;
+    padding-right: 40%;
+    padding-top: 50%;
+    margin-left: -2px;
+    height: auto;
+}
+
+.jumbotron{
+ 
+ /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eeeeee+76,eeeeee+76,ffffff+100 */
+background: rgb(238,238,238); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(238,238,238,1) 76%, rgba(238,238,238,1) 76%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  rgba(238,238,238,1) 76%,rgba(238,238,238,1) 76%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  rgba(238,238,238,1) 76%,rgba(238,238,238,1) 76%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+ } 
+
+
+ /*RANK PANEL CLASSES*/
+
+.panel-group{
+
+	text-align: left;
+} 
+ 
+
