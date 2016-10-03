@@ -11,8 +11,9 @@ var tooltip = d3.select("body").append("div").attr("class", "toolTip");
 var x = d3.scaleLinear().range([0, width]);
 var y = d3.scaleBand().range([height, 0]);
 
-var g = svg.append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+var gr = svg.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
   
 d3.json("horizontalData.json", function(error, data) {
     if (error) throw error;
@@ -22,16 +23,16 @@ d3.json("horizontalData.json", function(error, data) {
     x.domain([0, d3.max(data, function(d) { return d.value; })]);
     y.domain(data.map(function(d) { return d.category; })).padding(0.1);
 
-    g.append("g")
+    gr.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x).ticks(5).tickFormat(function(d) { return parseInt(d / 1000); }).tickSizeInner([-height]));
 
-    g.append("g")
+    gr.append("g")
         .attr("class", "y axis")
         .call(d3.axisLeft(y));
 
-    g.selectAll(".bar")
+    gr.selectAll(".bar")
         .data(data)
       .enter().append("rect")
         .attr("class", "bar")
@@ -47,7 +48,10 @@ d3.json("horizontalData.json", function(error, data) {
               .style("display", "inline-block")
               .html((d.category) + "<br><span>" + (d.value) + "   "+ "tracked visits" + "</span>");
         })
-        .on("mouseout", function(d){ tooltip.style("display", "none");});
+        .on("mouseout", function(d){ tooltip.style("display", "none");})
+
+        // gr.append("text")
+        //   .text("TEXTTT");
 });              
 
 
@@ -57,8 +61,9 @@ d3.json("horizontalData.json", function(error, data) {
     var data=[75,25];
     var r=150;
     var color= d3.scaleOrdinal()
-                  .range(["blue", "white"]);
-
+                  .range(["#CC0058", "#eeeeee"]);
+var maxD= d3.max(data);
+var minD= d3.min(data);
 
 
     var canvas= d3.select("#doughnut").append("svg")
@@ -71,7 +76,7 @@ d3.json("horizontalData.json", function(error, data) {
 
 // creat an arc path generator. the path function will fetch info from here.
     var arc= d3.arc()
-              .innerRadius(75)
+              .innerRadius(95)
               .outerRadius(r);
 
 var pie= d3.pie()
@@ -84,19 +89,25 @@ var arcs = group.selectAll(".arc")
                 .enter()
                   .append("g")
                   .attr("class","arc")
-         
-
+           
+           group.append("text")
+                .attr("text-anchor","middle")
+                .attr("class","dataHighlight")
+                .attr("transform", arc.centroid(maxD))
+                .text(function(d) { return d3.max(data) + "%" ;});
+// necesitaras enter() method para texto dinamico viniendo de db
           // append paths
 
           arcs.append("path")
             .attr("d", arc)
             .attr("fill", function(d) { return color(d.data);})
 
-            arcs.append("text")
-                .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")";})
-                .attr("text-anchor","middle")
-                .attr("font-size","24px")
-                .attr("fill", "white")
-                .text(function(d) { return d.data + " %"  ;});
+// text on arcs
+            // arcs.append("text")
+            //     .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")";})
+            //     .attr("text-anchor","middle")
+            //     .attr("font-size","24px")
+            //     .attr("fill", "white")
+            //     .text(function(d) { return d.data + " %"  ;});
 
 

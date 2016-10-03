@@ -8,7 +8,7 @@
 }
 .bar:hover {
 	fill: #CC0058;
-  transition: fill 0.15s;
+  transition: fill 0.25s;
 }
 text {
   font-family: 'Fira Sans', sans-serif;
@@ -58,4 +58,9 @@ text {
 .toolTip span {
 	font-weight: 500;
   color: #081F2C;
+}
+
+.dataHighlight{
+
+  font-size: 4em;
 }
