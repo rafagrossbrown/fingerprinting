@@ -20,6 +20,7 @@
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="/style/bootstrap.css" media="screen" rel="stylesheet" type="text/css">
 <link href="/style/main.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/style/viz.css" media="screen" rel="stylesheet" type="text/css">
 <link href="/style/flags.css" media="screen" rel="stylesheet" type="text/css">
 <!-- <link href="/style/font-awesome.min.css" rel="stylesheet">   -->
 <!-- SCRIPTS -->
@@ -28,6 +29,8 @@
   <script src="https://use.fontawesome.com/6211adc9f6.js"></script>
 <!--   <script async="" src="/script/analytics.js"></script> -->
   <script src="/script/jquery.min.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,500,700" rel="stylesheet">
   
 
    
@@ -71,7 +74,8 @@
            of smartness to the links to include the naked anchor *only* if the 
            page is the index.html and use the full URL otherwise -->
       <a class="navbar-brand" href="#">
-        <img src="/images/dtl1-sm.png" style="margin-top:-10px;">
+        <img src="/images/dtl1-sm.png">
+        <!-- <img src="/images/dtl1-sm.png" style="margin-top:-10px;"> -->
       </a>
     </div>
     <div class="collapse navbar-collapse navbar-right" id="myNavbar">
@@ -115,6 +119,7 @@
         <h1>Fingerprinting Web Viz </h1>
         <!-- <h2>I can add: {{1+2}}.</h2> -->
         <p>Odds are, you’ve probably been fingerprinted online. This web tracking technique is used to create profiles and stories about you. We have audited 5000 of the most visited websites to shine a light on the practice of fingerprinting. Here are our some of our results. </p>
+        <p id="d3p">this is a d3 paragraph</p>
         <p><a class="btn btn-primary " href="#whatis" role="button"><img src="/images/arrow.png" alt="Home" /></a></p>
         
       </div>
@@ -158,21 +163,26 @@
           
         </div>
         <div class="col-md-6">
-          <h4>Percentage of News 
-Websites fingerprinting visitors</h4>
-<img src="http://placehold.it/350x350">
           
+<div id="doughnut"><h4>Percentage of News 
+Websites fingerprinting visitors</h4></div>
+
+<!-- <img src="http://placehold.it/350x350"> -->
+                <hr>
        </div>
       </div>
-      <hr>
+
     </div> <!-- /container -->
+ 
         <!-- section -->
-    <div class="container">
+    <div class="container vizContainer">
     <h3>Fingerprinted Traffic by Website Category</h3>
-    <img src="http://placehold.it/350x350">
+   <!--  <img src="http://placehold.it/350x350"> -->
+       <svg width="500" height="500"></svg>
     <!-- collapsible -->
          <hr>
 	</div>
+
   <!-- section -->
     <div class="container vizContainer">
     <h2>Top 10 Countries ranked by number of hosted fingerprinting websites</h2>
@@ -275,6 +285,7 @@ Websites fingerprinting visitors</h4>
     </div> <!-- /container -->
         <!-- section -->
     <div id="about" class="container vizContainer">
+
       <!-- Example row of columns -->
       <div class="row">
       <h2>About</h2>
@@ -291,7 +302,7 @@ Websites fingerprinting visitors</h4>
       </div>
     </div> <!-- /container -->
   <!-- </section> -->
-
+ 
      <script type="text/javascript" charset="UTF-8" src="http://cookie-script.com/s/474fc3db154b7b9ef45401fdad585459.js"></script>
 
    <footer class="footer main-footer">
@@ -322,6 +333,7 @@ Websites fingerprinting visitors</h4>
   <script src="/script/angular.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
    <script src="/script/main.js" media="screen"></script>
+   <script src="/script/viz.js" media="screen"></script>
   </body>
   
 

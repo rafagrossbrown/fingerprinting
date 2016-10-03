@@ -1088,13 +1088,15 @@ border-color: transparent;
 
 .navbar-form{
 
-	margin-right: 2.5em;
+	margin-right: 3em;
 
 
 
 
 }
 .search-query{
+	width: 500px;
+	/*width: 80%;*/
 	border-radius: 25px;
 	padding-left: 10px;
 	padding-top: 5px;

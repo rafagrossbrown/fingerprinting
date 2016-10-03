@@ -11,7 +11,8 @@
            of smartness to the links to include the naked anchor *only* if the 
            page is the index.html and use the full URL otherwise -->
       <a class="navbar-brand" href="{% if page.isIndex%}#{% else %}{{ site.baseurl}}/index.html#{% endif %}">
-        <img src="{{ site.baseurl}}/images/dtl1-sm.png" style="margin-top:-10px;">
+        <img src="{{ site.baseurl}}/images/dtl1-sm.png">
+        <!-- <img src="{{ site.baseurl}}/images/dtl1-sm.png" style="margin-top:-10px;"> -->
       </a>
     </div>
     <div class="collapse navbar-collapse navbar-right" id="myNavbar">
