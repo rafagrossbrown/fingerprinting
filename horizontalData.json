@@ -1,9 +1,19 @@
 [
-    {"category": "Leisure ", "value": 18000},
-    {"category": "Social ", "value": 17000},
-    {"category": "Technology ", "value": 80000},
+    {"category": "Leisure ", 
+    "value": 18000},
+
+    {"category": "Social ", 
+    "value": 17000},
+
+    {"category": "Technology ", 
+    "value": 80000},
     {"category": "Science ", "value": 55000},
-    {"category": "News ", "value": 100000},
-    {"category": "Sports", "value": 50000},
-    {"category": "Travel", "value": 55000}
+
+    {"category": "News ", 
+    "value": 100000},
+    {"category": "Sports", 
+    "value": 50000},
+
+    {"category": "Travel", 
+    "value": 55000}
 ]

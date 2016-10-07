@@ -126,6 +126,13 @@
     <div id="whatis" class="container">
     <h2>What is Online Fingerprinting?</h2>
       <!-- Example row of columns -->
+
+          <!-- Value -->
+    <pre id="object"></pre>
+  
+
+    <!-- Child -->
+    <ul id='list'></ul>
       <div class="row">
         <div class="col-md-4">
           <h3>What is FingerPrinting Panel A</h3>
@@ -157,8 +164,9 @@
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-6">
-          <h4>Tracked users (monthly estimation):</h4>
-          <img src="http://placehold.it/350x350"> 
+
+          <div id="visitorsT"><h4>Total Websites vs. Total websites that fingerprint</h4></div>
+          <!-- <img src="http://placehold.it/350x350">  -->
           
         </div>
         <div class="col-md-6">
@@ -235,7 +243,9 @@ Websites fingerprinting visitors</h4></div>
     <!-- section -->
     <div class="container vizContainer">
     <h2>Top 10 Countries ranked by fingerprinted traffic</h2>
-    <!-- collapsible -->
+   <div class="row">
+    <div class="col-md-4">
+    <!-- collapsible panel -->
 		  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		  <div class="panel panel-default">
 		    <div class="panel-heading" role="tab" id="headingOne">
@@ -247,7 +257,7 @@ Websites fingerprinting visitors</h4></div>
 		    </div>
 		    <div id="collapseOne" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
 		      <div class="panel-body">
-		        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+		       <!--  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. -->
 		      </div>
 		    </div>
 		  </div>
@@ -261,7 +271,7 @@ Websites fingerprinting visitors</h4></div>
 		    </div>
 		    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 		      <div class="panel-body">
-		        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+		        <!-- Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. -->
 		      </div>
 		    </div>
 		  </div>
@@ -275,11 +285,21 @@ Websites fingerprinting visitors</h4></div>
 		    </div>
 		    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 		      <div class="panel-body">
-		        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+		      <!--   Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS. -->
 		      </div>
 		    </div>
 		  </div>
-		</div>
+		<!-- close panel group -->
+    </div>
+    </div>
+<!-- here goes map -->
+    <div class="col-md-8">
+      
+ <!--  <div id="containerMap"></div> -->
+      
+    </div>
+    <!-- close Viz row -->
+    </div>
       <hr>
     </div> <!-- /container -->
         <!-- section -->
@@ -330,9 +350,13 @@ Websites fingerprinting visitors</h4></div>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
   <script src="/script/angular.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+  <script src="/script/dbconnection.js" media="screen"></script>
    <script src="/script/main.js" media="screen"></script>
+   <script src="/script/topojson.v1.min.js"></script>
    <script src="/script/viz.js" media="screen"></script>
+  
   </body>
   
 
