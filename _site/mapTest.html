@@ -73,7 +73,7 @@
       <!-- in order to make the spy-scroll effect work I needed to add some kind 
            of smartness to the links to include the naked anchor *only* if the 
            page is the index.html and use the full URL otherwise -->
-      <a class="navbar-brand" href="/index.html#">
+      <a class="navbar-brand" href="#">
         <img src="/images/dtl1-sm.png">
         <!-- <img src="/images/dtl1-sm.png" style="margin-top:-10px;"> -->
       </a>
@@ -85,8 +85,8 @@
             <button type="submit" class="btn btn-default">Search</button> 
         </form>
         
-        <li class="">
-        <a href="/index.html#">Home</a>
+        <li class="active">
+        <a href="#">Home</a>
       </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
@@ -112,43 +112,182 @@
   </div>
 </nav>
 
-    <div class="post-container">
-<h3> DTL2015: What you missed.</h3> 
+    <style>
+.country:hover{
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+.text{
+  font-size:10px;
+  text-transform:capitalize;
+}
+#containerMap {
+  margin-top: 100px;
+  margin:20px 10%;
+  border:2px solid #000;
+  border-radius: 5px;
+  height:100%;
+  overflow:hidden;
+  background: #F0F8FF;
+}
+.hidden { 
+  display: none; 
+}
+div.tooltip {
+  color: #222; 
+  background: #fff; 
+  padding: .5em; 
+  text-shadow: #f5f5f5 0 1px 0;
+  border-radius: 2px; 
+  box-shadow: 0px 0px 2px 0px #a6a6a6; 
+  opacity: 0.9; 
+  position: absolute;
+}
+.graticule {
+  fill: none;
+  stroke: #bbb;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}
+.equator {
+  stroke: #ccc;
+  stroke-width: 1px;
+}
 
-
-<div class="post-date">
-27 Jan 2016
-</div>
-
-
-
-<div class="blurb">
-Check out below the video about our <a href="http://dtlconferences.org/">DTL2015 Conference</a>.
-</div>
-
-<div class="post-body">
-
-<div class="row">
-				 <div class="col-sm-12"> 
+</style>
+    <!-- Main jumbotron for a primary marketing message or call to action -->
  
-				 	<div class="embed-responsive embed-responsive-16by9">
-				 		 <!-- <iframe width="560" height="315" src="//www.youtube.com/embed/Ty3R-GbKLnY" frameborder="0" allowfullscreen></iframe>   -->
-				 		 <iframe src="https://player.vimeo.com/video/153229520?title=0&amp;byline=0&amp;portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
-					</div>
-				 </div>		     
-			</div>
-			<br /><br />
-<p><a href="http://dtlconferences.org/">DTL2015</a> gathered world-class researchers, industry leaders, policymakers, developers and communicators who are leading the development of an Internet that is more respectful to personal data online.
-Over 20 presentations of cutting-edge research, panels, and discussions surrounding the future of personal data and data transparency online.
-The hub of this effort is the Data Transparency Lab, a community effort founded by MIT Connection Science, Mozilla Foundation, Open Data Institute and Telefónica.</p>
-<p><a href="http://dtlconferences.org/">For more info on our events visit: www.dtlconferences.org</a></p>
+   <div id="containerMap"></div>
 
-		
+    
+ <!-- <script src="js/d3.min.js"></script> -->
 
-<!-- close post body -->
-</div>
-</div>
 
+<script>
+d3.select(window).on("resize", throttle);
+
+var zoom= d3.zoom()
+            .scaleExtent([1,8])
+            // .on("zoom",move);
+
+var width= document.getElementById('containerMap').offsetWidth-60;
+var height= width /2;
+
+var topo,projection,path,svg,g;
+
+
+
+setup(width,height);
+
+function setup(width,height){
+  projection= d3.geoMercator()
+                .translate([0,0])
+                .scale(width /2 / Math.PI);
+
+  path= d3.geoPath()
+          .projection(projection);
+
+  svg=d3.select("#containerMap").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + width/2 + "," + height /2 + ")")
+        // .call(zoom);
+
+g = svg.append("g");
+
+}
+
+
+d3.json("data/world-topo.json", function (error, world) {
+
+ 
+  // var countries = world.objects;
+  //topojson.feature  returns a features collection
+  var countries= topojson.feature(world, world.objects.countries).features;
+
+  topo = countries;
+  // console.log(topo);
+  draw(topo);
+ 
+
+});                
+
+// draw function
+
+function draw(topo){
+
+var country= g.selectAll(".country").data(topo);
+
+country.enter().insert("path")
+      .attr("class","country")
+      .attr("d",path)
+      .attr("id", function(d,i) { return d.id; })
+      .attr("title", function (d,i) {return d.properties.name})
+      .style("fill", function(d,i) {return d.properties.color;});
+
+  //ofsets plus width/height of transform, plsu 20 px of padding, plus 20 extra for tooltip offset off mouse
+  var offsetL = document.getElementById('containerMap').offsetLeft+(width/2)+40;
+  var offsetT =document.getElementById('containerMap').offsetTop+(height/2)+20;
+
+//tooltips
+country.on("mousemove", function(d,i){
+          var mouse= d3.mouse(svg.node()).map(function (d) {return parseInt (d);});
+            tooltip.classed("hidden",false)
+              .attr("style", "left:" + (mouse[0] + offsetL) + "px;top:"+ (mouse[1]+offsetT)+ "px")
+              .html(d.properties.name)
+          })
+        .on("mouseout", function(d,i){
+          tooltip.classed("hidden",true)
+        });
+}
+
+function redraw() {
+  width= document.getElementById('containerMap').offsetWidth-60;
+  height= width/2;
+  d3.select('svg').remove();
+  setup(width,height);
+  draw(topo);
+}
+
+
+//move() es el callback del var zoom
+function move(){
+
+  var t= d3.event.translate;
+  var s = d3.event.scale;
+  var h = height/3;
+
+  t[0]= Math.min(width/ 2 * (s-1), Math.max(width /2 * (1-s), t[0]));
+  t[1]= Math.min(height /2 * (s-1) + h * s, Math.max(height/2 *(1-s) - h * s, t[1]));
+
+  zoom.translate(t);
+  g.style("stroke-width",1/s).attr("transform", "translate(" + t + ")scale(" + s + ")");
+
+
+}
+
+var throttleTimer;
+
+function throttle(){
+  window.clearTimeout(throttleTimer);
+    throttleTimer = window.setTimeout(function(){
+      redraw();
+    }, 200);
+
+    }
+
+
+
+
+</script>
+  <!-- section -->
+  
+    <!-- section -->
+
+ 
+  <!-- </section> -->
+ 
      <script type="text/javascript" charset="UTF-8" src="http://cookie-script.com/s/474fc3db154b7b9ef45401fdad585459.js"></script>
 
    <footer class="footer main-footer">

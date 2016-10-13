@@ -67,21 +67,28 @@ text {
 
 /*containerMap style*/
 
+ 
 .country:hover{
   stroke: #fff;
-  stroke-width: .7px;
+  stroke-width: 1.5px;
+}
+.text{
+  font-size:10px;
+  text-transform:capitalize;
 }
 #containerMap {
-  margin:10px 10%;
-  padding:20px;
-  border:2px solid #d0d0d0;
+  /*margin-top: 100px;*/
+  margin:20px 10%;
+  border:0px solid #000;
   border-radius: 5px;
   height:100%;
+  overflow:hidden;
+  background: #F0F8FF;
 }
 .hidden { 
   display: none; 
 }
-div.tooltip {
+/*div.tooltip {
   color: #222; 
   background: #fff; 
   padding: .5em; 
@@ -90,4 +97,14 @@ div.tooltip {
   box-shadow: 0px 0px 2px 0px #a6a6a6; 
   opacity: 0.9; 
   position: absolute;
+}*/
+.graticule {
+  fill: none;
+  stroke: #bbb;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}
+.equator {
+  stroke: #ccc;
+  stroke-width: 1px;
 }
