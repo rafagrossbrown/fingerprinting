@@ -1,5 +1,5 @@
 
- 
+$('[data-toggle="tooltip"]').tooltip();  
 
 // FA search icon on search bar
 $('#iconified').on('keyup', function() {

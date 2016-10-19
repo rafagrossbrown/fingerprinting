@@ -1,10 +1,13 @@
+
+
+
 // Traffic Map
 
 d3.select(window).on("resize", throttle);
 
 var zoom= d3.zoom()
-            .scaleExtent([1,6])
-            // .on("zoom",move);
+            .scaleExtent([1,8])
+            .on("zoom",move);
 
 var width= document.getElementById('containerMap').offsetWidth-20;
 var height= width /2;
@@ -218,7 +221,7 @@ function drawBargraph() {
         gr.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).ticks(5).tickFormat(function(d) { return parseInt(d / 1000); }).tickSizeInner([-height]));
+            .call(d3.axisBottom(x).ticks(5).tickFormat(function(d) { return parseInt(d); }).tickSizeInner([-height]));
 
         gr.append("g")
             .attr("class", "y axis")
@@ -309,3 +312,6 @@ var arcs = group.selectAll(".arc")
    
  }
  drawDoughnut();
+
+
+ 

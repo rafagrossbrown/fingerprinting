@@ -23,13 +23,14 @@ body a{
 
 	 /*border-bottom: 3px solid #7ab9ba;*/
 	text-decoration: none;
-	color:black;
+	color:#1bbbd1;
 	font-size: 16px;
 }
 
 body a:hover{
-	text-decoration: none;
-	 color:#7ab9ba;
+	text-decoration: underline;
+	 color:#0080C9;
+
 }
 
 body a:active {
@@ -110,6 +111,16 @@ input.empty {
     font-weight: normal;
     text-decoration: inherit;
      content: "\f007";
+}
+
+svg {
+
+	margin-top: 10px;
+}
+
+.dataTitle{
+
+	margin: 50px;
 }
 
 .slick-pics{
@@ -998,8 +1009,8 @@ padding: 50px;
  	padding: 30px 20px 30px 20px;
  }
 
- #about{
-
+ #aboutText{
+text-align: left;
  }
 
 /*HEADER > NAVIGATION STUFF*/
@@ -1149,4 +1160,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
 	text-align: left;
 } 
  
+ /*bootstrap.css @ line 5299*/
+ .panel-default {
+  /*border-color: #ddd;*/
+  max-width: 700px;
+
+}
 
