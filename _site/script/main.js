@@ -1,17 +1,42 @@
 
-$('[data-toggle="tooltip"]').tooltip();  
 
-// FA search icon on search bar
-$('#iconified').on('keyup', function() {
-    var input = $(this);
-    if(input.val().length === 0) {
-        input.addClass('empty');
-    } else {
-        input.removeClass('empty');
-    }
+$( document ).ready(function() {
+ 
+	//bootstrap tooltip
+	$('[data-toggle="tooltip"]').tooltip();  
+
+	// Fade In script
+		$(function() {
+		    $(window).scroll( function(){
+				$('.fadeInBlock').each( function(i){
+		            
+		            var bottom_of_object = $(this).position().top + $(this).outerHeight();
+		            var bottom_of_window = $(window).scrollTop() + $(window).height();
+		            
+		            /* Adjust the "200" to either have a delay or that the content starts fading a bit before you reach it  */
+		            bottom_of_window = bottom_of_window +600;  
+		          
+		            if( bottom_of_window > bottom_of_object ){
+		                
+		                $(this).animate({'opacity':'1'},500);
+		                    
+		            }
+		        }); 
+		    
+		    });
+		});
+
+		// FA search icon on search bar
+		$('#iconified').on('keyup', function() {
+		    var input = $(this);
+		    if(input.val().length === 0) {
+		        input.addClass('empty');
+		    } else {
+		        input.removeClass('empty');
+		    }
+		});
+
 });
-
-
 // angular tutorial
 
 (function() {

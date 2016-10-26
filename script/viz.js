@@ -1,4 +1,105 @@
+// Visualization 1 -- Global Overview
+//Get website object with a certain url.
+// ALL DATA URL: https://privacymeter-eddbf.firebaseio.com/.json
+var globalData, total_sites,fingerprint_sites; // a global
 
+  d3.json("https://privacymeter-eddbf.firebaseio.com/data/global.json", function(json) {
+  globalData = json;
+       
+
+  console.log("Websites from Spain that fingerprint users" + " "+ globalData.countries.es.websites);
+  // draw global data doughnut viz
+  visualizeDataT();
+  drawDoughnuts("categories","business","#category1");
+  drawDoughnuts("categories","news","#category2");
+    drawDoughnuts("categories","health","#category3");
+     drawDoughnuts("categories","kids_and_teens","#category4");
+     drawDoughnuts("categories","computers","#category5");
+     drawDoughnuts("categories","shopping","#category6");
+     drawDoughnuts("categories","arts","#category7");
+     drawDoughnuts("categories","home","#category8");
+
+ 
+});
+
+
+function visualizeDataT(){  
+
+ total_sites =globalData.websites;
+ fingerprint_sites = globalData.websites_tracking;
+
+console.log("FP Sites===" + total_sites);
+console.log("FP Sites===" + fingerprint_sites);
+console.log("PERCENTAGE of sites that fingerprint ===" + "    "+ fingerprint_sites/total_sites);
+var fpPercent=fingerprint_sites/total_sites*100;
+//limit the float width, number of decimals
+fpPercent= d3.format(".3g")(fpPercent);
+var noFpPercent= 100-fpPercent;
+console.log("formatted =="+fpPercent);
+
+
+
+// PERCENTAGE OF NEWS SITES DOUGHNUT  
+// thevariable data is defined as an argument in the callback function of d3 json
+// d3.json("mydata.json", function(data) {
+    var data=[fpPercent,noFpPercent];
+
+    var r=170;
+    var color= d3.scaleOrdinal()
+                  .range(["#004F7C", "#eeeeee"]);
+var maxD= d3.max(data);
+var minD= d3.min(data);
+
+
+    var canvas= d3.select("#globalVisitors").append("svg")
+          .attr("width", 500)
+          .attr("height",500);
+
+    var group= canvas.append("g")
+                    .attr("transform", "translate(300,200)");
+
+
+// creat an arc path generator. the path function will fetch info from here.
+    var arc= d3.arc()
+              .innerRadius(110)
+              .outerRadius(r);
+
+var pie= d3.pie()
+          .value(function (d){ return d; });
+
+
+// fetch data, then pass it through the Pie Layout "var pie"    
+var arcs = group.selectAll(".arc")
+                .data(pie(data))
+                .enter()
+                  .append("g")
+                  .attr("class","arc")
+           
+           group.append("text")
+                .attr("text-anchor","middle")
+                .attr("class","dataHighlight")
+                .attr("transform", arc.centroid(minD))
+                .text(function(d) { return d3.min(data)+"%";});
+// necesitaras enter() method para texto dinamico viniendo de db
+          // append paths
+
+          arcs.append("path")
+            .attr("d", arc)
+            .attr("fill", function(d) { return color(d.data);})
+
+// text on arcs
+            // arcs.append("text")
+            //     .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")";})
+            //     .attr("text-anchor","middle")
+            //     .attr("font-size","24px")
+            //     .attr("fill", "white")
+            //     .text(function(d) { return d.data + " %"  ;});
+
+ 
+   
+
+
+}
 
 
 // Traffic Map
@@ -65,7 +166,10 @@ country.enter().insert("path")
       .attr("d",path)
       .attr("id", function(d,i) { return d.id; })
       .attr("title", function (d,i) {return d.properties.name})
-      .style("fill", function(d,i) {return d.properties.color;});
+     .style("fill", "white");
+   
+     
+      // .style("fill", function(d,i) {return d.properties.color;});
 
   //ofsets plus width/height of transform, plsu 20 px of padding, plus 20 extra for tooltip offset off mouse
   var offsetL = document.getElementById('containerMap').offsetLeft+(width/2)+40;
@@ -119,76 +223,11 @@ function throttle(){
     }
 //closemap 
 
-//Get website object with a certain url.
-
-var dataT; // a global
-
-  d3.json("https://privacymeter-eddbf.firebaseio.com/data/global.json", function(json) {
-  dataT = json;
-// var maXX= d3.entries(dataT)
-//             .sort(function(a, b) { return d3.descending(a.value, b.value); })
-//             [0];
-//             console.log("max equals to" + maXX);
-  
-  visualizeDataT();
-  
-});
 
 
-function visualizeDataT(){
-
-  var total_sites =dataT.total_sites;
-
-  var fingerprinted_sites = dataT.total_fingerprints;
 
 
-  var data= [total_sites,fingerprinted_sites];
 
-
-  // console.log(data.sort(d3.ascending));
-
-   var canvasVisits= d3.select("#visitorsT").append("svg")
-
-           
-
-  var  margin = {top: 20, right: 50, bottom: 30, left: 10},
-       width = +canvasVisits.attr("width") - margin.left - margin.right,
-       height = +canvasVisits.attr("height") - margin.top - margin.bottom;
-       // console.log(width + "pxxxx");
-
-
-  var tooltip= d3.select("#visitorsT").append("div").attr("class", "toolTip");
-
-  var x = d3.scaleLinear()
-            .range([0,width]);
-  // create an ordinal scale, uses floats
-  var y = d3.scaleBand()
-            .range([height,0])
-            .domain([0,678]);
-
-
-  var groupV= canvasVisits.append("g")
-                      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  // bind the data
-
- 
- x.domain([0, d3.max(data, function(d) { return d.value; })]);
-
-
-  groupV.selectAll(".bar")
-        .data(data)
-        .enter()
-          .append("rect")
-          .attr("class","bar")
-          .attr("x",0)
-          .attr("height", y.bandwidth())
-          .attr("y", function(d) { return y(d); })
-          .attr("width", function(d) {return d;})  
-   
-
-
-}
 
     //Fingerprinted Traffic by Website Category
 function drawBargraph() {
@@ -249,34 +288,51 @@ function drawBargraph() {
             //   .text("TEXTTT");
     });                      
 }
-
 //Fingerprinted Traffic by Website Category
 drawBargraph();
 
-
-function drawDoughnut(){
+// PERCENTAGE OF NEWS SITES DOUGHNUT  
+function drawDoughnuts(query,target,catDiv){
 // PERCENTAGE OF NEWS SITES DOUGHNUT  
 // thevariable data is defined as an argument in the callback function of d3 json
 // d3.json("mydata.json", function(data) {
-    var data=[75,25];
-    var r=150;
+
+// 1- get # of total news analyzed
+var total= globalData[query][target].websites;
+// 2- get # of fingerprint news sites 
+var tracking= globalData[query][target].websites_tracking;
+// 3- convert to PERCENTAGE
+var perc= tracking/total *100;
+perc= d3.format(".3g")(perc);
+var balance= 100-perc;
+var color= d3.rgb(204, 0, 88);
+
+    var data=[perc, balance];
+    var r=100;
     var color= d3.scaleOrdinal()
-                  .range(["#CC0058", "#eeeeee"]);
+                  .range([color, "#eeeeee"]);
 var maxD= d3.max(data);
 var minD= d3.min(data);
 
+var catDiv;
 
-    var canvas= d3.select("#doughnut").append("svg")
-          .attr("width", 500)
-          .attr("height", 500);
+    var canvas= d3.select(catDiv).append("svg")
+          .attr("width", 300)
+          .attr("height", 300);
+
+           d3.select(catDiv)
+              .append("div")
+              .attr("class", "doughnutLabel")
+              .html("<br><span>" + "Website Category:" + " " + target +  "</span>");
+
+                   // .text("Website Category:" + "  "+ target);
 
     var group= canvas.append("g")
-                    .attr("transform", "translate(300,200)");
-
+                    .attr("transform", "translate(150,140)");
 
 // creat an arc path generator. the path function will fetch info from here.
     var arc= d3.arc()
-              .innerRadius(95)
+              .innerRadius(60)
               .outerRadius(r);
 
 var pie= d3.pie()
@@ -292,9 +348,9 @@ var arcs = group.selectAll(".arc")
            
            group.append("text")
                 .attr("text-anchor","middle")
-                .attr("class","dataHighlight")
-                .attr("transform", arc.centroid(maxD))
-                .text(function(d) { return d3.max(data) + "%" ;});
+                .attr("class","doughnutText")
+                .attr("transform", arc.centroid(minD))
+                .text(function(d) { return d3.min(data) + "%" ;});
 // necesitaras enter() method para texto dinamico viniendo de db
           // append paths
 
@@ -302,6 +358,12 @@ var arcs = group.selectAll(".arc")
             .attr("d", arc)
             .attr("fill", function(d) { return color(d.data);})
 
+            // group.append("text")
+            //           .attr("text-anchor","middle")
+            //            .attr("transform", "translate(-200,-50)")
+            //             .text("News"+ "   "+ "Websites");
+
+       
 // text on arcs
             // arcs.append("text")
             //     .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")";})
@@ -311,7 +373,7 @@ var arcs = group.selectAll(".arc")
             //     .text(function(d) { return d.data + " %"  ;});
    
  }
- drawDoughnut();
+ 
 
 
  

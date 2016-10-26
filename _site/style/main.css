@@ -11,7 +11,7 @@
 
 body{
 	font-family: "GothamLight";
-	font-size: 16px;
+	font-size: 15px;
 	color: #666666;
 	margin: 0;
 	padding: 0;
@@ -24,7 +24,7 @@ body a{
 	 /*border-bottom: 3px solid #7ab9ba;*/
 	text-decoration: none;
 	color:#1bbbd1;
-	font-size: 16px;
+	font-size: 15px;
 }
 
 body a:hover{
@@ -739,7 +739,8 @@ span{
 
 /*blog.html classes */
 .wrapper{
- 
+ padding-right: 2em;
+	padding-left: 2em;
 }
 .module{
 
@@ -999,6 +1000,7 @@ text-indent: 3em;
 /*FINGERPRINTING styles*/
  
  #whatis{
+ 	margin-top: 20px;
 padding: 50px;
 
  
@@ -1123,13 +1125,13 @@ border-color: transparent;
 
 .btn-primary {
     color: #fff;
-    background-color: #7AB800;
+    /*background-color: #7AB800;*/
     border-color: transparent;
     border-radius: 50% ;
     font-size: 20px;
     width: 50px;
     height: 50px;
-    margin-top: 20px;
+    margin-top: 120px;
     font-weight: normal;
 }
 
@@ -1137,33 +1139,46 @@ border-color: transparent;
 	display: block;
     padding-right: 40%;
     padding-top: 50%;
-    margin-left: -2px;
+    margin-left: -3px;
     height: auto;
 }
 
 .jumbotron{
- 
- /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eeeeee+76,eeeeee+76,ffffff+100 */
-background: rgb(238,238,238); /* Old browsers */
-background: -moz-linear-gradient(top,  rgba(238,238,238,1) 76%, rgba(238,238,238,1) 76%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top,  rgba(238,238,238,1) 76%,rgba(238,238,238,1) 76%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom,  rgba(238,238,238,1) 76%,rgba(238,238,238,1) 76%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+color:black;
+background: #004F7C ; /* fallback for old browsers */
+background: -webkit-linear-gradient(to  bottom, #004F7C , #FFFFFF); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to  bottom, #004F7C , #FFFFFF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        
 
- } 
-
+         } 
+         .jumbotron h1{
+         	background-color: white;
+         }
+.jumbotron p{
+	text-align: left; 
+	margin-left: 150px;
+	margin-right: 150px;
+	padding: 20px;
+	background-color: white;
+	color: #11283c;
+}
 
  /*RANK PANEL CLASSES*/
 
 .panel-group{
 
 	text-align: left;
+	margin-bottom: 70px;
 } 
  
  /*bootstrap.css @ line 5299*/
  .panel-default {
   /*border-color: #ddd;*/
-  max-width: 700px;
+  /*max-width: 700px;*/
+  margin: 0 70px 70px 70px;
 
 }
 
+.fadeInBlock {
+    opacity:0;
+}

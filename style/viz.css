@@ -65,12 +65,31 @@ text {
   font-size: 4em;
 }
 
-/*containerMap style*/
+.doughnutText{
 
- 
-.country:hover{
-  stroke: #fff;
-  stroke-width: 1.5px;
+  font-size: 2em;
+}
+/*containerMap style*/
+.doughnutLabel{
+color:#004F7C;
+  font-size: 1em;
+ border-bottom: 1px;
+}
+
+.doughnut{
+
+
+
+}
+
+.country{
+
+  stroke-width:1px;
+  stroke:#004f7c;
+}
+.country:hover {
+  stroke: black;
+  stroke-width: 1px;
 }
 .text{
   font-size:10px;
@@ -107,4 +126,27 @@ text {
 .equator {
   stroke: #ccc;
   stroke-width: 1px;
+}
+
+table {
+  margin-top: 30px;
+    /*font-family: arial, sans-serif;*/
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 0px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    vertical-align: center;
+}
+th{
+  color:white;
+  background-color: #004F7C;
+  font-size: 1em;
+}
+
+tr:nth-child(even) {
+    background-color: #f7f7f7;
 }
