@@ -8,13 +8,13 @@ title: Data Transparency Lab
 
     <div class="jumbotron">
        
-        <h1>Online Tracking: Fingerprinting</h1>
+        <h1>Browser Fingerprinting Census</h1>
         <!-- <h2>TESTING ANGULARJS: {{ '1+2' | angular }}.</h2> -->
-        <p>Fingerprinting is a web tracking technique often used to create profiles and stories about you and millions of other users. We have audited [[5000]] of the most visited websites to shine a light on the practice of fingerprinting. Here are our some of our results. </p>
+        <p><span>Browser Fingerprinting</span> is a web tracking technique often used to create profiles and stories about you and millions of other users. We have audited [[5000]] of the most visited websites to shine a light on the practice of fingerprinting. Here are our some of our results. </p>
        
         
  
-     <a class="btn btn-primary " href="#whatis" role="button"><img src="/images/arrow.png" alt="Home" /></a> 
+     <!-- <a class="btn btn-primary " href="#whatis" role="button"><img src="/images/arrow.png" alt="Home" /></a>  -->
     </div>
     <div class="wrapper">
     <div id="whatis" class="container">
@@ -27,23 +27,20 @@ title: Data Transparency Lab
 
     <!-- Child -->
  <!--    <ul id='list'></ul> -->
-      <div class="row">
-        <div class="col-md-4">
-          <h3>What is FingerPrinting Panel A</h3>
-          <img src="http://placehold.it/350x150">
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <div class="row" style="text-align: left;">
+        <div class="col-md-4" style="padding: 30px;">
+          <h4 style="margin-bottom: 30px;">A form of user tracking.</h4>
+          <p>Browser fingerprinting is a tracking technique executed by running a code that requests information from a user's browser, and based on that information, creates a unique fingerprint for that particular user.   </p>
          <!--  <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
         </div>
-        <div class="col-md-4">
-          <h3>What is FingerPrinting Panel B</h3>
-          <img src="http://placehold.it/350x150">
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <div class="col-md-4" style="padding: 30px;">
+          <h4 style="margin-bottom: 30px;">What is done with users' fingerprints?</h4>
+          <p>This information is sometimes used to personalize a website or service user experience, but is also used to create profiles and stories about  millions of users.  </p>
           <!-- <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
        </div>
-        <div class="col-md-4">
-          <h3>What is FingerPrinting Panel C</h3>
-          <img src="http://placehold.it/350x150">
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <div class="col-md-4" style="padding: 30px;">
+          <h4 style="margin-bottom: 30px;">Audio fingerprinting?! Canvas fingerprinting?!</h4>
+          <p>There are several kinds of browser fingerprinting techniques. Known techniques include font, canvas, webRTC, and audio fingerprinting. Though they vary in methodology, the goal is the same: mainly to uniquely identify a user and keep track of her movement online.  </p>
          <!--  <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
        </div>
       </div>
@@ -59,13 +56,13 @@ title: Data Transparency Lab
       <div class="row">
         <div class="col-md-6">
 
-          <div id="globalVisitors"><h4 class="dataTitle">Percentage of analyzed websites that fingerprint users  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="This doesn't include websites that track users using cookies" data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle"></div>
+          <div id="globalVisitors"><h4 class="dataTitle">Percentage of all analyzed websites that fingerprint users  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="This doesn't include websites that track users using cookies" data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle"></div>
           <!-- <img src="http://placehold.it/350x350">  -->
           
         </div>
         <div class="col-md-6">
           
-             <h4 class="dataTitle">Website Categories Fingerprinting Rank <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="Rank of Website Categories by number of websites that fingerprint" data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle">
+             <h4 class="dataTitle">Website Categories Fingerprinting Rank <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="Rank of Website Categories by number of fingerprinted visits" data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle">
    <!--  <img src="http://placehold.it/350x350"> -->
        <svg width="500" height="500"></svg>
     <!-- collapsible -->
@@ -79,7 +76,7 @@ title: Data Transparency Lab
         <!-- section -->
     <div class="container vizContainer fadeInBlock">
     <div class="row">
-    <h4 class="dataTitle">Percentage of websites that fingerprint visitors by Website Category  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="This percentage of all websites of this Category is fingerprinting its visitors" data-placement="bottom" style="color:#9b9b9b;"></i></h4>
+    <h4 class="dataTitle">Percentage of websites that fingerprint visitors by Website Category  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="This percentage of websites of this Category is fingerprinting its visitors." data-placement="bottom" style="color:#9b9b9b;"></i></h4>
           <div id="categorizer">
             <div class="row">
               <div class="col-md-3 doughnut"><div id="category1"></div> </div>
@@ -301,7 +298,7 @@ title: Data Transparency Lab
 
 <p>The Princeton Web Census is a research tool that provides information about the measurements performed on 1 million web sites. The measurements were focused on identifying the tracking techniques used by those websites, both stateful (cookie-based) and stateless (fingerprinting-based). The tool can be used to check which tracking techniques are used by a given website or to check how widely used a given tracking technology is.</p>
 
-<p>This website is an effort to interface, communicate, and share the Web Census data, which has been enhanced by Privacymeter, a tool created by the <a href="http://datatransparencylab.org/techprogram.html">DTL Tech Program <i class="fa fa-external-link" ></i></a>. You can find other privacy tools supported by DTL <a href="http://datatransparencylab.org/tools.html">here <i class="fa fa-external-link" ></i></a>.</p>
+<p>This website is an effort to interface, communicate, and share the Web Census data, which has been enhanced by Privacymeter, a tool created by the <a href="http://datatransparencylab.org/techprogram.html">DTL Tech Program <i class="fa fa-external-link" ></i></a>. You can find other privacy tools supported by DTL <a href="http://datatransparencylab.org/tools.html">here <i class="fa fa-external-link" ></i></a>. At the moment, the website is only visualizing data highlights related to fingerprinting, and not the other tracking techniques identified by the Web Census data. We are working on visualizing that data on this website soon. </p>
           
         </div>
         <div class="col-md-6">

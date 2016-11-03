@@ -6,8 +6,11 @@
          url('gotham-light.ttf') format('truetype'),
          url('gotham-light.svg#GothamLight') format('svg');
          font-weight: 800;
+
+
 }
- /*url('gotham-light.woff2') format('woff2'),*/
+
+ 
 
 body{
 	font-family: "GothamLight";
@@ -116,6 +119,11 @@ input.empty {
 svg {
 
 	margin-top: 10px;
+}
+
+span {
+font-size:1.2em;
+	font-style: italic;
 }
 
 .dataTitle{
@@ -1027,7 +1035,9 @@ text-align: left;
  #navbar-default{
 
  	background-color: #004F7C;
- 	min-height: 70px;
+ 	min-height: 100px;
+ 	padding: 20px;
+ 	  box-shadow: 0 5px 15px rgba(39,163,212,0.13), 0 4px 4px rgba(0,0,0,0.16);
  }
 .navbar-collapse {
 
@@ -1144,23 +1154,22 @@ border-color: transparent;
 }
 
 .jumbotron{
-color:black;
-background: #004F7C ; /* fallback for old browsers */
-background: -webkit-linear-gradient(to  bottom, #004F7C , #FFFFFF); /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to  bottom, #004F7C , #FFFFFF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        
+	padding-top: 100px !important;
+margin-top: 30px;
+background-color: rgba(213, 237, 246,.6);
 
          } 
          .jumbotron h1{
-         	background-color: white;
+         color: #004F7C;
          }
 .jumbotron p{
 	text-align: left; 
 	margin-left: 150px;
 	margin-right: 150px;
 	padding: 20px;
-	background-color: white;
-	color: #11283c;
+	color: #004F7C;
+
+	 
 }
 
  /*RANK PANEL CLASSES*/

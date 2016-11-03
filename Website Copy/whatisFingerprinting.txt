@@ -1,0 +1,6 @@
+Browser fingerprinting is a tracking technique executed by running a code that requests information from a users browser, and based on that information, creates a unique fingerprint for that particular user. 
+
+This information is sometimtes used to personalize a website or service user experience, but is also used to create profiles and stories about  millions of users. 
+
+There are several kinds of browser fingerprinting techniques. Known techniques include font, canvas, webRTC, and audio fingerprinting. Though they vary in methodology, the goal is the same: mainly to uniquely identify a user and keep track of her movement online. 
+

@@ -7,7 +7,9 @@ var globalData, total_sites,fingerprint_sites; // a global
   globalData = json;
        
 
-  console.log("Websites from Spain that fingerprint users" + " "+ globalData.countries.es.websites);
+ 
+ 
+      
   // draw global data doughnut viz
   visualizeDataT();
   drawDoughnuts("categories","business","#category1");
@@ -28,9 +30,9 @@ function visualizeDataT(){
  total_sites =globalData.websites;
  fingerprint_sites = globalData.websites_tracking;
 
-console.log("FP Sites===" + total_sites);
-console.log("FP Sites===" + fingerprint_sites);
-console.log("PERCENTAGE of sites that fingerprint ===" + "    "+ fingerprint_sites/total_sites);
+// console.log("FP Sites===" + total_sites);
+// console.log("FP Sites===" + fingerprint_sites);
+// console.log("PERCENTAGE of sites that fingerprint ===" + "    "+ fingerprint_sites/total_sites);
 var fpPercent=fingerprint_sites/total_sites*100;
 //limit the float width, number of decimals
 fpPercent= d3.format(".3g")(fpPercent);
@@ -46,7 +48,7 @@ console.log("formatted =="+fpPercent);
 
     var r=170;
     var color= d3.scaleOrdinal()
-                  .range(["#004F7C", "#eeeeee"]);
+                  .range([d3.rgb(111, 37, 127), "#eeeeee"]);
 var maxD= d3.max(data);
 var minD= d3.min(data);
 
@@ -62,7 +64,8 @@ var minD= d3.min(data);
 // creat an arc path generator. the path function will fetch info from here.
     var arc= d3.arc()
               .innerRadius(110)
-              .outerRadius(r);
+              .outerRadius(r)
+
 
 var pie= d3.pie()
           .value(function (d){ return d; });
@@ -74,6 +77,8 @@ var arcs = group.selectAll(".arc")
                 .enter()
                   .append("g")
                   .attr("class","arc")
+
+                 
            
            group.append("text")
                 .attr("text-anchor","middle")
@@ -87,6 +92,7 @@ var arcs = group.selectAll(".arc")
             .attr("d", arc)
             .attr("fill", function(d) { return color(d.data);})
 
+ 
 // text on arcs
             // arcs.append("text")
             //     .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")";})
@@ -232,31 +238,37 @@ function throttle(){
     //Fingerprinted Traffic by Website Category
 function drawBargraph() {
 
+
+
     var svgCat = d3.select("svg"),
         margin = {top: 20, right: 50, bottom: 30, left: 100},
         width = +svgCat.attr("width") - margin.left - margin.right,
         height = +svgCat.attr("height") - margin.top - margin.bottom;
       
     var tooltip = d3.select("body").append("div").attr("class", "toolTip");
-      
+      // map the domain data to the view div width 
     var x = d3.scaleLinear()
               .range([0, width]);
+              // map to the view div height
     var y = d3.scaleBand()
               .range([height, 0]);
 
     var gr = svgCat.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-      
-    d3.json("horizontalData.json", function(error, data) {
+// URL FOR CATEGORIES: https://privacymeter-eddbf.firebaseio.com/data/global/categories.json      
+    d3.json("horizontalData.json", function(error, data1) {
         if (error) throw error;
       
-        data.sort(function(a, b) { return a.value - b.value; });
-      
-        x.domain([0, d3.max(data, function(d) { return d.value; })]);
-        y.domain(data.map(function(d) { return d.category; }))
-          .padding(0.1);
+        data1.sort(function(a, b) { return a.value - b.value; });
+      //add the domain data
+        x.domain([0, d3.max(data1, function(d) { return d.value; })]);
+        y.domain(data1.map(function(d) { return d.category; }))
+          .padding(0.08);
 
+//Append AXES to svg group
+//d3.axis generates the visual elements, it's a 'draw function', are meant to be used with quantitative scales.
+//At a minimum, each axis also needs to be told on what scale to operate. Here, x is the scaleLinear
         gr.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
@@ -266,8 +278,9 @@ function drawBargraph() {
             .attr("class", "y axis")
             .call(d3.axisLeft(y));
 
+//APPEND RECTANGLES BOUND TO DATA. Use .enter because data willl be updated
         gr.selectAll(".bar")
-            .data(data)
+            .data(data1)
           .enter().append("rect")
             .attr("class", "bar")
             .attr("x", 0)
@@ -284,6 +297,7 @@ function drawBargraph() {
             })
             .on("mouseout", function(d){ tooltip.style("display", "none");})
 
+
             // gr.append("text")
             //   .text("TEXTTT");
     });                      
@@ -296,6 +310,10 @@ function drawDoughnuts(query,target,catDiv){
 // PERCENTAGE OF NEWS SITES DOUGHNUT  
 // thevariable data is defined as an argument in the callback function of d3 json
 // d3.json("mydata.json", function(data) {
+ 
+
+
+
 
 // 1- get # of total news analyzed
 var total= globalData[query][target].websites;
@@ -305,7 +323,37 @@ var tracking= globalData[query][target].websites_tracking;
 var perc= tracking/total *100;
 perc= d3.format(".3g")(perc);
 var balance= 100-perc;
-var color= d3.rgb(204, 0, 88);
+
+
+var colorMap = {
+ arts:d3.rgb(204,0,190),
+ health:d3.rgb(0, 190, 204),
+ business: d3.rgb(0, 204, 14),
+ news:d3.rgb(116, 0, 204) ,
+ computers:d3.rgb(18,152,241)  ,
+ shopping:d3.rgb(0,204,116)  ,
+ home: d3.rgb(116,255,0) ,
+ kids_and_teens: d3.rgb(204, 0, 88)
+};
+
+// var color= d3.rgb(204, 0, 88);
+var color= colorMap[target];
+
+
+var iconMap={
+
+  arts:"images/icons/film-strip-with-two-photograms.svg"  ,
+ health:"images/icons/medical-kit.svg" ,
+ business: "images/icons/briefcase.svg" ,
+ news:"images/icons/newspaper.svg"   ,
+ computers: "images/icons/open-laptop-computer.svg"  ,
+ shopping:"images/icons/shopping-cart-black-shape.svg"   ,
+ home:"images/icons/home.svg"   ,
+ kids_and_teens:  "images/icons/smile.svg" 
+}
+var icon= iconMap[target];
+
+
 
     var data=[perc, balance];
     var r=100;
@@ -323,7 +371,7 @@ var catDiv;
            d3.select(catDiv)
               .append("div")
               .attr("class", "doughnutLabel")
-              .html("<br><span>" + "Website Category:" + " " + target +  "</span>");
+              .html("<br><span>" + perc + "%" + "</span>" +"  of " + target + "  sites are fingerprinting.");
 
                    // .text("Website Category:" + "  "+ target);
 
@@ -344,19 +392,34 @@ var arcs = group.selectAll(".arc")
                 .data(pie(data))
                 .enter()
                   .append("g")
-                  .attr("class","arc")
+                  .attr("class","arc");
+
            
-           group.append("text")
+            // group.append("image")
+            //     .attr("xlink:href", "url"):
+         group.append("svg:image")
+                .attr("xlink:href", icon)
                 .attr("text-anchor","middle")
-                .attr("class","doughnutText")
-                .attr("transform", arc.centroid(minD))
-                .text(function(d) { return d3.min(data) + "%" ;});
+                .transition().duration(4000)
+                .style("opacity",.5)
+                .attr("width", 50)
+                .attr("height", 50)
+                .attr("x", -25)
+                .attr("y",-25);
+   
+
+
+           // group.append("text")
+           //      .attr("text-anchor","middle")
+           //      .attr("class","doughnutText")
+           //      .attr("transform", arc.centroid(minD))
+           //      .text(function(d) { return d3.min(data) + "%" ;});
 // necesitaras enter() method para texto dinamico viniendo de db
           // append paths
 
           arcs.append("path")
-            .attr("d", arc)
-            .attr("fill", function(d) { return color(d.data);})
+            .attr("d", arc)            
+            .attr("fill", function(d) { return color(d.data);});
 
             // group.append("text")
             //           .attr("text-anchor","middle")
@@ -375,5 +438,5 @@ var arcs = group.selectAll(".arc")
  }
  
 
-
  
+ // d3.select("body").transition().style("background-color", "red");

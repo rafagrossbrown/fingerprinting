@@ -4,10 +4,13 @@
   font-family: 'Fira Sans', sans-serif;
 }*/
 .bar {
-	fill: #6F257F;
+	/*fill: #6F257F;*/
+  fill: rgb(18,152,241);
 }
 .bar:hover {
-	fill: #CC0058;
+  /*fill: #6F257F;*/
+  fill: rgb(220,13,138);
+	/*fill: #CC0058;*/
   transition: fill 0.25s;
 }
 text {
