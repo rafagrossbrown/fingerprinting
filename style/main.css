@@ -395,8 +395,10 @@ font-size:1.2em;
 	margin-right: auto;
 	width: 30%;
 	height: 1px;
-	margin-bottom: 1.667em;
-	background-color: #88cecf;
+	margin-bottom: 1em;
+	background-color: rgb(111, 37, 127);
+	/*background-color: #004f7c;*/
+
 }
 
 .updates-divider-line{

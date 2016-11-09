@@ -26,7 +26,7 @@ title: Data Transparency Lab
   
 
     <!-- Child -->
- <!--    <ul id='list'></ul> -->
+ <!--    <ul id='list'></ul> --><div class="divider-line"></div>
       <div class="row" style="text-align: left;">
         <div class="col-md-4" style="padding: 30px;">
           <h4 style="margin-bottom: 30px;">A form of user tracking.</h4>
@@ -52,11 +52,16 @@ title: Data Transparency Lab
   <h2>Data Highlights</h2>
     <!-- section -->
     <div class="fadeInBlock container vizContainer">
+    <div class="row">
+      <div  id="totalFingerprinted" class="col-md-6"></div>
+      <div class="col-md-6"></div>
+
+    </div>
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-6">
 
-          <div id="globalVisitors"><h4 class="dataTitle">Percentage of all analyzed websites that fingerprint users  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="This doesn't include websites that track users using cookies" data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle"></div>
+          <div id="globalVisitors"><h4 class="dataTitle">Percentage of all analyzed websites that fingerprint users  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="The websites with the most traffic (as ranked by Alexa), over80,000 websites were scanned.This doesn't include websites that track users using cookies, only websites that use fingerprinting technology." data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle"></div>
           <!-- <img src="http://placehold.it/350x350">  -->
           
         </div>
@@ -167,17 +172,20 @@ title: Data Transparency Lab
     <!-- section -->
     <div class="container vizContainer">
     <h4 class="dataTitle">Top 10 Countries ranked by Fingerprinted Traffic  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="Visitors from these countries are fingerprinted the most" data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle">
+    <div class="row">
+    <!-- here goes map -->
+    <div class="col-md-12">
+      <div id="container" class="shadow"></div>
+  
+      
+    </div>
+    </div>
    <div class="row">
     <div class="col-md-4">
-
-
- 
- 
-
 <table>
   <tr>
     <th>Country</th>
-    <th>Tracked Visits (monthly)</th>
+    <th>Number Fingerprinting Websites(monthly)</th>
      
   </tr>
   <tr>
@@ -275,12 +283,8 @@ title: Data Transparency Lab
 	 
     </div> -->
     </div>
-<!-- here goes map -->
-    <div class="col-md-8">
-      
-  <div id="containerMap"></div>
-      
-    </div>
+
+
     <!-- close Viz row -->
     </div>
       <hr>
@@ -310,8 +314,9 @@ automated version of a full-fledged consumer browser. It
 supports parallelism for speed and scale, automatic recovery
 from failures of the underlying browser, and comprehensive
 browser instrumentation.</p>
-          <p>Privacymeter builds on top of the OpenWPM1 results and hones in on the websites with the most traffic, analyzing over 80,000 websites, which encompass 145 countries and 17 website categories. 
+          <p>Privacymeter builds on top of the OpenWPM1 results (the analysis of 1,000,000 sites) and hones in on the websites with the most traffic (as ranked by <a href="http://www.alexa.com/">Alexa <i class="fa fa-external-link" ></i></a>), analyzing over 80,000 websites, which encompass 145 countries and 17 website categories. 
 </p>
+
           <p><a class="btn btn-default" href="https://webtransparency.cs.princeton.edu/webcensus/#" role="button">View details &raquo;</a></p>
        </div>
       </div>
