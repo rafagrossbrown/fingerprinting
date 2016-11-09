@@ -124,6 +124,8 @@
         <h1>Browser Fingerprinting Census</h1>
         <!-- <h2>TESTING ANGULARJS: {{1+2}}.</h2> -->
         <p><span>Browser Fingerprinting</span> is a web tracking technique often used to create profiles and stories about you and millions of other users. We have audited [[5000]] of the most visited websites to shine a light on the practice of fingerprinting. Here are our some of our results. </p>
+
+        <!-- <p>Best viewed on desktop browsers.</p> -->
        
         
  
@@ -163,24 +165,26 @@
   <!-- <section id="dataWrap"> -->
 
   <h2>Data Highlights</h2>
+  <p><span>Updated Monthly</span></p>
     <!-- section -->
     <div class="fadeInBlock container vizContainer">
-    <div class="row">
-      <div  id="totalFingerprinted" class="col-md-6"></div>
-      <div class="col-md-6"></div>
+     <h4 style="text-align: left;">Every month, we analyze the top 500 websites ranked by traffic according to <a href="http://www.alexa.com/">Alexa</a>. From this analysis we have extracted the following highlights: </h4 style="text-align: left;">
+    <div  id="totalFingerprinted"></div>
 
-    </div>
+    <!-- <div class="row">
+      <div  id="totalFingerprinted" class="col-md-12"></div>
+    </div> -->
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-6">
 
-          <div id="globalVisitors"><h4 class="dataTitle">Percentage of all analyzed websites that fingerprint users  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="The websites with the most traffic (as ranked by Alexa), over80,000 websites were scanned.This doesn't include websites that track users using cookies, only websites that use fingerprinting technology." data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle"></div>
+          <div id="globalVisitors"><h4 class="dataTitle">Percentage of all analyzed websites that fingerprint users  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="We scanned the websites with the most traffic (as ranked by Alexa), totaling over 80,000 websites.This doesn't include websites that track users using cookies, only websites that use fingerprinting technology." data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle"></div>
           <!-- <img src="http://placehold.it/350x350">  -->
           
         </div>
         <div class="col-md-6">
           
-             <h4 class="dataTitle">Website Categories Fingerprinting Rank <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="Rank of Website Categories by number of fingerprinted visits" data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle">
+             <h4 class="dataTitle">Website Categories Ranked by Number of Visits <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="Rank of Website Categories by number of fingerprinted visits" data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle">
    <!--  <img src="http://placehold.it/350x350"> -->
        <svg width="500" height="500"></svg>
     <!-- collapsible -->
@@ -194,7 +198,7 @@
         <!-- section -->
     <div class="container vizContainer fadeInBlock">
     <div class="row">
-    <h4 class="dataTitle">Percentage of websites that fingerprint visitors by Website Category  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="This percentage of websites of this Category is fingerprinting its visitors." data-placement="bottom" style="color:#9b9b9b;"></i></h4>
+    <h4 class="dataTitle">Fingerprinted Visits by Site Category  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="Percentage of total of that category." data-placement="bottom" style="color:#9b9b9b;"></i></h4>
           <div id="categorizer">
             <div class="row">
               <div class="col-md-3 doughnut"><div id="category1"></div> </div>
@@ -284,11 +288,12 @@
     </div>   -->
     <!-- section -->
     <div class="container vizContainer">
-    <h4 class="dataTitle">Top 10 Countries ranked by Fingerprinted Traffic  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="Visitors from these countries are fingerprinted the most" data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle">
+    <h4 class="dataTitle"> Percentage of sites fingerprinting users <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title=" Highlighted color indicates what fraction of websites visited by users from a given country are fingerprinting them. Country indicates users' location not the website's hosting country. " data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle">
     <div class="row">
     <!-- here goes map -->
-    <div class="col-md-12">
-      <div id="container" class="shadow"></div>
+    <div id="mapC" class="col-md-12">
+
+      <div id="container"></div>
   
       
     </div>

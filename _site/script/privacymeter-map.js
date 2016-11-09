@@ -94,7 +94,7 @@ function draw(topo) {
 
   var color_domain = [50, 150, 350, 750, 1500]
   var ext_color_domain = [0, 50, 150, 350, 750, 1500]
-  var legend_labels = ["< 10", "10+", "20+", "30+", "40+", "> 50"] 
+  var legend_labels = ["< 2%", "+2%", "+4%", "+6%", "+8%", "> 10"] 
 
   var color = d3.scaleThreshold()
   .domain(color_domain)
@@ -124,7 +124,7 @@ function draw(topo) {
     .attr("x", 20)
     .attr("y", 290)
     .attr("style","font-size: 14px;")
-    .text("Number of Fingerprinting Websites");
+    .text("% of visited sites that fingerprint");
 
 
 
@@ -141,7 +141,7 @@ function draw(topo) {
 
 
   var country = g.selectAll(".country").data(topo);
-
+  
   country.enter().insert("path")
       .attr("class", "country")
       .attr("d", path)
@@ -261,30 +261,29 @@ function addpoint(lon,lat,text) {
 function countryFill(countryName){
 
 
-	for (var i = 0; i < top_trackers.length; i++){
-		if (top_trackers[i].country == countryName){
-			var num_trackers = parseInt(top_trackers[i].trackers)
-			   if (num_trackers < 10){	
-				return cs[0];
+  for (var i = 0; i < top_trackers.length; i++){
+    if (top_trackers[i].country == countryName){
+      var ratio_trackers = parseInt(top_trackers[i].track_ratio)
+      console.log(ratio_trackers)
+         if (ratio_trackers < 1){ 
+        return cs[0];
 
-			    } else if (num_trackers < 20){
-				return cs[1];
+          } else if (ratio_trackers < 2){
+        return cs[1];
 
-			    } else if (num_trackers < 30){
-				return cs[2];
+          } else if (ratio_trackers < 4){
+        return cs[2];
 
-			    } else if (num_trackers < 40){
-				return cs[3];
+          } else if (ratio_trackers < 6){
+        return cs[3];
 
-			    } else if (num_trackers < 50){
-				return cs[4];
+          } else if (ratio_trackers < 8){
+        return cs[4];
 
-			    } else if (num_trackers >= 50){
-				return cs[5];			
-			    }
-		}
-	}
-	return "white";	
+          } else if (ratio_trackers >= 10){
+        return cs[5];     
+          }
+    }
+  }
+  return "white"; 
 }
-
-

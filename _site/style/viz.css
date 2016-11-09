@@ -14,10 +14,11 @@
   transition: fill 0.25s;
 }
 text {
-  font-family: 'Fira Sans', sans-serif;
+  /*font-family: 'Fira Sans', sans-serif;*/
   font-weight: 500;
   font-size: 15px;
   color: #081F2C;
+  padding: 1em;
 }
 .axis path,
 .axis line {
@@ -80,8 +81,13 @@ color:#004F7C;
 }
 
 .doughnut{
+  line-height: 2em;
+  /*text-align: left;*/
+/*  background-color: red;
+  margin-right:5px;*/
+  border-color: red;
 
-
+border: 2px;
 
 }
 
@@ -167,3 +173,20 @@ th{
 tr:nth-child(even) {
     background-color: #f7f7f7;
 }
+
+#totalFingerprinted{
+  padding: 20px  20px 20px 0px ;
+  /*padding-bottom: 0em;*/
+  margin-top: 50px;
+  margin-left:100px;
+  margin-bottom: 1em;
+  text-align: center;
+color:#1298F1;
+font-size: 2em;
+border-left: 2px solid rgb(111, 37, 127);
+
+}
+
+/*#categorizer{
+
+}*/

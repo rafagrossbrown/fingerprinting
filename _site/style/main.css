@@ -26,12 +26,13 @@ body a{
 
 	 /*border-bottom: 3px solid #7ab9ba;*/
 	text-decoration: none;
-	color:#1bbbd1;
-	font-size: 15px;
+	color: #004F7C;
+	/*font-size: 15px;*/
+	border-bottom: 3px solid #1bbbd1;
 }
 
 body a:hover{
-	text-decoration: underline;
+	text-decoration: none;
 	 color:#0080C9;
 
 }
@@ -122,10 +123,19 @@ svg {
 }
 
 span {
-font-size:1.2em;
+/*font-size:1.2em;*/
 	font-style: italic;
 }
 
+strong{
+	color:rgb(111, 37, 127);
+	font-size: 3em;
+}
+
+#categorizer span {
+font-size:1.2em;
+	font-style: italic;
+}
 .dataTitle{
 
 	margin: 50px;

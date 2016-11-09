@@ -3,13 +3,20 @@
 // ALL DATA URL: https://privacymeter-eddbf.firebaseio.com/.json
 var globalData, total_sites,fingerprint_sites, categoryTraffic; // a global
 
-$().append( "<strong>Hello</strong>" );
+
+
 
   d3.json("https://privacymeter-eddbf.firebaseio.com/data/global.json", function(json) {
   globalData = json;
 
 
+var totalFingerprinted= globalData.fingerprint_traffic;
+// totalFingerprinted=   ;
+    
 
+     totalFingerprinted = d3.format(",")(totalFingerprinted);
+
+$('#totalFingerprinted').append( "<strong>" + totalFingerprinted + " "+ "</strong>" + "<p>visits have been fingerprinted in the last month.</p>"  );
         
 
   // draw global data doughnut viz
@@ -39,7 +46,7 @@ var fpPercent=fingerprint_sites/total_sites*100;
 //limit the float width, number of decimals
 fpPercent= d3.format(".3g")(fpPercent);
 var noFpPercent= 100-fpPercent;
-console.log("formatted =="+fpPercent);
+// console.log("formatted =="+fpPercent);
 
 
 
@@ -154,7 +161,7 @@ d3.json("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_cat
       //add the domain data
         x.domain([0, d3.max(data1, function(d) { return d.value; })]);
         y.domain(data1.map(function(d) { return d.collection; }))
-          .padding(0.08);
+          .padding(0.1);
 
 //Append AXES to svg group
 //d3.axis generates the visual elements, it's a 'draw function', are meant to be used with quantitative scales.
@@ -162,7 +169,7 @@ d3.json("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_cat
         gr.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).ticks(5).tickFormat(function(d) { return parseInt(d); }).tickSizeInner([-height]));
+            .call(d3.axisBottom(x).ticks(3).tickFormat(function(d) { return parseInt(d/1); }).tickSizeInner([-height]));
 
         gr.append("g")
             .attr("class", "y axis")
@@ -183,7 +190,7 @@ d3.json("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_cat
                   .style("left", d3.event.pageX - 50 + "px")
                   .style("top", d3.event.pageY - 90 + "px")
                   .style("display", "inline-block")
-                  .html((d.collection) + "<br><span>" + (d.value) + "   "+ "tracked visits" + "</span>");
+                  .html((d.collection) + "<br><span>" + (d3.format(",")(d.value)) + "   "+ "tracked visits" + "</span>");
             })
             .on("mouseout", function(d){ tooltip.style("display", "none");})
 
@@ -198,15 +205,24 @@ drawBargraph();
 // PERCENTAGE OF NEWS SITES DOUGHNUT  
 function drawDoughnuts(query,target,catDiv){
 // PERCENTAGE OF NEWS SITES DOUGHNUT  
-// thevariable data is defined as an argument in the callback function of d3 json
-// d3.json("mydata.json", function(data) {
  
+//  d3.json("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_categories_traffic.json", function(error,data2){
+
+
+// console.log(data2[0]);
+//  });
 
 
 // 1- get # of total news analyzed
 var total= globalData[query][target].websites;
 // 2- get # of fingerprint news sites 
 var tracking= globalData[query][target].websites_tracking;
+
+var traffic= globalData[query][target].tracking_traffic;
+
+traffic= d3.format(",")(traffic);
+
+
 // 3- convert to PERCENTAGE
 var perc= tracking/total *100;
 perc= d3.format(".3g")(perc);
@@ -259,8 +275,9 @@ var catDiv;
            d3.select(catDiv)
               .append("div")
               .attr("class", "doughnutLabel")
-              .html("<br><span>" + perc + "%" + "</span>" +"  of " + target + "  sites are fingerprinting.");
-
+              // .html("<br><span>" + perc + "%" + "</span>" +"  of " + target + "  sites are fingerprinting.");
+              .html("<span>" + perc + "%" + "</span>" +"  of " + target + "  sites are fingerprinting." +  "<br><span>"+ traffic+ "</span>" + "  "+ " visits to " + target +  " sites were fingerprinted in a month.");
+// " amounting to " + 
                    // .text("Website Category:" + "  "+ target);
 
     var group= canvas.append("g")
