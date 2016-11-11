@@ -1,9 +1,20 @@
-
 // d3.select(window).on("resize", throttle);
 
 //set the sclae of colours in two different ways
 // var cs = chroma.scale('OrRd').colors(6); //OrRd scale designed colours to fit well
-var cs = chroma.scale(['#f2f0f7','#dadaeb','#bcbddc','#756bb1','#756bb1', '#54278f']).colors(6); //initial to final value
+
+
+palette = [
+  "#f2f0f7",
+  "#dadaeb",
+  "#bcbddc",
+  "#9e9ac8",
+  "#807dba",
+  "#6a51a3",
+  "#4a1486"
+]
+
+var cs = chroma.scale(palette).colors(7); //initial to final value
 // var cs = chroma.scale(['white', 'Red']).colors(6);
 
 var top_trackers = (function () {
@@ -28,7 +39,7 @@ var top_trackers = (function () {
     .scaleExtent([1, 9])
     .on("zoom", move);
 */
-var c = document.getElementById('container');
+var c = document.getElementById('container2');
 var width = c.offsetWidth;
 var height = width / 2;
 
@@ -42,7 +53,7 @@ var topo,projection,path,svg,g;
 //var graticule = d3.geo.graticule();
 var graticule = d3.geoGraticule();
 
-var tooltip = d3.select("#container").append("div").attr("class", "tooltip hidden");
+var tooltip = d3.select("#container2").append("div").attr("class", "tooltip hidden");
 
 setup(width,height);
 
@@ -53,7 +64,7 @@ function setup(width,height){
 
   path = d3.geoPath().projection(projection);
 
-  svg = d3.select("#container").append("svg")
+  svg = d3.select("#container2").append("svg")
       .attr("width", width)
       .attr("height", height)
       //.call(zoom)
@@ -76,10 +87,12 @@ d3.json("data/world-topo-min.json", function(error, world) {
 
 function handleMouseOver(){
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+  var ratio = ratio_dict[this.__data__.properties.name] || "Unknown"  
+
 
   tooltip.classed("hidden", false)
     .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
-    .html(this.__data__.properties.name);
+    .html(this.__data__.properties.name + "\n" + ratio);
 }
 
 function handleMouseOut(){
@@ -122,8 +135,8 @@ function draw(topo) {
 
   legend.append("text")
     .attr("x", 20)
-    .attr("y", 290)
-    .attr("style","font-size: 14px;")
+    .attr("y", 270)
+    .attr("style","font-size: 14px; position: absolute;")
     .text("% of visited sites that fingerprint");
 
 
@@ -258,14 +271,24 @@ function addpoint(lon,lat,text) {
   }
 
 }
+
+var ratio_dict = {}
+
 function countryFill(countryName){
 
 
   for (var i = 0; i < top_trackers.length; i++){
+
+    var ratio_trackers = parseFloat(top_trackers[i].track_ratio).toFixed(2)
+
+    
+    ratio_dict[top_trackers[i].country] = ratio_trackers + "%";
+
+
+
     if (top_trackers[i].country == countryName){
-      var ratio_trackers = parseInt(top_trackers[i].track_ratio)
-      console.log(ratio_trackers)
-         if (ratio_trackers < 1){ 
+
+         if (ratio_trackers == 0){  
         return cs[0];
 
           } else if (ratio_trackers < 2){
@@ -280,8 +303,11 @@ function countryFill(countryName){
           } else if (ratio_trackers < 8){
         return cs[4];
 
+          } else if (ratio_trackers < 10){
+        return cs[5];
+
           } else if (ratio_trackers >= 10){
-        return cs[5];     
+        return cs[6];     
           }
     }
   }

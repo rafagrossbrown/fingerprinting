@@ -104,15 +104,18 @@ border: 2px;
   font-size:10px;
   text-transform:capitalize;
 }
-#container {
+#container2 {
   /*margin-top: 100px;*/
-  margin:20px 10%;
+  margin:10px 5%;
   border:0px solid #000;
   border-radius: 5px;
   height:100%;
   overflow:hidden;
   /*background: #F0F8FF;*/
   background-color: #e6e6e6;
+}
+#container{
+  white
 }
 
  
@@ -152,10 +155,11 @@ div.tooltip {
 }
 
 table {
-  margin-top: 30px;
     /*font-family: arial, sans-serif;*/
     border-collapse: collapse;
     width: 100%;
+    font-size: 14px;
+
 }
 
 td, th {
@@ -166,8 +170,11 @@ td, th {
 }
 th{
   color:white;
-  background-color: #004F7C;
-  font-size: 1em;
+  color: #004F7C;
+  /*background-color: #004F7C;*/
+  background-color: transparent;
+  font-size: 14px;
+  border-bottom: 1px solid rgb(111, 37, 127);
 }
 
 tr:nth-child(even) {
@@ -187,6 +194,7 @@ border-left: 2px solid rgb(111, 37, 127);
 
 }
 
-/*#categorizer{
+#updated{
+font-style: italic;
 
-}*/
+}

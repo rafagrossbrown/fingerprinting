@@ -123,7 +123,10 @@
        
         <h1>Browser Fingerprinting Census</h1>
         <!-- <h2>TESTING ANGULARJS: {{1+2}}.</h2> -->
-        <p><span>Browser Fingerprinting</span> is a web tracking technique often used to create profiles and stories about you and millions of other users. We have audited [[5000]] of the most visited websites to shine a light on the practice of fingerprinting. Here are our some of our results. </p>
+        <p><span>Browser Fingerprinting</span> is a web tracking technique often used to create profiles and stories about you and billions of other users. Generally, users have not consented to this practice, and are not aware of it. Tracker blocking apps like Ghostery and AdBlock cannot block this kind of behavior. </p>
+
+
+         <p id="introNumber"></p>
 
         <!-- <p>Best viewed on desktop browsers.</p> -->
        
@@ -144,19 +147,18 @@
  <!--    <ul id='list'></ul> --><div class="divider-line"></div>
       <div class="row" style="text-align: left;">
         <div class="col-md-4" style="padding: 30px;">
-          <h4 style="margin-bottom: 30px;">A form of user tracking.</h4>
-          <p>Browser fingerprinting is a tracking technique executed by running a code that requests information from a user's browser, and based on that information, creates a unique fingerprint for that particular user.   </p>
+          <h4 style="margin-bottom: 30px;">What  is browser fingerprinting?</h4>
+          <p>Browser fingerprinting is a tracking technique executed by running a code that requests a user's device to generate a unique set of information, and based on that information, creates a unique fingerprint for that particular user. Users are generally not aware that they are being identified and tracked online this way.   </p>
          <!--  <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
         </div>
         <div class="col-md-4" style="padding: 30px;">
           <h4 style="margin-bottom: 30px;">What is done with users' fingerprints?</h4>
-          <p>This information is sometimes used to personalize a website or service user experience, but is also used to create profiles and stories about  millions of users.  </p>
+          <p>This information is sometimes used to personalize a website's or service's user experience, but is also often used to create profiles and stories about  billions of users.  </p>
           <!-- <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
        </div>
         <div class="col-md-4" style="padding: 30px;">
-          <h4 style="margin-bottom: 30px;">Audio fingerprinting?! Canvas fingerprinting?!</h4>
-          <p>There are several kinds of browser fingerprinting techniques. Known techniques include font, canvas, webRTC, and audio fingerprinting. Though they vary in methodology, the goal is the same: mainly to uniquely identify a user and keep track of her movement online.  </p>
-         <!--  <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
+          <h4 style="margin-bottom: 30px;">Why did we create this site?</h4>
+          <p>There's little to no information about how widespread the practice of browser fingerprinting is. Moreover, users generally do not consent to this practice, and tools such as Ghostery and AdBlock do not have the capability of blocking this activity. We created this website to raise awareness about this practice, and eventually allow people to identify the websites that are fingerprinting (a feature that we will add soon).</p>
        </div>
       </div>
 
@@ -165,10 +167,10 @@
   <!-- <section id="dataWrap"> -->
 
   <h2>Data Highlights</h2>
-  <p><span>Updated Monthly</span></p>
+  <p id="updated"><span></span></p>
     <!-- section -->
     <div class="fadeInBlock container vizContainer">
-     <h4 style="text-align: left;">Every month, we analyze the top 500 websites ranked by traffic according to <a href="http://www.alexa.com/">Alexa</a>. From this analysis we have extracted the following highlights: </h4 style="text-align: left;">
+     <h4 style="text-align: left;">We periodically analyze the top websites ranked by traffic according to <a href="http://www.alexa.com/topsites">Alexa</a>. From this analysis we have extracted the following highlights: </h4 style="text-align: left;">
     <div  id="totalFingerprinted"></div>
 
     <!-- <div class="row">
@@ -178,15 +180,15 @@
       <div class="row">
         <div class="col-md-6">
 
-          <div id="globalVisitors"><h4 class="dataTitle">Percentage of all analyzed websites that fingerprint users  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="We scanned the websites with the most traffic (as ranked by Alexa), totaling over 80,000 websites.This doesn't include websites that track users using cookies, only websites that use fingerprinting technology." data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle"></div>
+          <div id="globalVisitors"><h4 class="dataTitle">Percentage of all analyzed websites that fingerprint users  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="We scanned the websites with the most traffic (ranked by Alexa). This doesn't include websites that track users using cookies, only websites that use fingerprinting technology." data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle"></div>
           <!-- <img src="http://placehold.it/350x350">  -->
           
         </div>
         <div class="col-md-6">
           
-             <h4 class="dataTitle">Website Categories Ranked by Number of Visits <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="Rank of Website Categories by number of fingerprinted visits" data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle">
+             <h4 class="dataTitle">Website Categories Ranked by Number of Visits <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="Rank of Website Categories (categories taken from Alexa), by number of monthly fingerprinted visits" data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle">
    <!--  <img src="http://placehold.it/350x350"> -->
-       <svg width="500" height="500"></svg>
+       <svg width="600" height="500"></svg>
     <!-- collapsible -->
          <hr>
         </div>
@@ -198,7 +200,7 @@
         <!-- section -->
     <div class="container vizContainer fadeInBlock">
     <div class="row">
-    <h4 class="dataTitle">Fingerprinted Visits by Site Category  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="Percentage of total of that category." data-placement="bottom" style="color:#9b9b9b;"></i></h4>
+    <h4 class="dataTitle">Fingerprinted Visits by Site Category  <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="The percentage and highlighted color indicates the proportion of websites that fingerprint of the total analyzed sites of that category." data-placement="bottom" style="color:#9b9b9b;"></i></h4>
           <div id="categorizer">
             <div class="row">
               <div class="col-md-3 doughnut"><div id="category1"></div> </div>
@@ -287,123 +289,19 @@
       <hr>
     </div>   -->
     <!-- section -->
-    <div class="container vizContainer">
-    <h4 class="dataTitle"> Percentage of sites fingerprinting users <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title=" Highlighted color indicates what fraction of websites visited by users from a given country are fingerprinting them. Country indicates users' location not the website's hosting country. " data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle">
+    <div class="container ">
+    <h4 class="dataTitle"> Percentage of sites fingerprinting users <i class="fa fa-info-circle fa-1x" data-toggle="tooltip" data-original-title="Highlighted color indicates what fraction of websites visited by users from a given country are fingerprinting them. Country indicates users' location not the website's hosting country. " data-placement="bottom" style="color:#9b9b9b;"></i></h4 class="dataTitle">
     <div class="row">
+        <div id="mapC" class="col-md-10">
+ 
+      <div id="container2"></div>
+
+    </div>
+     <div class="col-md-2">
+         <div id="container"></div>
+    </div>
     <!-- here goes map -->
-    <div id="mapC" class="col-md-12">
 
-      <div id="container"></div>
-  
-      
-    </div>
-    </div>
-   <div class="row">
-    <div class="col-md-4">
-<table>
-  <tr>
-    <th>Country</th>
-    <th>Number Fingerprinting Websites(monthly)</th>
-     
-  </tr>
-  <tr>
-    <td><img src="images/blank.gif" class="flag flag-us" />  United States</td>
-    <td>300,000,000</td>
-     
-  </tr>
-  <tr>
-    <td><img src="images/blank.gif" class="flag flag-cn" /> China</td>
-    <td>230,000,000</td>
-    
-  </tr>
-  <tr>
-    <td><img src="images/blank.gif" class="flag flag-in" /> India</td>
-    <td>190,000,000</td>
-     
-  </tr>
-<!--   <tr>
-    <td>Island Trading</td>
-    <td>Helen Bennett</td>
-     
-  </tr>
-  <tr>
-    <td>Laughing Bacchus Winecellars</td>
-    <td>Yoshi Tannamuri</td>
- 
-  </tr>
-  <tr>
-    <td>Magazzini Alimentari Riuniti</td>
-    <td>Giovanni Rovelli</td>
- 
-  </tr> -->
-</table>
-     <!-- <ul style="text-align: left">
-        <li> 1.
-    
-            <img src="images/blank.gif" class="flag flag-us" />  United States, over 300,000,000 monthly visits tracked.
-             
-        </li>
-        <li>
-          2.
-              <img src="images/blank.gif" class="flag flag-cn" /> China, over 230,000,000 monthly visits tracked.
-             
-        </li>
-        <li>3.
-          
-            <img src="images/blank.gif" class="flag flag-in" /> India, over 190,000,000 monthly visits tracked.
-       
-        </li>
-
-      </ul> -->
-		  <!-- <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
-		  <div class="panel panel-default">
-		    <div class="panel-heading" role="tab" id="headingOne">
-		      <h4 class="panel-title">
-		        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapse1" aria-expanded="false" aria-controls="collapse1">
-		        <img src="images/blank.gif" class="flag flag-us" />  United States
-		        </a> 
-		      </h4>
-		    </div>
-		    <div id="collapse1" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
-		      <div class="panel-body">
-		        
-		      </div>
-		    </div>
-		  </div>
-		  <div class="panel panel-default">
-		    <div class="panel-heading" role="tab" id="headingTwo">
-		      <h4 class="panel-title">
-		        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="false" aria-controls="collapse2">
-		         <img src="images/blank.gif" class="flag flag-cn" /> China
-		        </a> 
-		      </h4>
-		    </div>
-		    <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-		      <div class="panel-body">
-		        YINA
-		      </div>
-		    </div>
-		  </div>
-		  <div class="panel panel-default">
-		    <div class="panel-heading" role="tab" id="headingThree">
-		      <h4 class="panel-title">
-		        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="false" aria-controls="collapse3">
-		         <img src="images/blank.gif" class="flag flag-in" /> India
-		        </a> 
-		      </h4>
-		    </div>
-		    <div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-		      <div class="panel-body">
-		       
-		      </div>
-		    </div>
-		  </div>
-	 
-    </div> -->
-    </div>
-
-
-    <!-- close Viz row -->
     </div>
       <hr>
     </div> <!-- /container -->
@@ -416,12 +314,12 @@
   
         <div class="col-md-6">
           <h3>About</h3>
-          <p>[[    ]] is a collaboration between the <a href="http://datatransparencylab.org/">Data Transparency Lab ("DTL") <i class="fa fa-external-link" ></i></a>, and DTL grantees <a href="https://webtransparency.cs.princeton.edu/webcensus/#"> Steven Englehardt and Arvind Narayanan of Princeton University <i class="fa fa-external-link"></i></a>, the researchers behind the Princeton Web Census.</p>
+          <p>This website is a collaboration between the <a href="http://datatransparencylab.org/">Data Transparency Lab ("DTL") <i class="fa fa-external-link" ></i></a>, and DTL grantees <a href="https://webtransparency.cs.princeton.edu/webcensus/#"> Steven Englehardt and Arvind Narayanan of Princeton University <i class="fa fa-external-link"></i></a>, the researchers behind the Princeton Web Census.</p>
 
-<p>The Princeton Web Census is a research tool that provides information about the measurements performed on 1 million web sites. The measurements were focused on identifying the tracking techniques used by those websites, both stateful (cookie-based) and stateless (fingerprinting-based). The tool can be used to check which tracking techniques are used by a given website or to check how widely used a given tracking technology is.</p>
+<p>OpenWPM is a research tool that provides information about the measurements performed on websites, which has been used to generate the Princeton Web Census. The measurements were focused on identifying the tracking techniques used by those websites, both stateful (cookie-based) and stateless (fingerprinting-based). The tool can be used to check which tracking techniques are used by a given website or to check how widely used a given tracking technology is.</p>
 
-<p>This website is an effort to interface, communicate, and share the Web Census data, which has been enhanced by Privacymeter, a tool created by the <a href="http://datatransparencylab.org/techprogram.html">DTL Tech Program <i class="fa fa-external-link" ></i></a>. You can find other privacy tools supported by DTL <a href="http://datatransparencylab.org/tools.html">here <i class="fa fa-external-link" ></i></a>. At the moment, the website is only visualizing data highlights related to fingerprinting, and not the other tracking techniques identified by the Web Census data. We are working on visualizing that data on this website soon. </p>
-          
+<p>This website is an effort to interface, communicate, and share the data yielded by Privacymeter, a tool created by the <a href="http://datatransparencylab.org/techprogram.html">DTL Tech Program <i class="fa fa-external-link" ></i></a>, which builds on top of the Princeton OpenWPM, and enhances it. You can find other privacy tools supported by DTL <a href="http://datatransparencylab.org/tools.html">here <i class="fa fa-external-link" ></i></a>. At the moment, the website is only visualizing data highlights related to browser fingerprinting, other tracking techniques will analyzed and visualized in the future. </p>
+          <a href="http://datatransparencylab.org/"><img src="images/dtl1-sm.png"></a>
         </div>
         <div class="col-md-6">
           <h3>Methodology</h3>
@@ -432,7 +330,7 @@ automated version of a full-fledged consumer browser. It
 supports parallelism for speed and scale, automatic recovery
 from failures of the underlying browser, and comprehensive
 browser instrumentation.</p>
-          <p>Privacymeter builds on top of the OpenWPM1 results (the analysis of 1,000,000 sites) and hones in on the websites with the most traffic (as ranked by <a href="http://www.alexa.com/">Alexa <i class="fa fa-external-link" ></i></a>), analyzing over 80,000 websites, which encompass 145 countries and 17 website categories. 
+          <p>Privacymeter builds on top of the OpenWPM results and hones in on the websites with the most traffic (as ranked by <a href="http://www.alexa.com/topsites">Alexa <i class="fa fa-external-link" ></i></a>), analyzing tens of thousands of websites, which encompass 145 countries and 16 website categories. 
 </p>
 
           <p><a class="btn btn-default" href="https://webtransparency.cs.princeton.edu/webcensus/#" role="button">View details &raquo;</a></p>

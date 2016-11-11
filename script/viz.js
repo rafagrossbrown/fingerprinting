@@ -12,9 +12,14 @@ var globalData, total_sites,fingerprint_sites, categoryTraffic; // a global
 
 var totalFingerprinted= globalData.fingerprint_traffic;
 // totalFingerprinted=   ;
-    
-
+    var totalAnalyzed = globalData.websites;
+    totalAnalyzed= d3.format(",")(totalAnalyzed);
      totalFingerprinted = d3.format(",")(totalFingerprinted);
+
+     var lastUpdated= globalData.last_update;
+$('#introNumber').append( "We have audited over " + "<span>" + totalAnalyzed + "</span>"+ " of the most visited websites to shine a light on the practice of fingerprinting. Here are our some of our results. "  );
+$('#updated').append( "Last updated: " + lastUpdated);
+
 
 $('#totalFingerprinted').append( "<strong>" + totalFingerprinted + " "+ "</strong>" + "<p>visits have been fingerprinted in the last month.</p>"  );
         
@@ -33,6 +38,28 @@ $('#totalFingerprinted').append( "<strong>" + totalFingerprinted + " "+ "</stron
  
 });
 
+ function loadTable(){
+// Load Table data
+$.getJSON("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_countries_fingerprint.json",
+        (data)=>{
+           $("#container").html="";
+           $("#container").append("<tr><th>Country</th><th>Ratio</th></tr>");
+           if(data != null && $.isArray(data)){
+               data.sort((a,b)=>{
+                 return (b.track_ratio-a.track_ratio);
+               });
+               var top = data.slice(0,10);
+               $.each(top, function(index, value){
+
+                   $("#container").append("<tr><td>" + value.country + "</td><td class='second-colum'>" + value.track_ratio + "</td></tr>");
+               });
+           }
+        });
+
+ 
+ 
+}
+loadTable();
 
 function visualizeDataT(){  
 
@@ -117,7 +144,7 @@ function drawBargraph() {
 
 
     var svgCat = d3.select("svg"),
-        margin = {top: 20, right: 50, bottom: 30, left: 100},
+        margin = {top: 20, right: 50, bottom: 30, left: 150},
         width = +svgCat.attr("width") - margin.left - margin.right,
         height = +svgCat.attr("height") - margin.top - margin.bottom;
       
@@ -169,7 +196,21 @@ d3.json("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_cat
         gr.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x).ticks(3).tickFormat(function(d) { return parseInt(d/1); }).tickSizeInner([-height]));
+            .call(d3.axisBottom(x).ticks(3)
+              .tickFormat(function(d) { 
+              //Add commas to billions
+              return d= d3.format(",")(d);
+
+              // return d3.format('d');
+              // return       
+              
+
+
+               }).tickSizeInner([-height]));
+
+
+         
+
 
         gr.append("g")
             .attr("class", "y axis")
@@ -341,7 +382,4 @@ var arcs = group.selectAll(".arc")
             //     .text(function(d) { return d.data + " %"  ;});
    
  }
- 
 
- 
- // d3.select("body").transition().style("background-color", "red");
