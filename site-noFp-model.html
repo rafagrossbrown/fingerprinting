@@ -1,0 +1,158 @@
+--- 
+layout: default_site 
+title: Data Transparency Lab 
+---
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<div id="site-header">Site Checker</div>
+<div class="clearfix"> </div>
+<div id="report-wrapper">
+    <div class="row" style="font-size: 24px; color:#8D2E94; ">
+        <div class="col-md-6">
+            <p id="report-site" style="text-align:left; text-indent: 3em;">Report for N/A</p>
+            <!--  <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
+        </div>
+        <div class="col-md-6">
+            <p id="updated" class="pull-right" style="vertical-align:baseline ; font-size:18px; color:#9B9B9B; padding-right: 50px;"> Last updated: 2016-11-10 17:02:29 UCT </p>
+        </div>
+    </div>
+    <div class="site-check-box">
+        <h2>Overview</h2>
+        <div style="text-indent: 20px;">
+            <p>Country: <span id="report-country"> - </span></p>
+            <p> Kind of website: <span id="report-category"> - </span></p>
+        </div>
+    </div>
+
+    <div class="site-check-box">
+        <h3>Does this site fingerprint? <span id="boolFingerprint"><i class="fa fa-exclamation-triangle fa-1x "></i> - </span></h3>
+        <!-- <p>The following fingerprinting scripts are being deployed:</p> -->
+<!--         <ul>
+            <li>
+                <p><span>Canvas fingerprinting:</span></p>
+                <p><a href="">http://tags.bkrtx.com/js/bk-coretag.js</a></p>
+            </li> <br>
+            <li>
+                <p><span>Web RTC fingerprinting:</span></p>
+                <p><a href="">http://tags.bkrtx.com/js/bk-coretag.js</a></p>
+            </li> <br> </ul> -->
+    </div>
+    <div class="report-box-divider"></div>
+    <div class="site-check-box-sub">
+    <h2>Additional Info.</h2>
+        <h3>How many (monthly) visits does this site have?</h3>
+        <div>
+            <div id="report-traffic" class="number-highlight"> - </div>
+        </div>
+    </div>
+    <div class="site-check-box-sub">
+        <h3>Where are site visitors located?</h3>
+        <div id="trafficMap"> </div>
+    </div>
+    <div class="site-check-box-sub">
+        <h3>What are visitors also interested in?</h3>
+        <div id="categoriesAudience">
+            <ul>
+                <li>[[svg Icon Target]]Electronics>Computers</li>
+                <li>[[svg Icon Target]]Career and Education>Jobs and Employment</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+<script src="/script/d3.min.js"></script>
+<script>
+    var mydata = "test";
+    var url = getParameters();
+    var encUrl = "";
+    if (!validUrl(url)) {
+        console.log("Url no valida: " + url)
+    } else {
+        console.log("Valid url: " + url);
+        encUrl = urlEncoder(url);
+        $('#data11').val(encUrl);
+    };
+    var myquerydb = querydb(encUrl);
+    
+    function querydb(a) {
+      console.log("Valid url: " + a);
+        return $.getJSON('https://privacymeter-dtl.firebaseio.com/data/sites/' + a + '.json', function(){
+          console.log( "query sent" );
+        });
+    }
+
+    function validUrl(str) {
+        var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+        var pattern = new RegExp(expression);
+        if (!pattern.test(str)) {
+            alert("Please enter a valid URL.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    function urlEncoder(url) {
+        var result = '';
+        for (i = 0; i < url.length; i++) {
+            result += url.charCodeAt(i).toString(16);
+        }
+        console.log("Encoded url: " + result);
+        return result;
+    }
+
+    function getParameters() {
+        return location.search.split('?')[1]
+    }
+
+    function updateContent(siteData) {
+        //fucntion to update the content using the json
+	$("#report-site").html("Report for " + siteData.url)
+	$("#report-country").html(siteData.information.country)
+	$("#report-category").html(siteData.information.category)
+        console.log("Is tracking?")
+        if (siteData.hasOwnProperty("fingerprint")) {
+            console.log("YES")
+	    $("#boolFingerprint").html("YES")
+            fingerprints = siteData["fingerprint"]["201612"]
+            console.log("The following fingerprinting scripts are being deployed:")
+            for (var key in fingerprints) {
+                console.log(key)
+                if (fingerprints.hasOwnProperty(key)) {
+                    scriptfArray = fingerprints[key]
+                    //console.log(key + " -> " + fingerprints[key]);
+                    scriptfArray.forEach(function(script) {
+                        console.log(script);
+                    });
+                }
+            }
+        } else {
+            console.log("NO")
+	    $("#boolFingerprint").html("NO")
+        }
+        console.log("How many (monthly) visits were fingerprinted?")
+        console.log(siteData["information"]["traffic"])
+
+	$("#report-traffic").html(parseInt(siteData["information"]["traffic"]).toLocaleString())
+
+        console.log("Where are fingerprinted visitors located?")
+        //MAP
+        top_traffic = siteData["information"]["traffic_top"]
+        var arrayTopTraffic = [];
+        for (country in top_traffic) {
+            arrayTopTraffic.push([country, top_traffic[country]])
+        }
+        arrayTopTraffic.sort(function(a, b) {
+            return a[1] - b[1]
+        })
+        arrayTopTraffic.reverse();
+        window.arrayTopTraffic = arrayTopTraffic;
+        console.log(arrayTopTraffic)
+        console.log("What are visitors also interested in?")
+        audienceArray = siteData["information"]["audience"]
+        audienceArray.forEach(function(audienceType) {
+            console.log(audienceType);
+        });
+    }
+</script>
+<script src="/script/privacymeter-single-report.js"></script>

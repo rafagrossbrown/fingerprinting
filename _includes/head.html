@@ -4,7 +4,7 @@
     <title>Online Fingerprinting Census</title>
     <meta name="viewport" content="width=device-width">
   <meta http-equiv="Content-Type" content="text/html;">
-  
+
   <meta name="description" content="{{ site.description }}">
   <link rel="icon" href="{{  site.baseurl}}/images/favicon.ico" type="image/x-icon">
   <link rel="image_src" href="{{ site.baseurl}}/images/dtl1-sm.png">
@@ -20,18 +20,43 @@
 <link href="{{ site.baseurl}}/style/flags.css" media="screen" rel="stylesheet" type="text/css">
 <!-- <link href="{{ site.baseurl}}/style/font-awesome.min.css" rel="stylesheet">   -->
 <!-- SCRIPTS -->
+<style>
+.search_button{
+    border: 0px solid transparent;
+    border-radius:0;
+    margin-left:-5px;
+}
+.search_input{
+  border-radius:0;
+  margin-right: 0;
+}
+.navbar-form {
+    margin: 0px calc(50% - 480px);
+}
+ul .nav .navbar-nav {
+  line-height: 20px;
+}
+.navbar-nav > li > a {
+  line-height: 20px;
+  padding:10px 5px;
+}
+.navbar-nav > li {
+    margin-right: 10px;
+  }
+</style>
   <script src="https://use.fontawesome.com/6211adc9f6.js"></script>
 <!--   <script async="" src="{{ site.baseurl}}/script/analytics.js"></script> -->
   <script src="{{ site.baseurl}}/script/jquery.min.js"></script>
-  
+
   <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,500,700" rel="stylesheet">
      <script src="{{ site.baseurl}}/script/topojson.v1.min.js"></script>
      <!-- <script src="{{ site.baseurl}}/script/d3.min.js"></script> -->
-  
-  <script src="https://d3js.org/d3.v4.js"></script>
 
-   
-  
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="{{ site.baseurl}}/script/trends.js"></script>
+
+
+
       <!-- <script src="{{ site.baseurl}}/script/components/alerts/alerts.js"></script>
     <script src="{{ site.baseurl}}/script/components/dropdowns/dropdowns.js"></script>
     <script src="{{ site.baseurl}}/script/components/modals/modals.js"></script> -->
@@ -51,6 +76,6 @@
 
     ga('create', 'UA-62836510-1', {'allowAnchor': true});
     ga('send', 'pageview', { 'page': location.pathname + location.search + location.hash});
-    
+
   </script> -->
 </head>

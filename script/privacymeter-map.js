@@ -4,7 +4,7 @@
 // var cs = chroma.scale('OrRd').colors(6); //OrRd scale designed colours to fit well
 
 
-palette = [
+var cs = [
   "#f2f0f7",
   "#dadaeb",
   "#bcbddc",
@@ -14,7 +14,8 @@ palette = [
   "#4a1486"
 ]
 
-var cs = chroma.scale(palette).colors(7); //initial to final value
+//var cs = palette;
+//var cs = chroma.scale(palette).colors(7); //initial to final value
 // var cs = chroma.scale(['white', 'Red']).colors(6);
 
 var top_trackers = (function () {
@@ -30,7 +31,7 @@ var top_trackers = (function () {
         }
     });
     return json;
-})(); 
+})();
 
 
 
@@ -43,7 +44,7 @@ var c = document.getElementById('container2');
 var width = c.offsetWidth;
 var height = width / 2;
 
- 
+
 //offsets for tooltips
 var offsetL = c.offsetLeft+20;
 var offsetT = c.offsetTop+10;
@@ -87,7 +88,7 @@ d3.json("data/world-topo-min.json", function(error, world) {
 
 function handleMouseOver(){
   var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
-  var ratio = ratio_dict[this.__data__.properties.name] || "Unknown"  
+  var ratio = ratio_dict[this.__data__.properties.name] || "Unknown"
 
 
   tooltip.classed("hidden", false)
@@ -107,7 +108,7 @@ function draw(topo) {
 
   var color_domain = [50, 150, 350, 750, 1500]
   var ext_color_domain = [0, 50, 150, 350, 750, 1500]
-  var legend_labels = ["< 2%", "+2%", "+4%", "+6%", "+8%", "> 10"] 
+  var legend_labels = ["< 2%", "+2%", "+4%", "+6%", "+8%", "> 10"]
 
   var color = d3.scaleThreshold()
   .domain(color_domain)
@@ -154,7 +155,7 @@ function draw(topo) {
 
 
   var country = g.selectAll(".country").data(topo);
-  
+
   country.enter().insert("path")
       .attr("class", "country")
       .attr("d", path)
@@ -182,7 +183,7 @@ console.log(d);
       })
       .on("mouseout",  function(d,i) {
         tooltip.classed("hidden", true);
-      }); 
+      });
 */
 
   //EXAMPLE: adding some capitals from external CSV file
@@ -214,12 +215,12 @@ function move() {
   var h = height/4;
 
   t[0] = Math.min(
-    (width/height)  * (s - 1), 
+    (width/height)  * (s - 1),
     Math.max( width * (1 - s), t[0] )
   );
 
   t[1] = Math.min(
-    h * (s - 1) + h * s, 
+    h * (s - 1) + h * s,
     Math.max(height  * (1 - s) - h * s, t[1])
   );
 
@@ -281,14 +282,14 @@ function countryFill(countryName){
 
     var ratio_trackers = parseFloat(top_trackers[i].track_ratio).toFixed(2)
 
-    
+
     ratio_dict[top_trackers[i].country] = ratio_trackers + "%";
 
 
 
     if (top_trackers[i].country == countryName){
 
-         if (ratio_trackers == 0){  
+         if (ratio_trackers == 0){
         return cs[0];
 
           } else if (ratio_trackers < 2){
@@ -307,9 +308,9 @@ function countryFill(countryName){
         return cs[5];
 
           } else if (ratio_trackers >= 10){
-        return cs[6];     
+        return cs[6];
           }
     }
   }
-  return "white"; 
+  return "white";
 }

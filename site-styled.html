@@ -1,0 +1,138 @@
+---
+layout: default_site
+title: Data Transparency Lab
+---
+
+<div id="site-header">Site Checker</div>
+<div class="clearfix"> </div>
+<div id="report-wrapper">
+      <div class="row" style="font-size: 24px; color:#8D2E94; ">
+            <div class="col-md-6">
+            <p style="text-align:left; text-indent: 3em;" >Report for www.telefonica.es</p>
+             <!--  <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
+            </div>
+            <div class="col-md-6">
+               
+             <p id="updated" class="pull-right" style="vertical-align:baseline ; font-size:18px; color:#9B9B9B; padding-right: 50px;"> Last updated: 2016-11-10 17:02:29 UCT </p>
+               
+           </div>
+           </div>
+    <div class="site-check-box">
+        <h3>Overview</h3>
+            <div style="text-indent: 20px;">
+                <p><span>Country:</span> Spain</p>
+                <p><span> Kind of website:</span> Internet and Telecom > Telecommunications</p>
+            </div>
+    </div>
+    <div class="site-check-box">
+        <h3>Does this site fingerprint? <span><i class="fa fa-exclamation-triangle fa-1x "></i> Yes</span></h3>
+        <p>The following fingerprinting scripts are being deployed:</p>
+            <ul>
+                <li>
+                    <p><span>Canvas fingerprinting:</span></p>
+                    <p><a href="">http://tags.bkrtx.com/js/bk-coretag.js</a></p>
+                </li>
+                <br>
+                <li>
+                    <p><span>Web RTC fingerprinting:</span></p>
+                    <p ><a href="">http://tags.bkrtx.com/js/bk-coretag.js</a></p>
+                </li>
+                <br>
+            </ul>
+    </div>
+    <div class="report-box-divider"></div>
+     <div class="site-check-box-sub">
+        <h3>How many (monthly) visits were fingerprinted?</h3>
+            <div>
+                <div class="number-highlight">21,700,000</div>
+            </div>
+    </div>
+
+ <div class="site-check-box-sub">
+        <h3>Where are fingerprinted visitors located?</h3>
+            <div id="trafficMap">
+                 
+            </div>
+    </div>
+     <div class="site-check-box-sub">
+        <h3>What are  visitors also interested in?</h3>
+            <div id="categoriesAudience">
+                 <ul> 
+                        <li>[[svg Icon Target]]Electronics>Computers</li>
+                        <li>[[svg Icon Target]]Career and Education>Jobs and Employment</li>
+
+                 </ul>
+            </div>
+    </div>
+</div>
+
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+
+<script>
+
+querydb()
+
+
+
+  function querydb() {
+
+  var url = getParameters();
+  //console.log("After getParameters url is : " +url);
+  if (!validUrl(url)) {
+
+    console.log("Url no valida: " + url)
+
+  }else{
+
+    console.log("Valid url: " + url);
+
+            var encUrl = urlEncoder(url);
+            //$('#data11').val(encUrl);
+            $.getJSON('https://privacymeter-dtl.firebaseio.com/data/sites/' + encUrl + '.json', function(data) {
+                //console.log(data);
+            }).done(function(data) {
+                console.log("Search success");
+                if (data == null) {
+                    console.log("Site not found");
+                    var newQueryRef = new Firebase('https://privacymeter-dtl.firebaseio.com/data/queries');
+                    newQueryRef.push({
+                        "url": url
+                    });
+                    console.log("Added to queries list");
+                } else {
+                    console.log("Site found! ", data);
+                }
+            }).fail(function() {
+                console.log("error");
+            });
+
+    }
+}
+
+    function validUrl(str) {
+        var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+        var pattern = new RegExp(expression);
+        if (!pattern.test(str)) {
+            alert("Please enter a valid URL.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    function urlEncoder(url) {
+        var result = '';
+        for ( i = 0; i < url.length; i++) {
+            result += url.charCodeAt(i).toString(16);
+        }
+        console.log("Encoded url: " + result);
+        return result;
+    }
+
+function getParameters(){
+  return location.search.split('?')[1]
+}
+
+
+</script>

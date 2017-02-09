@@ -1,2 +1,2 @@
-# fingerprinting
-DTL Princeton FIngerprinting Viz Website
+# fingerprinting-census
+A Census about the adoption of Fingerprinting by Websites

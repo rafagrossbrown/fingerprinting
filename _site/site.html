@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" ng-app="fingerprinting">
+
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Online Fingerprinting Census</title>
+    <meta name="viewport" content="width=device-width">
+  <meta http-equiv="Content-Type" content="text/html;">
+
+  <meta name="description" content="A community-based effort to reveal the flow and usage of personal online data, and to explore ways towards a transparent and respectful data trade in the future
+">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="image_src" href="/images/dtl1-sm.png">
+  <meta name="Keywords" content="">
+  <meta property="og:site_name" content="The Data Transparency Lab">
+  <meta property="og:image" content="/images/dtl1-sm.png">
+<!-- STYLE -->
+
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/style/bootstrap.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/style/main.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/style/viz.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/style/flags.css" media="screen" rel="stylesheet" type="text/css">
+<!-- <link href="/style/font-awesome.min.css" rel="stylesheet">   -->
+<!-- SCRIPTS -->
+<style>
+.search_button{
+    border: 0px solid transparent;
+    border-radius:0;
+    margin-left:-5px;
+}
+.search_input{
+  border-radius:0;
+  margin-right: 0;
+}
+.navbar-form {
+    margin: 0px calc(50% - 480px);
+}
+ul .nav .navbar-nav {
+  line-height: 20px;
+}
+.navbar-nav > li > a {
+  line-height: 20px;
+  padding:10px 5px;
+}
+.navbar-nav > li {
+    margin-right: 10px;
+  }
+</style>
+  <script src="https://use.fontawesome.com/6211adc9f6.js"></script>
+<!--   <script async="" src="/script/analytics.js"></script> -->
+  <script src="/script/jquery.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,500,700" rel="stylesheet">
+     <script src="/script/topojson.v1.min.js"></script>
+     <!-- <script src="/script/d3.min.js"></script> -->
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="/script/trends.js"></script>
+
+
+
+      <!-- <script src="/script/components/alerts/alerts.js"></script>
+    <script src="/script/components/dropdowns/dropdowns.js"></script>
+    <script src="/script/components/modals/modals.js"></script> -->
+  <script type="text/javascript">
+    // Nasty hack to ensure the navbar menu is highlighted properly when user
+    // goes to a page different to index.html (otherwise, the home option
+    // keeps highlighted in the navbar
+    $( document ).ready(function() {
+      $('a[href="' + document.location.pathname + '"]').parent().parent().parent().addClass('active');
+    });
+  </script>
+<!--   <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-62836510-1', {'allowAnchor': true});
+    ga('send', 'pageview', { 'page': location.pathname + location.search + location.hash});
+
+  </script> -->
+</head>
+
+
+  <body data-spy="scroll" data-target="#navbar-default" style="zoom: 1" ng-controller="FPController">
+
+    <nav id="navbar-default" class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse"
+              data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- in order to make the spy-scroll effect work I needed to add some kind
+           of smartness to the links to include the naked anchor *only* if the
+           page is the index.html and use the full URL otherwise -->
+      <a class="navbar-brand" href="/index.html#">
+        <!-- <img src="/images/dtl1-sm.png"> -->
+        <!-- <img src="/images/dtl1-sm.png" style="margin-top:-10px;"> -->
+      </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+      <form class="navbar-form navbar-left">
+           <input type="text" class="search-query empty search_input pull-left" id="input_box" placeholder="&#xF002; Search websites">
+         <button type="submit" class="btn btn-default search_button" id="input_button">Search</button>
+     </form>
+      <ul class="nav navbar-nav">
+        <li class="">
+        <a href="/index.html#">Home</a>
+      </li>
+
+        <li>
+        <a href="#about">About</a>
+      </li>
+<li>
+              <a href="http://www.datatransparencylab.org">Downloads</a>
+            </li>
+        <li>
+              <a href="http://www.datatransparencylab.org">datatransparencylab.org</a>
+            </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+
+<script>
+
+    $('#input_button').click(function() {
+        //querydb();
+        setQuery();
+    });
+
+    $('#input_box').on('keypress', function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            //querydb();
+            setQuery();
+        }
+    });
+
+
+    function setQuery() {
+
+           var url = $('#input_box').val();
+
+
+            console.log("setQuery: " + url);
+
+            if (validURL(url)) {
+
+              window.location.href = "../site?" + formatUrl(url);
+
+            } else {
+                console.log("invalid url");
+            }
+        }
+
+
+    function validURL(str) {
+        var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+        var pattern = new RegExp(expression);
+        if (!pattern.test(str)) {
+            alert("Please enter a valid URL.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+function formatUrl(url){
+  if(url.indexOf("://") == -1){
+    url = "http://" + url;
+  }
+  var tmp = document.createElement ('a');
+  tmp.href = url;
+  return tmp.hostname.replace("www.", "");
+}
+
+</script>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://d3js.org/topojson.v2.min.js"></script>
+</head>
+
+<body>
+    <div id="site-header">Site Checker</div>
+    <div class="clearfix"> </div>
+    <div id="report-wrapper" style="display: none;">
+        <div class="row" style="font-size: 24px; color:#8D2E94; ">
+            <div class="col-md-6">
+                <p id="report-site" style="text-align:left; text-indent: 3em;">Report for N/A</p>
+                <!--  <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
+            </div>
+            <div class="col-md-6">
+                <p id="updated" class="pull-right" style="vertical-align:baseline ; font-size:18px; color:#9B9B9B; padding-right: 50px;"> Last updated: 2016-11-10 17:02:29 UCT </p>
+            </div>
+        </div>
+        <div class="site-check-box">
+            <h2>Overview</h2>
+            <div style="text-indent: 20px;">
+                <p>Country: <span id="report-country"> - </span></p>
+                <p> Kind of website: <span id="report-category"> - </span></p>
+            </div>
+        </div>
+        <div id="siteReport" style="display:none">
+            <h3>Does this site fingerprint? <span id="boolFingerprint"><i class="fa fa-exclamation-triangle fa-1x "></i> - </span></h3> </div>
+        <div id="kindsFP" class="site-check-box" style="display:none">
+            <p>The following fingerprinting scripts are being deployed:</p>
+            <ul>
+                <li id="fpTypeList"></li>
+            </ul>
+            <div class="report-box-divider"></div>
+        </div>
+    </div>
+    <div id="addInfo" style="display:none">
+        <div class="site-check-box-sub">
+            <h2>Additional Info.</h2>
+            <h3>How many (monthly) visits were fingerprinted?</h3>
+            <div>
+                <div id="report-traffic" class="number-highlight"> - </div>
+            </div>
+        </div>
+        <div class="site-check-box-sub">
+            <h3>Where are fingerprinted visitors located (highest ranking countries)?</h3>
+            <div id="trafficMap"> </div>
+        </div>
+        <div class="site-check-box-sub">
+            <h3>What are  visitors also interested in?</h3>
+            <div id="categoriesAudience">
+                <ul>
+                    <li id="audience"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="notFound" style="display:none">
+        <h2><i class="fa fa-exclamation-circle fa-4x" style="color:#DF564D;"></i></h2>
+        <h3>Looks like we've got homework!</h3>
+        <h4>Sorry, we haven't scanned <span id="report-site-not-found"> - </span> yet. We have added it to our to-do list, please come back in one month and search for it again. Thank you!  </h4> </div>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+    <script src="script/d3.min.js"></script>
+    <script src="script/privacymeter-single-report.js"></script>
+    <script>
+        var mydata = "test";
+        var url = getParameters();
+        var encUrl = "";
+        if (!validUrl(url)) {
+            //console.log("Url no valida: " + url);
+        } else {
+            //console.log("Valid url: " + url);
+            encUrl = urlEncoder(url);
+            $('#data11').val(encUrl);
+        };
+
+        var myquerydb = querydb(encUrl);
+
+        function querydb(a) {
+            //console.log("Valid url: " + a);
+            return $.getJSON('https://privacymeter-dtl.firebaseio.com/data/sites/' + a + '.json', function(data) {
+
+              updateContent(data);
+
+              top_trackers = data.information.traffic_top;
+
+              draw(topo);//updateContent(data);
+                //console.log("query sent");
+            });
+        }
+
+        function validUrl(str) {
+            var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+            var pattern = new RegExp(expression);
+            if (!pattern.test(str)) {
+                alert("Please enter a valid URL.");
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function urlEncoder(url) {
+            var result = '';
+            for (i = 0; i < url.length; i++) {
+                result += url.charCodeAt(i).toString(16);
+            }
+            //console.log("Encoded url: " + result);
+            return result;
+        }
+
+        function getParameters() {
+            return location.search.split('?')[1]
+        }
+
+        function updateContent(siteData) {
+            //console.log("checking if loop"); //fucntion to update the content using the json
+            if (siteData == null) {
+                $("#report-site-not-found").html(url)
+                $("#notFound").show();
+                //console.log("NOT IN OUR DB!");
+            } else {
+                $("#report-site").html("Report for " + siteData.url)
+                $("#report-country").html(siteData.information.country)
+                $("#report-category").html(siteData.information.category)
+                $("#report-wrapper").show();
+                //console.log("Is tracking?")
+                if (siteData.hasOwnProperty("fingerprint")) {
+                    //console.log("YES")
+                    $("#boolFingerprint").html("YES")
+                    $("#siteReport").show();
+                    $("#kindsFP").show();
+                    $("#addInfo").show();
+                    fingerprints = siteData["fingerprint"]["201612"]
+                    //console.log("The following fingerprinting scripts are being deployed:")
+                    var list = ""
+                    for (var key in fingerprints) {
+                        //console.log(key)
+                        $("#fpTypeList").append("<li>" + key.capitalizeFirstLetter() + " fingerprinting: <ul><li id=" + key + "></li></ul></li>");
+                        if (fingerprints.hasOwnProperty(key)) {
+                            scriptfArray = fingerprints[key]
+                            ////console.log(key + " -> " + fingerprints[key]);
+                            scriptfArray.forEach(function(script) {
+                                $("#" + key).append(script)
+                                //console.log(script);
+                            });
+                        }
+                    }
+                } else {
+                    //console.log("NO")
+                    $("#boolFingerprint").html("NO")
+                    $("#siteReport").show();
+                }
+                //console.log("How many (monthly) visits were fingerprinted?")
+                //console.log(siteData["information"]["traffic"])
+                $("#report-traffic").html(parseInt(siteData["information"]["traffic"]).toLocaleString())
+                //console.log("Where are fingerprinted visitors located?")
+                //MAP
+                top_traffic = siteData["information"]["traffic_top"]
+                var arrayTopTraffic = [];
+                for (country in top_traffic) {
+                    arrayTopTraffic.push([country, top_traffic[country]])
+                }
+                arrayTopTraffic.sort(function(a, b) {
+                    return a[1] - b[1]
+                })
+                arrayTopTraffic.reverse();
+                window.arrayTopTraffic = arrayTopTraffic;
+                //console.log(arrayTopTraffic);
+                //console.log("What are visitors also interested in?");
+                audienceArray = siteData.information.audience;
+                audienceArray.forEach(function(audienceType) {
+                    //console.log("my_audience", audienceType);
+                    $("#audience").append("<li>" + audienceType + "</li>");
+                });
+            }
+        }
+        String.prototype.capitalizeFirstLetter = function() {
+            return this.charAt(0).toUpperCase() + this.slice(1);
+        }
+    </script>
+
+
+
+     <script type="text/javascript" charset="UTF-8" src="http://cookie-script.com/s/474fc3db154b7b9ef45401fdad585459.js"></script>
+
+   <footer class="footer main-footer">
+    <p>
+      <a href="/policy.html" class="popup2" style="color:white;">Privacy and Transparency Policy</a>
+    </p>
+    <p>
+      © Data Transparency Lab 2016
+    </p>
+    <script type="text/javascript">
+      jQuery(document).ready(function () {
+        jQuery('.menu a').click(function(){
+          var match = jQuery(this).attr('href').match(/#\S+/);
+          ga('send', 'pageview', location.pathname + match[0]);
+        });
+      });
+    </script>
+  </footer>
+
+     <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <!-- <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> -->
+    <!-- <script src="../../dist/js/bootstrap.min.js"></script> -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+      <script src="/script/jquery.min.js"></script>
+  <script src="/script/bootstrap.min.js" media="screen"></script>
+  <script src="/script/angular.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+  <script src="/script/dbconnection.js" media="screen"></script>
+   <script src="/script/main.js" media="screen"></script>
+
+
+
+
+  </body>
+
+
+
+</html>

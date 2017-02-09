@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" ng-app="fingerprinting">
+
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Online Fingerprinting Census</title>
+    <meta name="viewport" content="width=device-width">
+  <meta http-equiv="Content-Type" content="text/html;">
+
+  <meta name="description" content="A community-based effort to reveal the flow and usage of personal online data, and to explore ways towards a transparent and respectful data trade in the future
+">
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  <link rel="image_src" href="/images/dtl1-sm.png">
+  <meta name="Keywords" content="">
+  <meta property="og:site_name" content="The Data Transparency Lab">
+  <meta property="og:image" content="/images/dtl1-sm.png">
+<!-- STYLE -->
+
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="/style/bootstrap.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/style/main.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/style/viz.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/style/flags.css" media="screen" rel="stylesheet" type="text/css">
+<!-- <link href="/style/font-awesome.min.css" rel="stylesheet">   -->
+<!-- SCRIPTS -->
+<style>
+.search_button{
+    border: 0px solid transparent;
+    border-radius:0;
+    margin-left:-5px;
+}
+.search_input{
+  border-radius:0;
+  margin-right: 0;
+}
+.navbar-form {
+    margin: 0px calc(50% - 480px);
+}
+ul .nav .navbar-nav {
+  line-height: 20px;
+}
+.navbar-nav > li > a {
+  line-height: 20px;
+  padding:10px 5px;
+}
+.navbar-nav > li {
+    margin-right: 10px;
+  }
+</style>
+  <script src="https://use.fontawesome.com/6211adc9f6.js"></script>
+<!--   <script async="" src="/script/analytics.js"></script> -->
+  <script src="/script/jquery.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,500,700" rel="stylesheet">
+     <script src="/script/topojson.v1.min.js"></script>
+     <!-- <script src="/script/d3.min.js"></script> -->
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="/script/trends.js"></script>
+
+
+
+      <!-- <script src="/script/components/alerts/alerts.js"></script>
+    <script src="/script/components/dropdowns/dropdowns.js"></script>
+    <script src="/script/components/modals/modals.js"></script> -->
+  <script type="text/javascript">
+    // Nasty hack to ensure the navbar menu is highlighted properly when user
+    // goes to a page different to index.html (otherwise, the home option
+    // keeps highlighted in the navbar
+    $( document ).ready(function() {
+      $('a[href="' + document.location.pathname + '"]').parent().parent().parent().addClass('active');
+    });
+  </script>
+<!--   <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-62836510-1', {'allowAnchor': true});
+    ga('send', 'pageview', { 'page': location.pathname + location.search + location.hash});
+
+  </script> -->
+</head>
+
+
+  <body data-spy="scroll" data-target="#navbar-default" style="zoom: 1" ng-controller="FPController">
+
+    <nav id="navbar-default" class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse"
+              data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- in order to make the spy-scroll effect work I needed to add some kind
+           of smartness to the links to include the naked anchor *only* if the
+           page is the index.html and use the full URL otherwise -->
+      <a class="navbar-brand" href="/index.html#">
+        <!-- <img src="/images/dtl1-sm.png"> -->
+        <!-- <img src="/images/dtl1-sm.png" style="margin-top:-10px;"> -->
+      </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+      <form class="navbar-form navbar-left">
+           <input type="text" class="search-query empty search_input pull-left" id="input_box" placeholder="&#xF002; Search websites">
+         <button type="submit" class="btn btn-default search_button" id="input_button">Search</button>
+     </form>
+      <ul class="nav navbar-nav">
+        <li class="">
+        <a href="/index.html#">Home</a>
+      </li>
+
+        <li>
+        <a href="#about">About</a>
+      </li>
+<li>
+              <a href="http://www.datatransparencylab.org">Downloads</a>
+            </li>
+        <li>
+              <a href="http://www.datatransparencylab.org">datatransparencylab.org</a>
+            </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+
+<script>
+
+    $('#input_button').click(function() {
+        //querydb();
+        setQuery();
+    });
+
+    $('#input_box').on('keypress', function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            //querydb();
+            setQuery();
+        }
+    });
+
+
+    function setQuery() {
+
+           var url = $('#input_box').val();
+
+
+            console.log("setQuery: " + url);
+
+            if (validURL(url)) {
+
+              window.location.href = "../site?" + formatUrl(url);
+
+            } else {
+                console.log("invalid url");
+            }
+        }
+
+
+    function validURL(str) {
+        var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+        var pattern = new RegExp(expression);
+        if (!pattern.test(str)) {
+            alert("Please enter a valid URL.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+function formatUrl(url){
+  if(url.indexOf("://") == -1){
+    url = "http://" + url;
+  }
+  var tmp = document.createElement ('a');
+  tmp.href = url;
+  return tmp.hostname.replace("www.", "");
+}
+
+</script>
+
+
+    <div class="post-container">
+<h3> Now Open: Data Transparency Lab Call For Proposals 
+2016!</h3> 
+
+
+<div class="post-date">
+15 Mar 2016
+</div>
+
+<div class="blurb">
+Our Grants Program has launched its annual 2016 Call for Proposals. Check out the details below.
+</div>
+
+<div class="post-body">
+<p>
+<span style="font-style:italic;">Barcelona, Spain </span></p>
+
+<p>— <a href="http://www.datatransparencylab.org/">The Data Transparency Lab</a> (DTL) has launched its second annual Call for Proposals, part of the DTL <a href="http://www.datatransparencylab.org/grants-program.html">Grants Program</a>. In order to support research to foster data transparency, DTL will award research grants to academic institutions worldwide. Such grants come in the form of a lump sum of up to 50K euro that will be awarded to successful applicants for pursuing DTL related research.   </p>
+
+<p>
+Our 2016 grant awardees will be announced early June 2016, and <a href="http://www.dtlconferences.org/"> will present their ongoing work at the DTL2016 Conference</a>, which will take place on Nov. 17-19th at Columbia University (New York City).</p>
+<div class="row">
+	<div class="col-sm-12"> 
+		<!-- En el caso de que la imagen lleve a otro sitio (al hacer click), mantener lo de <a href=""> ... -->
+		<a href="http://www.dtlconferences.org/">
+		<!-- link a la imagen -->
+		<img class="img-responsive" title="" src="/images/2016-jumbologo.png" />
+		 </a>
+	</div>
+	</div>
+
+ <p>
+The Data Transparency Lab (DTL) – a community of universities, businesses and institutions founded by Mozilla, Telefónica, MIT Connection Science and AT&amp;T – is a collaborative effort to support research in tools, data, and methodologies for shedding light on the use of personal data by online services, and to empower users to be in control of their personal data online.  
+</p>
+ <p>
+ For more information on this Call for Proposals, including topics, review process, Committee members, visit our website: <a href="http://www.datatransparencylab.org/grants-program.html">http://www.datatransparencylab.org/grants-program.html.</a>
+</p>
+<!-- close post body -->
+</div>
+</div>
+
+     <script type="text/javascript" charset="UTF-8" src="http://cookie-script.com/s/474fc3db154b7b9ef45401fdad585459.js"></script>
+
+   <footer class="footer main-footer">
+    <p>
+      <a href="/policy.html" class="popup2" style="color:white;">Privacy and Transparency Policy</a>
+    </p>
+    <p>
+      © Data Transparency Lab 2016
+    </p>
+    <script type="text/javascript">
+      jQuery(document).ready(function () {
+        jQuery('.menu a').click(function(){
+          var match = jQuery(this).attr('href').match(/#\S+/);
+          ga('send', 'pageview', location.pathname + match[0]);
+        });
+      });
+    </script>
+  </footer>
+
+     <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+    <!-- <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> -->
+    <!-- <script src="../../dist/js/bootstrap.min.js"></script> -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+      <script src="/script/jquery.min.js"></script>
+  <script src="/script/bootstrap.min.js" media="screen"></script>
+  <script src="/script/angular.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+  <script src="/script/dbconnection.js" media="screen"></script>
+   <script src="/script/main.js" media="screen"></script>
+      <script src="/script/viz.js" media="screen"></script>
+      <script src="/script/chroma.min.js"></script> 
+      <script src="/script/privacymeter-map.js"></script>
+
+
+  </body>
+
+
+
+</html>

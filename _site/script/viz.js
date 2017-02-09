@@ -22,7 +22,7 @@ $('#updated').append( "Last updated: " + lastUpdated);
 
 
 $('#totalFingerprinted').append( "<strong>" + totalFingerprinted + " "+ "</strong>" + "<p>visits have been fingerprinted in the last month.</p>"  );
-        
+
 
   // draw global data doughnut viz
   visualizeDataT();
@@ -35,17 +35,16 @@ $('#totalFingerprinted').append( "<strong>" + totalFingerprinted + " "+ "</stron
      drawDoughnuts("categories","arts","#category7");
      drawDoughnuts("categories","home","#category8");
 
- 
+
 });
 
  function loadTable(){
 // Load Table data
-$.getJSON("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_countries_fingerprint.json",
-        (data)=>{
+$.getJSON("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_countries_fingerprint.json", function(data){
            $("#container").html="";
            $("#container").append("<tr><th>Country</th><th>Ratio</th></tr>");
            if(data != null && $.isArray(data)){
-               data.sort((a,b)=>{
+               data.sort(function(a,b){
                  return (b.track_ratio-a.track_ratio);
                });
                var top = data.slice(0,10);
@@ -56,12 +55,12 @@ $.getJSON("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_c
            }
         });
 
- 
- 
+
+
 }
 loadTable();
 
-function visualizeDataT(){  
+function visualizeDataT(){
 
  total_sites =globalData.websites;
  fingerprint_sites = globalData.websites_tracking;
@@ -77,7 +76,7 @@ var noFpPercent= 100-fpPercent;
 
 
 
-// PERCENTAGE OF NEWS SITES DOUGHNUT  
+// PERCENTAGE OF NEWS SITES DOUGHNUT
 // thevariable data is defined as an argument in the callback function of d3 json
 // d3.json("mydata.json", function(data) {
     var data=[fpPercent,noFpPercent];
@@ -107,15 +106,15 @@ var pie= d3.pie()
           .value(function (d){ return d; });
 
 
-// fetch data, then pass it through the Pie Layout "var pie"    
+// fetch data, then pass it through the Pie Layout "var pie"
 var arcs = group.selectAll(".arc")
                 .data(pie(data))
                 .enter()
                   .append("g")
                   .attr("class","arc")
 
-                 
-           
+
+
            group.append("text")
                 .attr("text-anchor","middle")
                 .attr("class","dataHighlight")
@@ -128,11 +127,11 @@ var arcs = group.selectAll(".arc")
             .attr("d", arc)
             .attr("fill", function(d) { return color(d.data);})
 
- 
- 
 
- 
-   
+
+
+
+
 
 
 }
@@ -147,9 +146,9 @@ function drawBargraph() {
         margin = {top: 20, right: 50, bottom: 30, left: 150},
         width = +svgCat.attr("width") - margin.left - margin.right,
         height = +svgCat.attr("height") - margin.top - margin.bottom;
-      
+
     var tooltip = d3.select("body").append("div").attr("class", "toolTip");
-      // map the domain data to the view div width 
+      // map the domain data to the view div width
     var x = d3.scaleLinear()
               .range([0, width]);
               // map to the view div height
@@ -159,10 +158,10 @@ function drawBargraph() {
     var gr = svgCat.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-// URL FOR CATEGORIES: https://privacymeter-eddbf.firebaseio.com/data/global/categories.json      
-   
+// URL FOR CATEGORIES: https://privacymeter-eddbf.firebaseio.com/data/global/categories.json
 
-//     
+
+//
 
 // console.log(data2);
 //     });
@@ -175,16 +174,16 @@ d3.json("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_cat
           // console.log(keyArray[0]);
 // console.log(data1);
 //For loop que busque data1[i]
-          
+
 
 // console.log("bargraph a trafficValue =" + "  "+ trafficValue);
-// data1[query][target].tracking_traffic; 
+// data1[query][target].tracking_traffic;
 
 
         if (error) throw error;
       // sort data from max to min:
           data1.sort(function(a, b) { return a.value - b.value; });
-      
+
       //add the domain data
         x.domain([0, d3.max(data1, function(d) { return d.value; })]);
         y.domain(data1.map(function(d) { return d.collection; }))
@@ -197,19 +196,19 @@ d3.json("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_cat
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x).ticks(3)
-              .tickFormat(function(d) { 
+              .tickFormat(function(d) {
               //Add commas to billions
               return d= d3.format(",")(d);
 
               // return d3.format('d');
-              // return       
-              
+              // return
+
 
 
                }).tickSizeInner([-height]));
 
 
-         
+
 
 
         gr.append("g")
@@ -238,15 +237,15 @@ d3.json("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_cat
 
             // gr.append("text")
             //   .text("TEXTTT");
-    });                      
+    });
 }
 //Fingerprinted Traffic by Website Category
 drawBargraph();
 
-// PERCENTAGE OF NEWS SITES DOUGHNUT  
+// PERCENTAGE OF NEWS SITES DOUGHNUT
 function drawDoughnuts(query,target,catDiv){
-// PERCENTAGE OF NEWS SITES DOUGHNUT  
- 
+// PERCENTAGE OF NEWS SITES DOUGHNUT
+
 //  d3.json("https://privacymeter-eddbf.firebaseio.com/data/global/top_ranks/top_categories_traffic.json", function(error,data2){
 
 
@@ -256,7 +255,7 @@ function drawDoughnuts(query,target,catDiv){
 
 // 1- get # of total news analyzed
 var total= globalData[query][target].websites;
-// 2- get # of fingerprint news sites 
+// 2- get # of fingerprint news sites
 var tracking= globalData[query][target].websites_tracking;
 
 var traffic= globalData[query][target].tracking_traffic;
@@ -294,7 +293,7 @@ var iconMap={
  computers: "images/icons/open-laptop-computer.svg"  ,
  shopping:"images/icons/shopping-cart-black-shape.svg"   ,
  home:"images/icons/home.svg"   ,
- kids_and_teens:  "images/icons/smile.svg" 
+ kids_and_teens:  "images/icons/smile.svg"
 }
 var icon= iconMap[target];
 
@@ -318,7 +317,7 @@ var catDiv;
               .attr("class", "doughnutLabel")
               // .html("<br><span>" + perc + "%" + "</span>" +"  of " + target + "  sites are fingerprinting.");
               .html("<span>" + perc + "%" + "</span>" +"  of " + target + "  sites are fingerprinting." +  "<br><span>"+ traffic+ "</span>" + "  "+ " visits to " + target +  " sites were fingerprinted in a month.");
-// " amounting to " + 
+// " amounting to " +
                    // .text("Website Category:" + "  "+ target);
 
     var group= canvas.append("g")
@@ -333,14 +332,14 @@ var pie= d3.pie()
           .value(function (d){ return d; });
 
 
-// fetch data, then pass it through the Pie Layout "var pie"    
+// fetch data, then pass it through the Pie Layout "var pie"
 var arcs = group.selectAll(".arc")
                 .data(pie(data))
                 .enter()
                   .append("g")
                   .attr("class","arc");
 
-           
+
             // group.append("image")
             //     .attr("xlink:href", "url"):
          group.append("svg:image")
@@ -352,7 +351,7 @@ var arcs = group.selectAll(".arc")
                 .attr("height", 50)
                 .attr("x", -25)
                 .attr("y",-25);
-   
+
 
 
            // group.append("text")
@@ -364,7 +363,7 @@ var arcs = group.selectAll(".arc")
           // append paths
 
           arcs.append("path")
-            .attr("d", arc)            
+            .attr("d", arc)
             .attr("fill", function(d) { return color(d.data);});
 
             // group.append("text")
@@ -372,7 +371,7 @@ var arcs = group.selectAll(".arc")
             //            .attr("transform", "translate(-200,-50)")
             //             .text("News"+ "   "+ "Websites");
 
-       
+
 // text on arcs
             // arcs.append("text")
             //     .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")";})
@@ -380,6 +379,5 @@ var arcs = group.selectAll(".arc")
             //     .attr("font-size","24px")
             //     .attr("fill", "white")
             //     .text(function(d) { return d.data + " %"  ;});
-   
- }
 
+ }

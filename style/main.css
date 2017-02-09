@@ -79,7 +79,7 @@ h1{
 h2{
 	font-family: "GothamLight";
 	/*font-size: 3em;*/
-	color: black;
+	/*color: black;*/
 	margin-bottom: 1em;
 }
 
@@ -94,7 +94,7 @@ h3{
 h4{
 	font-family: "GothamLight";
 	/*font-size: 1.53em;*/
-	color: black;
+	/*color: black;*/
 	margin-bottom: 1em;
 }
 
@@ -431,6 +431,7 @@ font-size:1.2em;
 	width: 100%;
 	height: 1px;
 	margin-bottom: 1.667em;
+	margin-top: 1.667em;
 	background-color: #e7e7e7;
 }
 
@@ -915,8 +916,7 @@ margin: .5em;
 
 .blurb{
 	margin: .5em;
-	color:#7ab9ba
-;
+	color:#7ab9ba;
 	/*font-style: italic;*/
 	font-size: 1.2em;
 	padding-bottom: 10px;
@@ -1128,17 +1128,17 @@ border-color: transparent;
 
 .navbar-form{
 
-	margin-right: 3em;
+	margin-right: 1em;
 
 
 
 
 }
 .search-query{
-	width: 500px;
+	width: 400px;
 	/*width: 80%;*/
 	border-radius: 25px;
-	padding-left: 10px;
+	/*padding-left: 10px;*/
 	padding-top: 5px;
 	padding-bottom: 5px;
 	border-width: 0px;
@@ -1207,4 +1207,130 @@ background-color: rgba(213, 237, 246,.6);
 
 .fadeInBlock {
     opacity:0;
+}
+
+
+
+#site-header{
+	margin-top:50px ;
+		margin-bottom: 10px;
+	/*display: block;*/
+    text-indent: 20px;
+    /*clear: both;*/
+	vertical-align: middle;
+	line-height: 40px;
+	/*margin-top: 50px;*/
+	position: relative;
+	min-height: 60px;
+	width: 100%;
+	background-color: #913691;
+	color: #ffffff;
+	text-align: left;
+	font-size: 30px;
+
+
+	
+}
+
+.site-check-box{
+	padding-left: 2em;
+	padding-top: 2em;
+	padding-bottom: 2em;
+	border:1px solid #DDDDDD;
+	border-bottom: 0px;
+	text-align: left;
+	margin-left: 3em;
+	text-indent: 20px;
+}
+
+.site-check-box-sub{
+	padding-left: 2em;
+	padding-top: 2em;
+	padding-bottom: 2em;
+	border-left:1px solid #DDDDDD;
+	border-bottom: 0px;
+	text-align: left;
+	margin-left: 3em;
+	text-indent: 20px;
+}
+
+#report-wrapper{
+
+
+}
+#report-wrapper span{
+color: #1BBBD1;
+font-size: 1em;
+
+}
+
+#report-wrapper li{
+	padding-left: 3.33em;
+	margin-bottom: 2em;
+}
+
+.report-box-divider{
+	margin-left: auto;
+	margin-right: auto;
+	width: 90%;
+	/*height: 12px;*/
+	/*margin-top: 2.6em;*/
+	/*background-color: red;*/
+	border-bottom: 2px dotted #DDDDDD;
+}
+.number-highlight{
+	color: #1BBBD1;
+	font-size: 30px;
+	text-indent: 130px;
+
+}
+ 
+ #trafficMap{
+color: #1BBBD1;
+	font-size: 18px;
+	max-width: 70%
+	/*padding:1em;*/
+ 
+ 
+
+ }
+
+#downloads{
+	
+
+}
+
+#notFound{
+/*max-width: 50%;*/
+margin: 50px;
+/*background-color: #934c6d ;*/
+	/*color: white;*/
+}
+
+#siteReport{
+
+	padding-left: 2em;
+	padding-top: 2em;
+	padding-bottom: 2em;
+	border-left:1px solid #DDDDDD;
+	border-bottom: 0px;
+	text-align: left;
+	margin-left: 3em;
+	text-indent: 20px;
+}
+
+#trends{
+
+
+
+}
+
+#trend1{
+
+}
+
+.line {
+  fill: none;
+  stroke: red;
+  stroke-width: 2px;
 }
